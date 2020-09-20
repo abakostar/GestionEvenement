@@ -1,0 +1,26 @@
+{
+  "gestionevenementappApp": {
+    "evenement": {
+      "home": {
+        "title": "Evenements",
+        "createLabel": "Create a new Evenement",
+        "createOrEditLabel": "Create or edit a Evenement",
+        "notFound": "No Evenements found"
+      },
+      "created": "A new Evenement is created with identifier {{ param }}",
+      "updated": "A Evenement is updated with identifier {{ param }}",
+      "deleted": "A Evenement is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Evenement {{ id }}?"
+      },
+      "detail": {
+        "title": "Evenement"
+      },
+      "code": "Code",
+      "dateDebut": "Date Debut",
+      "dateFin": "Date Fin",
+      "description": "Description",
+      "categorie": "Categorie"
+    }
+  }
+}

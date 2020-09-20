@@ -1,0 +1,43 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.gestionevenement",
+      "nativeLanguage": "fr"
+    },
+    "jhipsterVersion": "6.10.3",
+    "applicationType": "monolith",
+    "baseName": "gestionevenementapp",
+    "packageName": "com.gestionevenement",
+    "packageFolder": "com/gestionevenement",
+    "serverPort": "8080",
+    "authenticationType": "session",
+    "cacheProvider": "no",
+    "websocket": "spring-websocket",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "rememberMeKey": "17923cd31590c2bc241832af71497a6d6d1c15955450ce63748e2b7801d3559a2155f0bf800be0b7285141ed04819c31c245",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "flatly",
+    "clientThemeVariant": "primary",
+    "creationTimestamp": 1600598613252,
+    "testFrameworks": ["cucumber"],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "fr",
+    "languages": ["fr", "en"],
+    "blueprints": [],
+    "lastLiquibaseTimestamp": 1600602699000
+  }
+}

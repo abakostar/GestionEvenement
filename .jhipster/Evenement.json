@@ -1,0 +1,40 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [
+    {
+      "relationshipName": "categorie",
+      "otherEntityName": "categorie",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "id",
+      "otherEntityRelationshipName": "evenement"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "code",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateDebut",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "dateFin",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "changelogDate": "20200920115139",
+  "dto": "mapstruct",
+  "searchEngine": false,
+  "service": "serviceImpl",
+  "entityTableName": "evenement",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": true,
+  "pagination": "infinite-scroll"
+}
