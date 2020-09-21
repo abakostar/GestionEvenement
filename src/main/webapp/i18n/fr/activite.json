@@ -1,0 +1,29 @@
+{
+  "gestionevenementappApp": {
+    "activite": {
+      "home": {
+        "title": "Activites",
+        "createLabel": "Créer un nouveau Activite",
+        "createOrEditLabel": "Créer ou éditer un Activite",
+        "notFound": "Aucun Activite trouvé"
+      },
+      "created": "Un nouveau Activite a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Activite avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Activite avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Activite {{ id }} ?"
+      },
+      "detail": {
+        "title": "Activite"
+      },
+      "nom": "Nom",
+      "description": "Description",
+      "date_activite": "Date Activite",
+      "heure_debut": "Heure Debut",
+      "heure_fin": "Heure Fin",
+      "etatclos": "Etatclos",
+      "evenement": "Evenement",
+      "emplacement": "Emplacement"
+    }
+  }
+}

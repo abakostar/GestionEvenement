@@ -12,6 +12,22 @@ import { RouterModule } from '@angular/router';
         path: 'evenement',
         loadChildren: () => import('./evenement/evenement.module').then(m => m.GestionevenementappEvenementModule),
       },
+      {
+        path: 'pays',
+        loadChildren: () => import('./pays/pays.module').then(m => m.GestionevenementappPaysModule),
+      },
+      {
+        path: 'ville',
+        loadChildren: () => import('./ville/ville.module').then(m => m.GestionevenementappVilleModule),
+      },
+      {
+        path: 'emplacement',
+        loadChildren: () => import('./emplacement/emplacement.module').then(m => m.GestionevenementappEmplacementModule),
+      },
+      {
+        path: 'activite',
+        loadChildren: () => import('./activite/activite.module').then(m => m.GestionevenementappActiviteModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

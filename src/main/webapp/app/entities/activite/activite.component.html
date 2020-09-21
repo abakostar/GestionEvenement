@@ -1,0 +1,83 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="gestionevenementappApp.activite.home.title">Activites</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-activite" [routerLink]="['/activite/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="gestionevenementappApp.activite.home.createLabel">
+            Create a new Activite
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="activites?.length === 0">
+        <span jhiTranslate="gestionevenementappApp.activite.home.notFound">No activites found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="activites && activites.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="nom"><span jhiTranslate="gestionevenementappApp.activite.nom">Nom</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="description"><span jhiTranslate="gestionevenementappApp.activite.description">Description</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="date_activite"><span jhiTranslate="gestionevenementappApp.activite.date_activite">Date Activite</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="heure_debut"><span jhiTranslate="gestionevenementappApp.activite.heure_debut">Heure Debut</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="heure_fin"><span jhiTranslate="gestionevenementappApp.activite.heure_fin">Heure Fin</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="etatclos"><span jhiTranslate="gestionevenementappApp.activite.etatclos">Etatclos</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="evenementCode"><span jhiTranslate="gestionevenementappApp.activite.evenement">Evenement</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="emplacementCode"><span jhiTranslate="gestionevenementappApp.activite.emplacement">Emplacement</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+                <tr *ngFor="let activite of activites ;trackBy: trackId">
+                    <td><a [routerLink]="['/activite', activite.id, 'view']">{{ activite.id }}</a></td>
+                    <td>{{ activite.nom }}</td>
+                    <td>{{ activite.description }}</td>
+                    <td>{{ activite.date_activite | date:'mediumDate' }}</td>
+                    <td>{{ activite.heure_debut | date:'medium' }}</td>
+                    <td>{{ activite.heure_fin | date:'medium' }}</td>
+                    <td>{{ activite.etatclos }}</td>
+                    <td>
+                        <div *ngIf="activite.evenementId">
+                            <a [routerLink]="['/evenement', activite.evenementId , 'view']" >{{ activite.evenementCode }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="activite.emplacementId">
+                            <a [routerLink]="['/emplacement', activite.emplacementId , 'view']" >{{ activite.emplacementCode }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/activite', activite.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/activite', activite.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(activite)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+{
+  "gestionevenementappApp": {
+    "emplacement": {
+      "home": {
+        "title": "Emplacements",
+        "createLabel": "Create a new Emplacement",
+        "createOrEditLabel": "Create or edit a Emplacement",
+        "notFound": "No Emplacements found"
+      },
+      "created": "A new Emplacement is created with identifier {{ param }}",
+      "updated": "A Emplacement is updated with identifier {{ param }}",
+      "deleted": "A Emplacement is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Emplacement {{ id }}?"
+      },
+      "detail": {
+        "title": "Emplacement"
+      },
+      "code": "Code",
+      "description": "Description",
+      "capacite": "Capacite",
+      "ville": "Ville"
+    }
+  }
+}

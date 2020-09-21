@@ -1,0 +1,62 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="activite">
+            <h2><span jhiTranslate="gestionevenementappApp.activite.detail.title">Activite</span> {{ activite.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="gestionevenementappApp.activite.nom">Nom</span></dt>
+                <dd>
+                    <span>{{ activite.nom }}</span>
+                </dd>
+                <dt><span jhiTranslate="gestionevenementappApp.activite.description">Description</span></dt>
+                <dd>
+                    <span>{{ activite.description }}</span>
+                </dd>
+                <dt><span jhiTranslate="gestionevenementappApp.activite.date_activite">Date Activite</span></dt>
+                <dd>
+                    <span>{{ activite.date_activite }}</span>
+                </dd>
+                <dt><span jhiTranslate="gestionevenementappApp.activite.heure_debut">Heure Debut</span></dt>
+                <dd>
+                    <span>{{ activite.heure_debut }}</span>
+                </dd>
+                <dt><span jhiTranslate="gestionevenementappApp.activite.heure_fin">Heure Fin</span></dt>
+                <dd>
+                    <span>{{ activite.heure_fin }}</span>
+                </dd>
+                <dt><span jhiTranslate="gestionevenementappApp.activite.etatclos">Etatclos</span></dt>
+                <dd>
+                    <span>{{ activite.etatclos }}</span>
+                </dd>
+                <dt><span jhiTranslate="gestionevenementappApp.activite.evenement">Evenement</span></dt>
+                <dd>
+                    <div *ngIf="activite.evenementId">
+                        <a [routerLink]="['/evenement', activite.evenementId, 'view']">{{ activite.evenementCode }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="gestionevenementappApp.activite.emplacement">Emplacement</span></dt>
+                <dd>
+                    <div *ngIf="activite.emplacementId">
+                        <a [routerLink]="['/emplacement', activite.emplacementId, 'view']">{{ activite.emplacementCode }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/activite', activite.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

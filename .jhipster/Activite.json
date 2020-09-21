@@ -1,0 +1,55 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [
+    {
+      "relationshipName": "evenement",
+      "otherEntityName": "evenement",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "code",
+      "otherEntityRelationshipName": "activite"
+    },
+    {
+      "relationshipName": "emplacement",
+      "otherEntityName": "emplacement",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "code",
+      "otherEntityRelationshipName": "activite"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "date_activite",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "heure_debut",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "heure_fin",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "etatclos",
+      "fieldType": "Boolean"
+    }
+  ],
+  "changelogDate": "20200920220016",
+  "dto": "mapstruct",
+  "searchEngine": false,
+  "service": "serviceImpl",
+  "entityTableName": "activite",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": true,
+  "pagination": "infinite-scroll"
+}
