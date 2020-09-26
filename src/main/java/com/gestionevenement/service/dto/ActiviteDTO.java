@@ -15,13 +15,13 @@ public class ActiviteDTO implements Serializable {
 
     private String description;
 
-    private LocalDate date_activite;
-
-    private ZonedDateTime heure_debut;
-
-    private ZonedDateTime heure_fin;
-
     private Boolean etatclos;
+
+    private LocalDate dateActivite;
+
+    private ZonedDateTime heureDebut;
+
+    private ZonedDateTime heureFin;
 
 
     private Long evenementId;
@@ -56,36 +56,36 @@ public class ActiviteDTO implements Serializable {
         this.description = description;
     }
 
-    public LocalDate getDate_activite() {
-        return date_activite;
-    }
-
-    public void setDate_activite(LocalDate date_activite) {
-        this.date_activite = date_activite;
-    }
-
-    public ZonedDateTime getHeure_debut() {
-        return heure_debut;
-    }
-
-    public void setHeure_debut(ZonedDateTime heure_debut) {
-        this.heure_debut = heure_debut;
-    }
-
-    public ZonedDateTime getHeure_fin() {
-        return heure_fin;
-    }
-
-    public void setHeure_fin(ZonedDateTime heure_fin) {
-        this.heure_fin = heure_fin;
-    }
-
     public Boolean isEtatclos() {
         return etatclos;
     }
 
     public void setEtatclos(Boolean etatclos) {
         this.etatclos = etatclos;
+    }
+
+    public LocalDate getDateActivite() {
+        return dateActivite;
+    }
+
+    public void setDateActivite(LocalDate dateActivite) {
+        this.dateActivite = dateActivite;
+    }
+
+    public ZonedDateTime getHeureDebut() {
+        return heureDebut;
+    }
+
+    public void setHeureDebut(ZonedDateTime heureDebut) {
+        this.heureDebut = heureDebut;
+    }
+
+    public ZonedDateTime getHeureFin() {
+        return heureFin;
+    }
+
+    public void setHeureFin(ZonedDateTime heureFin) {
+        this.heureFin = heureFin;
     }
 
     public Long getEvenementId() {
@@ -144,10 +144,10 @@ public class ActiviteDTO implements Serializable {
             "id=" + getId() +
             ", nom='" + getNom() + "'" +
             ", description='" + getDescription() + "'" +
-            ", date_activite='" + getDate_activite() + "'" +
-            ", heure_debut='" + getHeure_debut() + "'" +
-            ", heure_fin='" + getHeure_fin() + "'" +
             ", etatclos='" + isEtatclos() + "'" +
+            ", dateActivite='" + getDateActivite() + "'" +
+            ", heureDebut='" + getHeureDebut() + "'" +
+            ", heureFin='" + getHeureFin() + "'" +
             ", evenementId=" + getEvenementId() +
             ", evenementCode='" + getEvenementCode() + "'" +
             ", emplacementId=" + getEmplacementId() +

@@ -4,10 +4,10 @@ export interface IActivite {
   id?: number;
   nom?: string;
   description?: string;
-  date_activite?: Moment;
-  heure_debut?: Moment;
-  heure_fin?: Moment;
   etatclos?: boolean;
+  dateActivite?: Moment;
+  heureDebut?: Moment;
+  heureFin?: Moment;
   evenementCode?: string;
   evenementId?: number;
   emplacementCode?: string;
@@ -19,10 +19,10 @@ export class Activite implements IActivite {
     public id?: number,
     public nom?: string,
     public description?: string,
-    public date_activite?: Moment,
-    public heure_debut?: Moment,
-    public heure_fin?: Moment,
     public etatclos?: boolean,
+    public dateActivite?: Moment,
+    public heureDebut?: Moment,
+    public heureFin?: Moment,
     public evenementCode?: string,
     public evenementId?: number,
     public emplacementCode?: string,

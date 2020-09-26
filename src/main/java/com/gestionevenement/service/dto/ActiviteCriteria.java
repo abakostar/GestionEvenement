@@ -32,13 +32,13 @@ public class ActiviteCriteria implements Serializable, Criteria {
 
     private StringFilter description;
 
-    private LocalDateFilter date_activite;
-
-    private ZonedDateTimeFilter heure_debut;
-
-    private ZonedDateTimeFilter heure_fin;
-
     private BooleanFilter etatclos;
+
+    private LocalDateFilter dateActivite;
+
+    private ZonedDateTimeFilter heureDebut;
+
+    private ZonedDateTimeFilter heureFin;
 
     private LongFilter evenementId;
 
@@ -51,10 +51,10 @@ public class ActiviteCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.nom = other.nom == null ? null : other.nom.copy();
         this.description = other.description == null ? null : other.description.copy();
-        this.date_activite = other.date_activite == null ? null : other.date_activite.copy();
-        this.heure_debut = other.heure_debut == null ? null : other.heure_debut.copy();
-        this.heure_fin = other.heure_fin == null ? null : other.heure_fin.copy();
         this.etatclos = other.etatclos == null ? null : other.etatclos.copy();
+        this.dateActivite = other.dateActivite == null ? null : other.dateActivite.copy();
+        this.heureDebut = other.heureDebut == null ? null : other.heureDebut.copy();
+        this.heureFin = other.heureFin == null ? null : other.heureFin.copy();
         this.evenementId = other.evenementId == null ? null : other.evenementId.copy();
         this.emplacementId = other.emplacementId == null ? null : other.emplacementId.copy();
     }
@@ -88,36 +88,36 @@ public class ActiviteCriteria implements Serializable, Criteria {
         this.description = description;
     }
 
-    public LocalDateFilter getDate_activite() {
-        return date_activite;
-    }
-
-    public void setDate_activite(LocalDateFilter date_activite) {
-        this.date_activite = date_activite;
-    }
-
-    public ZonedDateTimeFilter getHeure_debut() {
-        return heure_debut;
-    }
-
-    public void setHeure_debut(ZonedDateTimeFilter heure_debut) {
-        this.heure_debut = heure_debut;
-    }
-
-    public ZonedDateTimeFilter getHeure_fin() {
-        return heure_fin;
-    }
-
-    public void setHeure_fin(ZonedDateTimeFilter heure_fin) {
-        this.heure_fin = heure_fin;
-    }
-
     public BooleanFilter getEtatclos() {
         return etatclos;
     }
 
     public void setEtatclos(BooleanFilter etatclos) {
         this.etatclos = etatclos;
+    }
+
+    public LocalDateFilter getDateActivite() {
+        return dateActivite;
+    }
+
+    public void setDateActivite(LocalDateFilter dateActivite) {
+        this.dateActivite = dateActivite;
+    }
+
+    public ZonedDateTimeFilter getHeureDebut() {
+        return heureDebut;
+    }
+
+    public void setHeureDebut(ZonedDateTimeFilter heureDebut) {
+        this.heureDebut = heureDebut;
+    }
+
+    public ZonedDateTimeFilter getHeureFin() {
+        return heureFin;
+    }
+
+    public void setHeureFin(ZonedDateTimeFilter heureFin) {
+        this.heureFin = heureFin;
     }
 
     public LongFilter getEvenementId() {
@@ -150,10 +150,10 @@ public class ActiviteCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(nom, that.nom) &&
             Objects.equals(description, that.description) &&
-            Objects.equals(date_activite, that.date_activite) &&
-            Objects.equals(heure_debut, that.heure_debut) &&
-            Objects.equals(heure_fin, that.heure_fin) &&
             Objects.equals(etatclos, that.etatclos) &&
+            Objects.equals(dateActivite, that.dateActivite) &&
+            Objects.equals(heureDebut, that.heureDebut) &&
+            Objects.equals(heureFin, that.heureFin) &&
             Objects.equals(evenementId, that.evenementId) &&
             Objects.equals(emplacementId, that.emplacementId);
     }
@@ -164,10 +164,10 @@ public class ActiviteCriteria implements Serializable, Criteria {
         id,
         nom,
         description,
-        date_activite,
-        heure_debut,
-        heure_fin,
         etatclos,
+        dateActivite,
+        heureDebut,
+        heureFin,
         evenementId,
         emplacementId
         );
@@ -180,10 +180,10 @@ public class ActiviteCriteria implements Serializable, Criteria {
                 (id != null ? "id=" + id + ", " : "") +
                 (nom != null ? "nom=" + nom + ", " : "") +
                 (description != null ? "description=" + description + ", " : "") +
-                (date_activite != null ? "date_activite=" + date_activite + ", " : "") +
-                (heure_debut != null ? "heure_debut=" + heure_debut + ", " : "") +
-                (heure_fin != null ? "heure_fin=" + heure_fin + ", " : "") +
                 (etatclos != null ? "etatclos=" + etatclos + ", " : "") +
+                (dateActivite != null ? "dateActivite=" + dateActivite + ", " : "") +
+                (heureDebut != null ? "heureDebut=" + heureDebut + ", " : "") +
+                (heureFin != null ? "heureFin=" + heureFin + ", " : "") +
                 (evenementId != null ? "evenementId=" + evenementId + ", " : "") +
                 (emplacementId != null ? "emplacementId=" + emplacementId + ", " : "") +
             "}";

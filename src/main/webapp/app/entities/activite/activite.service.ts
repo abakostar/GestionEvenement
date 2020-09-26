@@ -51,18 +51,18 @@ export class ActiviteService {
 
   protected convertDateFromClient(activite: IActivite): IActivite {
     const copy: IActivite = Object.assign({}, activite, {
-      date_activite: activite.date_activite && activite.date_activite.isValid() ? activite.date_activite.format(DATE_FORMAT) : undefined,
-      heure_debut: activite.heure_debut && activite.heure_debut.isValid() ? activite.heure_debut.toJSON() : undefined,
-      heure_fin: activite.heure_fin && activite.heure_fin.isValid() ? activite.heure_fin.toJSON() : undefined,
+      dateActivite: activite.dateActivite && activite.dateActivite.isValid() ? activite.dateActivite.format(DATE_FORMAT) : undefined,
+      heureDebut: activite.heureDebut && activite.heureDebut.isValid() ? activite.heureDebut.toJSON() : undefined,
+      heureFin: activite.heureFin && activite.heureFin.isValid() ? activite.heureFin.toJSON() : undefined,
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.date_activite = res.body.date_activite ? moment(res.body.date_activite) : undefined;
-      res.body.heure_debut = res.body.heure_debut ? moment(res.body.heure_debut) : undefined;
-      res.body.heure_fin = res.body.heure_fin ? moment(res.body.heure_fin) : undefined;
+      res.body.dateActivite = res.body.dateActivite ? moment(res.body.dateActivite) : undefined;
+      res.body.heureDebut = res.body.heureDebut ? moment(res.body.heureDebut) : undefined;
+      res.body.heureFin = res.body.heureFin ? moment(res.body.heureFin) : undefined;
     }
     return res;
   }
@@ -70,9 +70,9 @@ export class ActiviteService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((activite: IActivite) => {
-        activite.date_activite = activite.date_activite ? moment(activite.date_activite) : undefined;
-        activite.heure_debut = activite.heure_debut ? moment(activite.heure_debut) : undefined;
-        activite.heure_fin = activite.heure_fin ? moment(activite.heure_fin) : undefined;
+        activite.dateActivite = activite.dateActivite ? moment(activite.dateActivite) : undefined;
+        activite.heureDebut = activite.heureDebut ? moment(activite.heureDebut) : undefined;
+        activite.heureFin = activite.heureFin ? moment(activite.heureFin) : undefined;
       });
     }
     return res;

@@ -27,20 +27,20 @@
       "fieldType": "String"
     },
     {
-      "fieldName": "date_activite",
+      "fieldName": "etatclos",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "dateActivite",
       "fieldType": "LocalDate"
     },
     {
-      "fieldName": "heure_debut",
+      "fieldName": "heureDebut",
       "fieldType": "ZonedDateTime"
     },
     {
-      "fieldName": "heure_fin",
+      "fieldName": "heureFin",
       "fieldType": "ZonedDateTime"
-    },
-    {
-      "fieldName": "etatclos",
-      "fieldType": "Boolean"
     }
   ],
   "changelogDate": "20200920220016",

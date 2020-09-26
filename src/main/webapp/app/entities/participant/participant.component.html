@@ -1,0 +1,77 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="gestionevenementappApp.participant.home.title">Participants</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-participant" [routerLink]="['/participant/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="gestionevenementappApp.participant.home.createLabel">
+            Create a new Participant
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="participants?.length === 0">
+        <span jhiTranslate="gestionevenementappApp.participant.home.notFound">No participants found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="participants && participants.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="nom"><span jhiTranslate="gestionevenementappApp.participant.nom">Nom</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="sexe"><span jhiTranslate="gestionevenementappApp.participant.sexe">Sexe</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="telephone"><span jhiTranslate="gestionevenementappApp.participant.telephone">Telephone</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="email"><span jhiTranslate="gestionevenementappApp.participant.email">Email</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="villeResidenceNom"><span jhiTranslate="gestionevenementappApp.participant.villeResidence">Ville Residence</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="userLogin"><span jhiTranslate="gestionevenementappApp.participant.user">User</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+                <tr *ngFor="let participant of participants ;trackBy: trackId">
+                    <td><a [routerLink]="['/participant', participant.id, 'view']">{{ participant.id }}</a></td>
+                    <td>{{ participant.nom }}</td>
+                    <td>{{ participant.sexe }}</td>
+                    <td>{{ participant.telephone }}</td>
+                    <td>{{ participant.email }}</td>
+                    <td>
+                        <div *ngIf="participant.villeResidenceId">
+                            <a [routerLink]="['/ville', participant.villeResidenceId , 'view']" >{{ participant.villeResidenceNom }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        {{ participant.userLogin }}
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/participant', participant.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/participant', participant.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(participant)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

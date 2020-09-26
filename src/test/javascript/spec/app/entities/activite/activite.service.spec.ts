@@ -24,16 +24,16 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Activite(0, 'AAAAAAA', 'AAAAAAA', currentDate, currentDate, currentDate, false);
+      elemDefault = new Activite(0, 'AAAAAAA', 'AAAAAAA', false, currentDate, currentDate, currentDate);
     });
 
     describe('Service methods', () => {
       it('should find an element', () => {
         const returnedFromService = Object.assign(
           {
-            date_activite: currentDate.format(DATE_FORMAT),
-            heure_debut: currentDate.format(DATE_TIME_FORMAT),
-            heure_fin: currentDate.format(DATE_TIME_FORMAT),
+            dateActivite: currentDate.format(DATE_FORMAT),
+            heureDebut: currentDate.format(DATE_TIME_FORMAT),
+            heureFin: currentDate.format(DATE_TIME_FORMAT),
           },
           elemDefault
         );
@@ -49,18 +49,18 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 0,
-            date_activite: currentDate.format(DATE_FORMAT),
-            heure_debut: currentDate.format(DATE_TIME_FORMAT),
-            heure_fin: currentDate.format(DATE_TIME_FORMAT),
+            dateActivite: currentDate.format(DATE_FORMAT),
+            heureDebut: currentDate.format(DATE_TIME_FORMAT),
+            heureFin: currentDate.format(DATE_TIME_FORMAT),
           },
           elemDefault
         );
 
         const expected = Object.assign(
           {
-            date_activite: currentDate,
-            heure_debut: currentDate,
-            heure_fin: currentDate,
+            dateActivite: currentDate,
+            heureDebut: currentDate,
+            heureFin: currentDate,
           },
           returnedFromService
         );
@@ -77,19 +77,19 @@ describe('Service Tests', () => {
           {
             nom: 'BBBBBB',
             description: 'BBBBBB',
-            date_activite: currentDate.format(DATE_FORMAT),
-            heure_debut: currentDate.format(DATE_TIME_FORMAT),
-            heure_fin: currentDate.format(DATE_TIME_FORMAT),
             etatclos: true,
+            dateActivite: currentDate.format(DATE_FORMAT),
+            heureDebut: currentDate.format(DATE_TIME_FORMAT),
+            heureFin: currentDate.format(DATE_TIME_FORMAT),
           },
           elemDefault
         );
 
         const expected = Object.assign(
           {
-            date_activite: currentDate,
-            heure_debut: currentDate,
-            heure_fin: currentDate,
+            dateActivite: currentDate,
+            heureDebut: currentDate,
+            heureFin: currentDate,
           },
           returnedFromService
         );
@@ -106,19 +106,19 @@ describe('Service Tests', () => {
           {
             nom: 'BBBBBB',
             description: 'BBBBBB',
-            date_activite: currentDate.format(DATE_FORMAT),
-            heure_debut: currentDate.format(DATE_TIME_FORMAT),
-            heure_fin: currentDate.format(DATE_TIME_FORMAT),
             etatclos: true,
+            dateActivite: currentDate.format(DATE_FORMAT),
+            heureDebut: currentDate.format(DATE_TIME_FORMAT),
+            heureFin: currentDate.format(DATE_TIME_FORMAT),
           },
           elemDefault
         );
 
         const expected = Object.assign(
           {
-            date_activite: currentDate,
-            heure_debut: currentDate,
-            heure_fin: currentDate,
+            dateActivite: currentDate,
+            heureDebut: currentDate,
+            heureFin: currentDate,
           },
           returnedFromService
         );

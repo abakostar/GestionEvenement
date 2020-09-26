@@ -1,0 +1,27 @@
+{
+  "gestionevenementappApp": {
+    "participant": {
+      "home": {
+        "title": "Participants",
+        "createLabel": "Create a new Participant",
+        "createOrEditLabel": "Create or edit a Participant",
+        "notFound": "No Participants found"
+      },
+      "created": "A new Participant is created with identifier {{ param }}",
+      "updated": "A Participant is updated with identifier {{ param }}",
+      "deleted": "A Participant is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Participant {{ id }}?"
+      },
+      "detail": {
+        "title": "Participant"
+      },
+      "nom": "Nom",
+      "sexe": "Sexe",
+      "telephone": "Telephone",
+      "email": "Email",
+      "villeResidence": "Ville Residence",
+      "user": "User"
+    }
+  }
+}

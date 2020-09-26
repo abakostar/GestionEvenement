@@ -24,16 +24,16 @@ export class ActiviteUpdateComponent implements OnInit {
   isSaving = false;
   evenements: IEvenement[] = [];
   emplacements: IEmplacement[] = [];
-  date_activiteDp: any;
+  dateActiviteDp: any;
 
   editForm = this.fb.group({
     id: [],
     nom: [],
     description: [],
-    date_activite: [],
-    heure_debut: [],
-    heure_fin: [],
     etatclos: [],
+    dateActivite: [],
+    heureDebut: [],
+    heureFin: [],
     evenementId: [],
     emplacementId: [],
   });
@@ -50,8 +50,8 @@ export class ActiviteUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ activite }) => {
       if (!activite.id) {
         const today = moment().startOf('day');
-        activite.heure_debut = today;
-        activite.heure_fin = today;
+        activite.heureDebut = today;
+        activite.heureFin = today;
       }
 
       this.updateForm(activite);
@@ -67,10 +67,10 @@ export class ActiviteUpdateComponent implements OnInit {
       id: activite.id,
       nom: activite.nom,
       description: activite.description,
-      date_activite: activite.date_activite,
-      heure_debut: activite.heure_debut ? activite.heure_debut.format(DATE_TIME_FORMAT) : null,
-      heure_fin: activite.heure_fin ? activite.heure_fin.format(DATE_TIME_FORMAT) : null,
       etatclos: activite.etatclos,
+      dateActivite: activite.dateActivite,
+      heureDebut: activite.heureDebut ? activite.heureDebut.format(DATE_TIME_FORMAT) : null,
+      heureFin: activite.heureFin ? activite.heureFin.format(DATE_TIME_FORMAT) : null,
       evenementId: activite.evenementId,
       emplacementId: activite.emplacementId,
     });
@@ -96,12 +96,10 @@ export class ActiviteUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       nom: this.editForm.get(['nom'])!.value,
       description: this.editForm.get(['description'])!.value,
-      date_activite: this.editForm.get(['date_activite'])!.value,
-      heure_debut: this.editForm.get(['heure_debut'])!.value
-        ? moment(this.editForm.get(['heure_debut'])!.value, DATE_TIME_FORMAT)
-        : undefined,
-      heure_fin: this.editForm.get(['heure_fin'])!.value ? moment(this.editForm.get(['heure_fin'])!.value, DATE_TIME_FORMAT) : undefined,
       etatclos: this.editForm.get(['etatclos'])!.value,
+      dateActivite: this.editForm.get(['dateActivite'])!.value,
+      heureDebut: this.editForm.get(['heureDebut'])!.value ? moment(this.editForm.get(['heureDebut'])!.value, DATE_TIME_FORMAT) : undefined,
+      heureFin: this.editForm.get(['heureFin'])!.value ? moment(this.editForm.get(['heureFin'])!.value, DATE_TIME_FORMAT) : undefined,
       evenementId: this.editForm.get(['evenementId'])!.value,
       emplacementId: this.editForm.get(['emplacementId'])!.value,
     };

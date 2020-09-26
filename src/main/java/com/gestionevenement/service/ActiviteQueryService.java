@@ -97,17 +97,17 @@ public class ActiviteQueryService extends QueryService<Activite> {
             if (criteria.getDescription() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getDescription(), Activite_.description));
             }
-            if (criteria.getDate_activite() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getDate_activite(), Activite_.date_activite));
-            }
-            if (criteria.getHeure_debut() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getHeure_debut(), Activite_.heure_debut));
-            }
-            if (criteria.getHeure_fin() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getHeure_fin(), Activite_.heure_fin));
-            }
             if (criteria.getEtatclos() != null) {
                 specification = specification.and(buildSpecification(criteria.getEtatclos(), Activite_.etatclos));
+            }
+            if (criteria.getDateActivite() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getDateActivite(), Activite_.dateActivite));
+            }
+            if (criteria.getHeureDebut() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getHeureDebut(), Activite_.heureDebut));
+            }
+            if (criteria.getHeureFin() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getHeureFin(), Activite_.heureFin));
             }
             if (criteria.getEvenementId() != null) {
                 specification = specification.and(buildSpecification(criteria.getEvenementId(),

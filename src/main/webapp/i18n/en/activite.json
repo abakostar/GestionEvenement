@@ -18,10 +18,10 @@
       },
       "nom": "Nom",
       "description": "Description",
-      "date_activite": "Date Activite",
-      "heure_debut": "Heure Debut",
-      "heure_fin": "Heure Fin",
       "etatclos": "Etatclos",
+      "dateActivite": "Date Activite",
+      "heureDebut": "Heure Debut",
+      "heureFin": "Heure Fin",
       "evenement": "Evenement",
       "emplacement": "Emplacement"
     }

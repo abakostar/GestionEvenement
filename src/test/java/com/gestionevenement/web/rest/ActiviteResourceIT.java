@@ -49,6 +49,9 @@ public class ActiviteResourceIT {
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_ETATCLOS = false;
+    private static final Boolean UPDATED_ETATCLOS = true;
+
     private static final LocalDate DEFAULT_DATE_ACTIVITE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE_ACTIVITE = LocalDate.now(ZoneId.systemDefault());
     private static final LocalDate SMALLER_DATE_ACTIVITE = LocalDate.ofEpochDay(-1L);
@@ -60,9 +63,6 @@ public class ActiviteResourceIT {
     private static final ZonedDateTime DEFAULT_HEURE_FIN = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_HEURE_FIN = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
     private static final ZonedDateTime SMALLER_HEURE_FIN = ZonedDateTime.ofInstant(Instant.ofEpochMilli(-1L), ZoneOffset.UTC);
-
-    private static final Boolean DEFAULT_ETATCLOS = false;
-    private static final Boolean UPDATED_ETATCLOS = true;
 
     @Autowired
     private ActiviteRepository activiteRepository;
@@ -94,10 +94,10 @@ public class ActiviteResourceIT {
         Activite activite = new Activite()
             .nom(DEFAULT_NOM)
             .description(DEFAULT_DESCRIPTION)
-            .date_activite(DEFAULT_DATE_ACTIVITE)
-            .heure_debut(DEFAULT_HEURE_DEBUT)
-            .heure_fin(DEFAULT_HEURE_FIN)
-            .etatclos(DEFAULT_ETATCLOS);
+            .etatclos(DEFAULT_ETATCLOS)
+            .dateActivite(DEFAULT_DATE_ACTIVITE)
+            .heureDebut(DEFAULT_HEURE_DEBUT)
+            .heureFin(DEFAULT_HEURE_FIN);
         return activite;
     }
     /**
@@ -110,10 +110,10 @@ public class ActiviteResourceIT {
         Activite activite = new Activite()
             .nom(UPDATED_NOM)
             .description(UPDATED_DESCRIPTION)
-            .date_activite(UPDATED_DATE_ACTIVITE)
-            .heure_debut(UPDATED_HEURE_DEBUT)
-            .heure_fin(UPDATED_HEURE_FIN)
-            .etatclos(UPDATED_ETATCLOS);
+            .etatclos(UPDATED_ETATCLOS)
+            .dateActivite(UPDATED_DATE_ACTIVITE)
+            .heureDebut(UPDATED_HEURE_DEBUT)
+            .heureFin(UPDATED_HEURE_FIN);
         return activite;
     }
 
@@ -139,10 +139,10 @@ public class ActiviteResourceIT {
         Activite testActivite = activiteList.get(activiteList.size() - 1);
         assertThat(testActivite.getNom()).isEqualTo(DEFAULT_NOM);
         assertThat(testActivite.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-        assertThat(testActivite.getDate_activite()).isEqualTo(DEFAULT_DATE_ACTIVITE);
-        assertThat(testActivite.getHeure_debut()).isEqualTo(DEFAULT_HEURE_DEBUT);
-        assertThat(testActivite.getHeure_fin()).isEqualTo(DEFAULT_HEURE_FIN);
         assertThat(testActivite.isEtatclos()).isEqualTo(DEFAULT_ETATCLOS);
+        assertThat(testActivite.getDateActivite()).isEqualTo(DEFAULT_DATE_ACTIVITE);
+        assertThat(testActivite.getHeureDebut()).isEqualTo(DEFAULT_HEURE_DEBUT);
+        assertThat(testActivite.getHeureFin()).isEqualTo(DEFAULT_HEURE_FIN);
     }
 
     @Test
@@ -179,10 +179,10 @@ public class ActiviteResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(activite.getId().intValue())))
             .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].date_activite").value(hasItem(DEFAULT_DATE_ACTIVITE.toString())))
-            .andExpect(jsonPath("$.[*].heure_debut").value(hasItem(sameInstant(DEFAULT_HEURE_DEBUT))))
-            .andExpect(jsonPath("$.[*].heure_fin").value(hasItem(sameInstant(DEFAULT_HEURE_FIN))))
-            .andExpect(jsonPath("$.[*].etatclos").value(hasItem(DEFAULT_ETATCLOS.booleanValue())));
+            .andExpect(jsonPath("$.[*].etatclos").value(hasItem(DEFAULT_ETATCLOS.booleanValue())))
+            .andExpect(jsonPath("$.[*].dateActivite").value(hasItem(DEFAULT_DATE_ACTIVITE.toString())))
+            .andExpect(jsonPath("$.[*].heureDebut").value(hasItem(sameInstant(DEFAULT_HEURE_DEBUT))))
+            .andExpect(jsonPath("$.[*].heureFin").value(hasItem(sameInstant(DEFAULT_HEURE_FIN))));
     }
     
     @Test
@@ -198,10 +198,10 @@ public class ActiviteResourceIT {
             .andExpect(jsonPath("$.id").value(activite.getId().intValue()))
             .andExpect(jsonPath("$.nom").value(DEFAULT_NOM))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
-            .andExpect(jsonPath("$.date_activite").value(DEFAULT_DATE_ACTIVITE.toString()))
-            .andExpect(jsonPath("$.heure_debut").value(sameInstant(DEFAULT_HEURE_DEBUT)))
-            .andExpect(jsonPath("$.heure_fin").value(sameInstant(DEFAULT_HEURE_FIN)))
-            .andExpect(jsonPath("$.etatclos").value(DEFAULT_ETATCLOS.booleanValue()));
+            .andExpect(jsonPath("$.etatclos").value(DEFAULT_ETATCLOS.booleanValue()))
+            .andExpect(jsonPath("$.dateActivite").value(DEFAULT_DATE_ACTIVITE.toString()))
+            .andExpect(jsonPath("$.heureDebut").value(sameInstant(DEFAULT_HEURE_DEBUT)))
+            .andExpect(jsonPath("$.heureFin").value(sameInstant(DEFAULT_HEURE_FIN)));
     }
 
 
@@ -382,321 +382,6 @@ public class ActiviteResourceIT {
 
     @Test
     @Transactional
-    public void getAllActivitesByDate_activiteIsEqualToSomething() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where date_activite equals to DEFAULT_DATE_ACTIVITE
-        defaultActiviteShouldBeFound("date_activite.equals=" + DEFAULT_DATE_ACTIVITE);
-
-        // Get all the activiteList where date_activite equals to UPDATED_DATE_ACTIVITE
-        defaultActiviteShouldNotBeFound("date_activite.equals=" + UPDATED_DATE_ACTIVITE);
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByDate_activiteIsNotEqualToSomething() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where date_activite not equals to DEFAULT_DATE_ACTIVITE
-        defaultActiviteShouldNotBeFound("date_activite.notEquals=" + DEFAULT_DATE_ACTIVITE);
-
-        // Get all the activiteList where date_activite not equals to UPDATED_DATE_ACTIVITE
-        defaultActiviteShouldBeFound("date_activite.notEquals=" + UPDATED_DATE_ACTIVITE);
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByDate_activiteIsInShouldWork() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where date_activite in DEFAULT_DATE_ACTIVITE or UPDATED_DATE_ACTIVITE
-        defaultActiviteShouldBeFound("date_activite.in=" + DEFAULT_DATE_ACTIVITE + "," + UPDATED_DATE_ACTIVITE);
-
-        // Get all the activiteList where date_activite equals to UPDATED_DATE_ACTIVITE
-        defaultActiviteShouldNotBeFound("date_activite.in=" + UPDATED_DATE_ACTIVITE);
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByDate_activiteIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where date_activite is not null
-        defaultActiviteShouldBeFound("date_activite.specified=true");
-
-        // Get all the activiteList where date_activite is null
-        defaultActiviteShouldNotBeFound("date_activite.specified=false");
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByDate_activiteIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where date_activite is greater than or equal to DEFAULT_DATE_ACTIVITE
-        defaultActiviteShouldBeFound("date_activite.greaterThanOrEqual=" + DEFAULT_DATE_ACTIVITE);
-
-        // Get all the activiteList where date_activite is greater than or equal to UPDATED_DATE_ACTIVITE
-        defaultActiviteShouldNotBeFound("date_activite.greaterThanOrEqual=" + UPDATED_DATE_ACTIVITE);
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByDate_activiteIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where date_activite is less than or equal to DEFAULT_DATE_ACTIVITE
-        defaultActiviteShouldBeFound("date_activite.lessThanOrEqual=" + DEFAULT_DATE_ACTIVITE);
-
-        // Get all the activiteList where date_activite is less than or equal to SMALLER_DATE_ACTIVITE
-        defaultActiviteShouldNotBeFound("date_activite.lessThanOrEqual=" + SMALLER_DATE_ACTIVITE);
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByDate_activiteIsLessThanSomething() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where date_activite is less than DEFAULT_DATE_ACTIVITE
-        defaultActiviteShouldNotBeFound("date_activite.lessThan=" + DEFAULT_DATE_ACTIVITE);
-
-        // Get all the activiteList where date_activite is less than UPDATED_DATE_ACTIVITE
-        defaultActiviteShouldBeFound("date_activite.lessThan=" + UPDATED_DATE_ACTIVITE);
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByDate_activiteIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where date_activite is greater than DEFAULT_DATE_ACTIVITE
-        defaultActiviteShouldNotBeFound("date_activite.greaterThan=" + DEFAULT_DATE_ACTIVITE);
-
-        // Get all the activiteList where date_activite is greater than SMALLER_DATE_ACTIVITE
-        defaultActiviteShouldBeFound("date_activite.greaterThan=" + SMALLER_DATE_ACTIVITE);
-    }
-
-
-    @Test
-    @Transactional
-    public void getAllActivitesByHeure_debutIsEqualToSomething() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where heure_debut equals to DEFAULT_HEURE_DEBUT
-        defaultActiviteShouldBeFound("heure_debut.equals=" + DEFAULT_HEURE_DEBUT);
-
-        // Get all the activiteList where heure_debut equals to UPDATED_HEURE_DEBUT
-        defaultActiviteShouldNotBeFound("heure_debut.equals=" + UPDATED_HEURE_DEBUT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByHeure_debutIsNotEqualToSomething() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where heure_debut not equals to DEFAULT_HEURE_DEBUT
-        defaultActiviteShouldNotBeFound("heure_debut.notEquals=" + DEFAULT_HEURE_DEBUT);
-
-        // Get all the activiteList where heure_debut not equals to UPDATED_HEURE_DEBUT
-        defaultActiviteShouldBeFound("heure_debut.notEquals=" + UPDATED_HEURE_DEBUT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByHeure_debutIsInShouldWork() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where heure_debut in DEFAULT_HEURE_DEBUT or UPDATED_HEURE_DEBUT
-        defaultActiviteShouldBeFound("heure_debut.in=" + DEFAULT_HEURE_DEBUT + "," + UPDATED_HEURE_DEBUT);
-
-        // Get all the activiteList where heure_debut equals to UPDATED_HEURE_DEBUT
-        defaultActiviteShouldNotBeFound("heure_debut.in=" + UPDATED_HEURE_DEBUT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByHeure_debutIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where heure_debut is not null
-        defaultActiviteShouldBeFound("heure_debut.specified=true");
-
-        // Get all the activiteList where heure_debut is null
-        defaultActiviteShouldNotBeFound("heure_debut.specified=false");
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByHeure_debutIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where heure_debut is greater than or equal to DEFAULT_HEURE_DEBUT
-        defaultActiviteShouldBeFound("heure_debut.greaterThanOrEqual=" + DEFAULT_HEURE_DEBUT);
-
-        // Get all the activiteList where heure_debut is greater than or equal to UPDATED_HEURE_DEBUT
-        defaultActiviteShouldNotBeFound("heure_debut.greaterThanOrEqual=" + UPDATED_HEURE_DEBUT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByHeure_debutIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where heure_debut is less than or equal to DEFAULT_HEURE_DEBUT
-        defaultActiviteShouldBeFound("heure_debut.lessThanOrEqual=" + DEFAULT_HEURE_DEBUT);
-
-        // Get all the activiteList where heure_debut is less than or equal to SMALLER_HEURE_DEBUT
-        defaultActiviteShouldNotBeFound("heure_debut.lessThanOrEqual=" + SMALLER_HEURE_DEBUT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByHeure_debutIsLessThanSomething() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where heure_debut is less than DEFAULT_HEURE_DEBUT
-        defaultActiviteShouldNotBeFound("heure_debut.lessThan=" + DEFAULT_HEURE_DEBUT);
-
-        // Get all the activiteList where heure_debut is less than UPDATED_HEURE_DEBUT
-        defaultActiviteShouldBeFound("heure_debut.lessThan=" + UPDATED_HEURE_DEBUT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByHeure_debutIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where heure_debut is greater than DEFAULT_HEURE_DEBUT
-        defaultActiviteShouldNotBeFound("heure_debut.greaterThan=" + DEFAULT_HEURE_DEBUT);
-
-        // Get all the activiteList where heure_debut is greater than SMALLER_HEURE_DEBUT
-        defaultActiviteShouldBeFound("heure_debut.greaterThan=" + SMALLER_HEURE_DEBUT);
-    }
-
-
-    @Test
-    @Transactional
-    public void getAllActivitesByHeure_finIsEqualToSomething() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where heure_fin equals to DEFAULT_HEURE_FIN
-        defaultActiviteShouldBeFound("heure_fin.equals=" + DEFAULT_HEURE_FIN);
-
-        // Get all the activiteList where heure_fin equals to UPDATED_HEURE_FIN
-        defaultActiviteShouldNotBeFound("heure_fin.equals=" + UPDATED_HEURE_FIN);
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByHeure_finIsNotEqualToSomething() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where heure_fin not equals to DEFAULT_HEURE_FIN
-        defaultActiviteShouldNotBeFound("heure_fin.notEquals=" + DEFAULT_HEURE_FIN);
-
-        // Get all the activiteList where heure_fin not equals to UPDATED_HEURE_FIN
-        defaultActiviteShouldBeFound("heure_fin.notEquals=" + UPDATED_HEURE_FIN);
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByHeure_finIsInShouldWork() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where heure_fin in DEFAULT_HEURE_FIN or UPDATED_HEURE_FIN
-        defaultActiviteShouldBeFound("heure_fin.in=" + DEFAULT_HEURE_FIN + "," + UPDATED_HEURE_FIN);
-
-        // Get all the activiteList where heure_fin equals to UPDATED_HEURE_FIN
-        defaultActiviteShouldNotBeFound("heure_fin.in=" + UPDATED_HEURE_FIN);
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByHeure_finIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where heure_fin is not null
-        defaultActiviteShouldBeFound("heure_fin.specified=true");
-
-        // Get all the activiteList where heure_fin is null
-        defaultActiviteShouldNotBeFound("heure_fin.specified=false");
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByHeure_finIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where heure_fin is greater than or equal to DEFAULT_HEURE_FIN
-        defaultActiviteShouldBeFound("heure_fin.greaterThanOrEqual=" + DEFAULT_HEURE_FIN);
-
-        // Get all the activiteList where heure_fin is greater than or equal to UPDATED_HEURE_FIN
-        defaultActiviteShouldNotBeFound("heure_fin.greaterThanOrEqual=" + UPDATED_HEURE_FIN);
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByHeure_finIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where heure_fin is less than or equal to DEFAULT_HEURE_FIN
-        defaultActiviteShouldBeFound("heure_fin.lessThanOrEqual=" + DEFAULT_HEURE_FIN);
-
-        // Get all the activiteList where heure_fin is less than or equal to SMALLER_HEURE_FIN
-        defaultActiviteShouldNotBeFound("heure_fin.lessThanOrEqual=" + SMALLER_HEURE_FIN);
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByHeure_finIsLessThanSomething() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where heure_fin is less than DEFAULT_HEURE_FIN
-        defaultActiviteShouldNotBeFound("heure_fin.lessThan=" + DEFAULT_HEURE_FIN);
-
-        // Get all the activiteList where heure_fin is less than UPDATED_HEURE_FIN
-        defaultActiviteShouldBeFound("heure_fin.lessThan=" + UPDATED_HEURE_FIN);
-    }
-
-    @Test
-    @Transactional
-    public void getAllActivitesByHeure_finIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        activiteRepository.saveAndFlush(activite);
-
-        // Get all the activiteList where heure_fin is greater than DEFAULT_HEURE_FIN
-        defaultActiviteShouldNotBeFound("heure_fin.greaterThan=" + DEFAULT_HEURE_FIN);
-
-        // Get all the activiteList where heure_fin is greater than SMALLER_HEURE_FIN
-        defaultActiviteShouldBeFound("heure_fin.greaterThan=" + SMALLER_HEURE_FIN);
-    }
-
-
-    @Test
-    @Transactional
     public void getAllActivitesByEtatclosIsEqualToSomething() throws Exception {
         // Initialize the database
         activiteRepository.saveAndFlush(activite);
@@ -749,6 +434,321 @@ public class ActiviteResourceIT {
 
     @Test
     @Transactional
+    public void getAllActivitesByDateActiviteIsEqualToSomething() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where dateActivite equals to DEFAULT_DATE_ACTIVITE
+        defaultActiviteShouldBeFound("dateActivite.equals=" + DEFAULT_DATE_ACTIVITE);
+
+        // Get all the activiteList where dateActivite equals to UPDATED_DATE_ACTIVITE
+        defaultActiviteShouldNotBeFound("dateActivite.equals=" + UPDATED_DATE_ACTIVITE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByDateActiviteIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where dateActivite not equals to DEFAULT_DATE_ACTIVITE
+        defaultActiviteShouldNotBeFound("dateActivite.notEquals=" + DEFAULT_DATE_ACTIVITE);
+
+        // Get all the activiteList where dateActivite not equals to UPDATED_DATE_ACTIVITE
+        defaultActiviteShouldBeFound("dateActivite.notEquals=" + UPDATED_DATE_ACTIVITE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByDateActiviteIsInShouldWork() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where dateActivite in DEFAULT_DATE_ACTIVITE or UPDATED_DATE_ACTIVITE
+        defaultActiviteShouldBeFound("dateActivite.in=" + DEFAULT_DATE_ACTIVITE + "," + UPDATED_DATE_ACTIVITE);
+
+        // Get all the activiteList where dateActivite equals to UPDATED_DATE_ACTIVITE
+        defaultActiviteShouldNotBeFound("dateActivite.in=" + UPDATED_DATE_ACTIVITE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByDateActiviteIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where dateActivite is not null
+        defaultActiviteShouldBeFound("dateActivite.specified=true");
+
+        // Get all the activiteList where dateActivite is null
+        defaultActiviteShouldNotBeFound("dateActivite.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByDateActiviteIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where dateActivite is greater than or equal to DEFAULT_DATE_ACTIVITE
+        defaultActiviteShouldBeFound("dateActivite.greaterThanOrEqual=" + DEFAULT_DATE_ACTIVITE);
+
+        // Get all the activiteList where dateActivite is greater than or equal to UPDATED_DATE_ACTIVITE
+        defaultActiviteShouldNotBeFound("dateActivite.greaterThanOrEqual=" + UPDATED_DATE_ACTIVITE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByDateActiviteIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where dateActivite is less than or equal to DEFAULT_DATE_ACTIVITE
+        defaultActiviteShouldBeFound("dateActivite.lessThanOrEqual=" + DEFAULT_DATE_ACTIVITE);
+
+        // Get all the activiteList where dateActivite is less than or equal to SMALLER_DATE_ACTIVITE
+        defaultActiviteShouldNotBeFound("dateActivite.lessThanOrEqual=" + SMALLER_DATE_ACTIVITE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByDateActiviteIsLessThanSomething() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where dateActivite is less than DEFAULT_DATE_ACTIVITE
+        defaultActiviteShouldNotBeFound("dateActivite.lessThan=" + DEFAULT_DATE_ACTIVITE);
+
+        // Get all the activiteList where dateActivite is less than UPDATED_DATE_ACTIVITE
+        defaultActiviteShouldBeFound("dateActivite.lessThan=" + UPDATED_DATE_ACTIVITE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByDateActiviteIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where dateActivite is greater than DEFAULT_DATE_ACTIVITE
+        defaultActiviteShouldNotBeFound("dateActivite.greaterThan=" + DEFAULT_DATE_ACTIVITE);
+
+        // Get all the activiteList where dateActivite is greater than SMALLER_DATE_ACTIVITE
+        defaultActiviteShouldBeFound("dateActivite.greaterThan=" + SMALLER_DATE_ACTIVITE);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllActivitesByHeureDebutIsEqualToSomething() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where heureDebut equals to DEFAULT_HEURE_DEBUT
+        defaultActiviteShouldBeFound("heureDebut.equals=" + DEFAULT_HEURE_DEBUT);
+
+        // Get all the activiteList where heureDebut equals to UPDATED_HEURE_DEBUT
+        defaultActiviteShouldNotBeFound("heureDebut.equals=" + UPDATED_HEURE_DEBUT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByHeureDebutIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where heureDebut not equals to DEFAULT_HEURE_DEBUT
+        defaultActiviteShouldNotBeFound("heureDebut.notEquals=" + DEFAULT_HEURE_DEBUT);
+
+        // Get all the activiteList where heureDebut not equals to UPDATED_HEURE_DEBUT
+        defaultActiviteShouldBeFound("heureDebut.notEquals=" + UPDATED_HEURE_DEBUT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByHeureDebutIsInShouldWork() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where heureDebut in DEFAULT_HEURE_DEBUT or UPDATED_HEURE_DEBUT
+        defaultActiviteShouldBeFound("heureDebut.in=" + DEFAULT_HEURE_DEBUT + "," + UPDATED_HEURE_DEBUT);
+
+        // Get all the activiteList where heureDebut equals to UPDATED_HEURE_DEBUT
+        defaultActiviteShouldNotBeFound("heureDebut.in=" + UPDATED_HEURE_DEBUT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByHeureDebutIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where heureDebut is not null
+        defaultActiviteShouldBeFound("heureDebut.specified=true");
+
+        // Get all the activiteList where heureDebut is null
+        defaultActiviteShouldNotBeFound("heureDebut.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByHeureDebutIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where heureDebut is greater than or equal to DEFAULT_HEURE_DEBUT
+        defaultActiviteShouldBeFound("heureDebut.greaterThanOrEqual=" + DEFAULT_HEURE_DEBUT);
+
+        // Get all the activiteList where heureDebut is greater than or equal to UPDATED_HEURE_DEBUT
+        defaultActiviteShouldNotBeFound("heureDebut.greaterThanOrEqual=" + UPDATED_HEURE_DEBUT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByHeureDebutIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where heureDebut is less than or equal to DEFAULT_HEURE_DEBUT
+        defaultActiviteShouldBeFound("heureDebut.lessThanOrEqual=" + DEFAULT_HEURE_DEBUT);
+
+        // Get all the activiteList where heureDebut is less than or equal to SMALLER_HEURE_DEBUT
+        defaultActiviteShouldNotBeFound("heureDebut.lessThanOrEqual=" + SMALLER_HEURE_DEBUT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByHeureDebutIsLessThanSomething() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where heureDebut is less than DEFAULT_HEURE_DEBUT
+        defaultActiviteShouldNotBeFound("heureDebut.lessThan=" + DEFAULT_HEURE_DEBUT);
+
+        // Get all the activiteList where heureDebut is less than UPDATED_HEURE_DEBUT
+        defaultActiviteShouldBeFound("heureDebut.lessThan=" + UPDATED_HEURE_DEBUT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByHeureDebutIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where heureDebut is greater than DEFAULT_HEURE_DEBUT
+        defaultActiviteShouldNotBeFound("heureDebut.greaterThan=" + DEFAULT_HEURE_DEBUT);
+
+        // Get all the activiteList where heureDebut is greater than SMALLER_HEURE_DEBUT
+        defaultActiviteShouldBeFound("heureDebut.greaterThan=" + SMALLER_HEURE_DEBUT);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllActivitesByHeureFinIsEqualToSomething() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where heureFin equals to DEFAULT_HEURE_FIN
+        defaultActiviteShouldBeFound("heureFin.equals=" + DEFAULT_HEURE_FIN);
+
+        // Get all the activiteList where heureFin equals to UPDATED_HEURE_FIN
+        defaultActiviteShouldNotBeFound("heureFin.equals=" + UPDATED_HEURE_FIN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByHeureFinIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where heureFin not equals to DEFAULT_HEURE_FIN
+        defaultActiviteShouldNotBeFound("heureFin.notEquals=" + DEFAULT_HEURE_FIN);
+
+        // Get all the activiteList where heureFin not equals to UPDATED_HEURE_FIN
+        defaultActiviteShouldBeFound("heureFin.notEquals=" + UPDATED_HEURE_FIN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByHeureFinIsInShouldWork() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where heureFin in DEFAULT_HEURE_FIN or UPDATED_HEURE_FIN
+        defaultActiviteShouldBeFound("heureFin.in=" + DEFAULT_HEURE_FIN + "," + UPDATED_HEURE_FIN);
+
+        // Get all the activiteList where heureFin equals to UPDATED_HEURE_FIN
+        defaultActiviteShouldNotBeFound("heureFin.in=" + UPDATED_HEURE_FIN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByHeureFinIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where heureFin is not null
+        defaultActiviteShouldBeFound("heureFin.specified=true");
+
+        // Get all the activiteList where heureFin is null
+        defaultActiviteShouldNotBeFound("heureFin.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByHeureFinIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where heureFin is greater than or equal to DEFAULT_HEURE_FIN
+        defaultActiviteShouldBeFound("heureFin.greaterThanOrEqual=" + DEFAULT_HEURE_FIN);
+
+        // Get all the activiteList where heureFin is greater than or equal to UPDATED_HEURE_FIN
+        defaultActiviteShouldNotBeFound("heureFin.greaterThanOrEqual=" + UPDATED_HEURE_FIN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByHeureFinIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where heureFin is less than or equal to DEFAULT_HEURE_FIN
+        defaultActiviteShouldBeFound("heureFin.lessThanOrEqual=" + DEFAULT_HEURE_FIN);
+
+        // Get all the activiteList where heureFin is less than or equal to SMALLER_HEURE_FIN
+        defaultActiviteShouldNotBeFound("heureFin.lessThanOrEqual=" + SMALLER_HEURE_FIN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByHeureFinIsLessThanSomething() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where heureFin is less than DEFAULT_HEURE_FIN
+        defaultActiviteShouldNotBeFound("heureFin.lessThan=" + DEFAULT_HEURE_FIN);
+
+        // Get all the activiteList where heureFin is less than UPDATED_HEURE_FIN
+        defaultActiviteShouldBeFound("heureFin.lessThan=" + UPDATED_HEURE_FIN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllActivitesByHeureFinIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        activiteRepository.saveAndFlush(activite);
+
+        // Get all the activiteList where heureFin is greater than DEFAULT_HEURE_FIN
+        defaultActiviteShouldNotBeFound("heureFin.greaterThan=" + DEFAULT_HEURE_FIN);
+
+        // Get all the activiteList where heureFin is greater than SMALLER_HEURE_FIN
+        defaultActiviteShouldBeFound("heureFin.greaterThan=" + SMALLER_HEURE_FIN);
+    }
+
+
+    @Test
+    @Transactional
     public void getAllActivitesByEvenementIsEqualToSomething() throws Exception {
         // Initialize the database
         activiteRepository.saveAndFlush(activite);
@@ -796,10 +796,10 @@ public class ActiviteResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(activite.getId().intValue())))
             .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].date_activite").value(hasItem(DEFAULT_DATE_ACTIVITE.toString())))
-            .andExpect(jsonPath("$.[*].heure_debut").value(hasItem(sameInstant(DEFAULT_HEURE_DEBUT))))
-            .andExpect(jsonPath("$.[*].heure_fin").value(hasItem(sameInstant(DEFAULT_HEURE_FIN))))
-            .andExpect(jsonPath("$.[*].etatclos").value(hasItem(DEFAULT_ETATCLOS.booleanValue())));
+            .andExpect(jsonPath("$.[*].etatclos").value(hasItem(DEFAULT_ETATCLOS.booleanValue())))
+            .andExpect(jsonPath("$.[*].dateActivite").value(hasItem(DEFAULT_DATE_ACTIVITE.toString())))
+            .andExpect(jsonPath("$.[*].heureDebut").value(hasItem(sameInstant(DEFAULT_HEURE_DEBUT))))
+            .andExpect(jsonPath("$.[*].heureFin").value(hasItem(sameInstant(DEFAULT_HEURE_FIN))));
 
         // Check, that the count call also returns 1
         restActiviteMockMvc.perform(get("/api/activites/count?sort=id,desc&" + filter))
@@ -848,10 +848,10 @@ public class ActiviteResourceIT {
         updatedActivite
             .nom(UPDATED_NOM)
             .description(UPDATED_DESCRIPTION)
-            .date_activite(UPDATED_DATE_ACTIVITE)
-            .heure_debut(UPDATED_HEURE_DEBUT)
-            .heure_fin(UPDATED_HEURE_FIN)
-            .etatclos(UPDATED_ETATCLOS);
+            .etatclos(UPDATED_ETATCLOS)
+            .dateActivite(UPDATED_DATE_ACTIVITE)
+            .heureDebut(UPDATED_HEURE_DEBUT)
+            .heureFin(UPDATED_HEURE_FIN);
         ActiviteDTO activiteDTO = activiteMapper.toDto(updatedActivite);
 
         restActiviteMockMvc.perform(put("/api/activites").with(csrf())
@@ -865,10 +865,10 @@ public class ActiviteResourceIT {
         Activite testActivite = activiteList.get(activiteList.size() - 1);
         assertThat(testActivite.getNom()).isEqualTo(UPDATED_NOM);
         assertThat(testActivite.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
-        assertThat(testActivite.getDate_activite()).isEqualTo(UPDATED_DATE_ACTIVITE);
-        assertThat(testActivite.getHeure_debut()).isEqualTo(UPDATED_HEURE_DEBUT);
-        assertThat(testActivite.getHeure_fin()).isEqualTo(UPDATED_HEURE_FIN);
         assertThat(testActivite.isEtatclos()).isEqualTo(UPDATED_ETATCLOS);
+        assertThat(testActivite.getDateActivite()).isEqualTo(UPDATED_DATE_ACTIVITE);
+        assertThat(testActivite.getHeureDebut()).isEqualTo(UPDATED_HEURE_DEBUT);
+        assertThat(testActivite.getHeureFin()).isEqualTo(UPDATED_HEURE_FIN);
     }
 
     @Test

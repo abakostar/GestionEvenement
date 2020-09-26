@@ -28,17 +28,17 @@ public class Activite implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "date_activite")
-    private LocalDate date_activite;
-
-    @Column(name = "heure_debut")
-    private ZonedDateTime heure_debut;
-
-    @Column(name = "heure_fin")
-    private ZonedDateTime heure_fin;
-
     @Column(name = "etatclos")
     private Boolean etatclos;
+
+    @Column(name = "date_activite")
+    private LocalDate dateActivite;
+
+    @Column(name = "heure_debut")
+    private ZonedDateTime heureDebut;
+
+    @Column(name = "heure_fin")
+    private ZonedDateTime heureFin;
 
     @ManyToOne
     @JsonIgnoreProperties(value = "activites", allowSetters = true)
@@ -83,45 +83,6 @@ public class Activite implements Serializable {
         this.description = description;
     }
 
-    public LocalDate getDate_activite() {
-        return date_activite;
-    }
-
-    public Activite date_activite(LocalDate date_activite) {
-        this.date_activite = date_activite;
-        return this;
-    }
-
-    public void setDate_activite(LocalDate date_activite) {
-        this.date_activite = date_activite;
-    }
-
-    public ZonedDateTime getHeure_debut() {
-        return heure_debut;
-    }
-
-    public Activite heure_debut(ZonedDateTime heure_debut) {
-        this.heure_debut = heure_debut;
-        return this;
-    }
-
-    public void setHeure_debut(ZonedDateTime heure_debut) {
-        this.heure_debut = heure_debut;
-    }
-
-    public ZonedDateTime getHeure_fin() {
-        return heure_fin;
-    }
-
-    public Activite heure_fin(ZonedDateTime heure_fin) {
-        this.heure_fin = heure_fin;
-        return this;
-    }
-
-    public void setHeure_fin(ZonedDateTime heure_fin) {
-        this.heure_fin = heure_fin;
-    }
-
     public Boolean isEtatclos() {
         return etatclos;
     }
@@ -133,6 +94,45 @@ public class Activite implements Serializable {
 
     public void setEtatclos(Boolean etatclos) {
         this.etatclos = etatclos;
+    }
+
+    public LocalDate getDateActivite() {
+        return dateActivite;
+    }
+
+    public Activite dateActivite(LocalDate dateActivite) {
+        this.dateActivite = dateActivite;
+        return this;
+    }
+
+    public void setDateActivite(LocalDate dateActivite) {
+        this.dateActivite = dateActivite;
+    }
+
+    public ZonedDateTime getHeureDebut() {
+        return heureDebut;
+    }
+
+    public Activite heureDebut(ZonedDateTime heureDebut) {
+        this.heureDebut = heureDebut;
+        return this;
+    }
+
+    public void setHeureDebut(ZonedDateTime heureDebut) {
+        this.heureDebut = heureDebut;
+    }
+
+    public ZonedDateTime getHeureFin() {
+        return heureFin;
+    }
+
+    public Activite heureFin(ZonedDateTime heureFin) {
+        this.heureFin = heureFin;
+        return this;
+    }
+
+    public void setHeureFin(ZonedDateTime heureFin) {
+        this.heureFin = heureFin;
     }
 
     public Evenement getEvenement() {
@@ -185,10 +185,10 @@ public class Activite implements Serializable {
             "id=" + getId() +
             ", nom='" + getNom() + "'" +
             ", description='" + getDescription() + "'" +
-            ", date_activite='" + getDate_activite() + "'" +
-            ", heure_debut='" + getHeure_debut() + "'" +
-            ", heure_fin='" + getHeure_fin() + "'" +
             ", etatclos='" + isEtatclos() + "'" +
+            ", dateActivite='" + getDateActivite() + "'" +
+            ", heureDebut='" + getHeureDebut() + "'" +
+            ", heureFin='" + getHeureFin() + "'" +
             "}";
     }
 }

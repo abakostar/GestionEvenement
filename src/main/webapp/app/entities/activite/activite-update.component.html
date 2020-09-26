@@ -24,33 +24,33 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="gestionevenementappApp.activite.date_activite" for="field_date_activite">Date Activite</label>
+                    <label class="form-control-label" jhiTranslate="gestionevenementappApp.activite.etatclos" for="field_etatclos">Etatclos</label>
+                    <input type="checkbox" class="form-control" name="etatclos" id="field_etatclos"
+                           formControlName="etatclos"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="gestionevenementappApp.activite.dateActivite" for="field_dateActivite">Date Activite</label>
                     <div class="input-group">
-                        <input id="field_date_activite" type="text" class="form-control" name="date_activite" ngbDatepicker #date_activiteDp="ngbDatepicker" formControlName="date_activite"/>
+                        <input id="field_dateActivite" type="text" class="form-control" name="dateActivite" ngbDatepicker #dateActiviteDp="ngbDatepicker" formControlName="dateActivite"/>
                         <span class="input-group-append">
-                            <button type="button" class="btn btn-secondary" (click)="date_activiteDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                            <button type="button" class="btn btn-secondary" (click)="dateActiviteDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
                         </span>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="gestionevenementappApp.activite.heure_debut" for="field_heure_debut">Heure Debut</label>
+                    <label class="form-control-label" jhiTranslate="gestionevenementappApp.activite.heureDebut" for="field_heureDebut">Heure Debut</label>
                     <div class="d-flex">
-                        <input id="field_heure_debut" type="datetime-local" class="form-control" name="heure_debut" formControlName="heure_debut" placeholder="YYYY-MM-DD HH:mm"/>
+                        <input id="field_heureDebut" type="datetime-local" class="form-control" name="heureDebut" formControlName="heureDebut" placeholder="YYYY-MM-DD HH:mm"/>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="gestionevenementappApp.activite.heure_fin" for="field_heure_fin">Heure Fin</label>
+                    <label class="form-control-label" jhiTranslate="gestionevenementappApp.activite.heureFin" for="field_heureFin">Heure Fin</label>
                     <div class="d-flex">
-                        <input id="field_heure_fin" type="datetime-local" class="form-control" name="heure_fin" formControlName="heure_fin" placeholder="YYYY-MM-DD HH:mm"/>
+                        <input id="field_heureFin" type="datetime-local" class="form-control" name="heureFin" formControlName="heureFin" placeholder="YYYY-MM-DD HH:mm"/>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="gestionevenementappApp.activite.etatclos" for="field_etatclos">Etatclos</label>
-                    <input type="checkbox" class="form-control" name="etatclos" id="field_etatclos"
-                           formControlName="etatclos"/>
                 </div>
 
                 <div class="form-group">

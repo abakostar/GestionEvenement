@@ -21,6 +21,9 @@
             <column name="description" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="etatclos" type="boolean">
+                <constraints nullable="true" />
+            </column>
             <column name="date_activite" type="date">
                 <constraints nullable="true" />
             </column>
@@ -28,9 +31,6 @@
                 <constraints nullable="true" />
             </column>
             <column name="heure_fin" type="datetime">
-                <constraints nullable="true" />
-            </column>
-            <column name="etatclos" type="boolean">
                 <constraints nullable="true" />
             </column>
             <column name="evenement_id" type="bigint">
@@ -66,10 +66,10 @@
             <column name="id" type="numeric"/>
             <column name="nom" type="string"/>
             <column name="description" type="string"/>
+            <column name="etatclos" type="boolean"/>
             <column name="date_activite" type="date"/>
             <column name="heure_debut" type="datetime"/>
             <column name="heure_fin" type="datetime"/>
-            <column name="etatclos" type="boolean"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
