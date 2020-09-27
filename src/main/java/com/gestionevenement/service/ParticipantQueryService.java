@@ -103,13 +103,9 @@ public class ParticipantQueryService extends QueryService<Participant> {
             if (criteria.getEmail() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getEmail(), Participant_.email));
             }
-            if (criteria.getVilleResidenceId() != null) {
-                specification = specification.and(buildSpecification(criteria.getVilleResidenceId(),
-                    root -> root.join(Participant_.villeResidence, JoinType.LEFT).get(Ville_.id)));
-            }
-            if (criteria.getUserId() != null) {
-                specification = specification.and(buildSpecification(criteria.getUserId(),
-                    root -> root.join(Participant_.user, JoinType.LEFT).get(User_.id)));
+            if (criteria.getVilleId() != null) {
+                specification = specification.and(buildSpecification(criteria.getVilleId(),
+                    root -> root.join(Participant_.ville, JoinType.LEFT).get(Ville_.id)));
             }
         }
         return specification;

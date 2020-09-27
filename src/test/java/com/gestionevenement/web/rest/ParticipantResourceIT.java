@@ -3,7 +3,6 @@ package com.gestionevenement.web.rest;
 import com.gestionevenement.GestionevenementappApp;
 import com.gestionevenement.domain.Participant;
 import com.gestionevenement.domain.Ville;
-import com.gestionevenement.domain.User;
 import com.gestionevenement.repository.ParticipantRepository;
 import com.gestionevenement.service.ParticipantService;
 import com.gestionevenement.service.dto.ParticipantDTO;
@@ -513,41 +512,21 @@ public class ParticipantResourceIT {
 
     @Test
     @Transactional
-    public void getAllParticipantsByVilleResidenceIsEqualToSomething() throws Exception {
+    public void getAllParticipantsByVilleIsEqualToSomething() throws Exception {
         // Initialize the database
         participantRepository.saveAndFlush(participant);
-        Ville villeResidence = VilleResourceIT.createEntity(em);
-        em.persist(villeResidence);
+        Ville ville = VilleResourceIT.createEntity(em);
+        em.persist(ville);
         em.flush();
-        participant.setVilleResidence(villeResidence);
+        participant.setVille(ville);
         participantRepository.saveAndFlush(participant);
-        Long villeResidenceId = villeResidence.getId();
+        Long villeId = ville.getId();
 
-        // Get all the participantList where villeResidence equals to villeResidenceId
-        defaultParticipantShouldBeFound("villeResidenceId.equals=" + villeResidenceId);
+        // Get all the participantList where ville equals to villeId
+        defaultParticipantShouldBeFound("villeId.equals=" + villeId);
 
-        // Get all the participantList where villeResidence equals to villeResidenceId + 1
-        defaultParticipantShouldNotBeFound("villeResidenceId.equals=" + (villeResidenceId + 1));
-    }
-
-
-    @Test
-    @Transactional
-    public void getAllParticipantsByUserIsEqualToSomething() throws Exception {
-        // Initialize the database
-        participantRepository.saveAndFlush(participant);
-        User user = UserResourceIT.createEntity(em);
-        em.persist(user);
-        em.flush();
-        participant.setUser(user);
-        participantRepository.saveAndFlush(participant);
-        Long userId = user.getId();
-
-        // Get all the participantList where user equals to userId
-        defaultParticipantShouldBeFound("userId.equals=" + userId);
-
-        // Get all the participantList where user equals to userId + 1
-        defaultParticipantShouldNotBeFound("userId.equals=" + (userId + 1));
+        // Get all the participantList where ville equals to villeId + 1
+        defaultParticipantShouldNotBeFound("villeId.equals=" + (villeId + 1));
     }
 
     /**

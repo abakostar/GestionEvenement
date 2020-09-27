@@ -3,6 +3,7 @@ package com.gestionevenement.domain;
 import com.gestionevenement.config.Constants;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gestionevenement.domain.enums.Sex;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
 
@@ -81,6 +82,13 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "reset_date")
     private Instant resetDate = null;
 
+    @Column(name = "sex", length = 10)
+    @Enumerated(value = EnumType.STRING)
+    private Sex sex;
+
+    @Column(name = "phone", length = 15)
+    private String phone;
+
     @JsonIgnore
     @ManyToMany
     @JoinTable(
@@ -93,6 +101,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
     private Set<PersistentToken> persistentTokens = new HashSet<>();
+
+    @ManyToOne
+    private Ville ville;
 
     public Long getId() {
         return id;
@@ -205,6 +216,30 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setPersistentTokens(Set<PersistentToken> persistentTokens) {
         this.persistentTokens = persistentTokens;
+    }
+
+    public Sex getSex() {
+        return sex;
+    }
+
+    public void setSex(Sex sexe) {
+        this.sex = sexe;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Ville getVille() {
+        return ville;
+    }
+
+    public void setVille(Ville ville) {
+        this.ville = ville;
     }
 
     @Override

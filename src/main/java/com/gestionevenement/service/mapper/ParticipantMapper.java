@@ -9,17 +9,14 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Participant} and its DTO {@link ParticipantDTO}.
  */
-@Mapper(componentModel = "spring", uses = {VilleMapper.class, UserMapper.class})
+@Mapper(componentModel = "spring", uses = {VilleMapper.class})
 public interface ParticipantMapper extends EntityMapper<ParticipantDTO, Participant> {
 
-    @Mapping(source = "villeResidence.id", target = "villeResidenceId")
-    @Mapping(source = "villeResidence.nom", target = "villeResidenceNom")
-    @Mapping(source = "user.id", target = "userId")
-    @Mapping(source = "user.login", target = "userLogin")
+    @Mapping(source = "ville.id", target = "villeId")
+    @Mapping(source = "ville.nom", target = "villeNom")
     ParticipantDTO toDto(Participant participant);
 
-    @Mapping(source = "villeResidenceId", target = "villeResidence")
-    @Mapping(source = "userId", target = "user")
+    @Mapping(source = "villeId", target = "ville")
     Participant toEntity(ParticipantDTO participantDTO);
 
     default Participant fromId(Long id) {

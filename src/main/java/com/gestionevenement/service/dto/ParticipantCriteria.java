@@ -34,9 +34,7 @@ public class ParticipantCriteria implements Serializable, Criteria {
 
     private StringFilter email;
 
-    private LongFilter villeResidenceId;
-
-    private LongFilter userId;
+    private LongFilter villeId;
 
     public ParticipantCriteria() {
     }
@@ -47,8 +45,7 @@ public class ParticipantCriteria implements Serializable, Criteria {
         this.sexe = other.sexe == null ? null : other.sexe.copy();
         this.telephone = other.telephone == null ? null : other.telephone.copy();
         this.email = other.email == null ? null : other.email.copy();
-        this.villeResidenceId = other.villeResidenceId == null ? null : other.villeResidenceId.copy();
-        this.userId = other.userId == null ? null : other.userId.copy();
+        this.villeId = other.villeId == null ? null : other.villeId.copy();
     }
 
     @Override
@@ -96,20 +93,12 @@ public class ParticipantCriteria implements Serializable, Criteria {
         this.email = email;
     }
 
-    public LongFilter getVilleResidenceId() {
-        return villeResidenceId;
+    public LongFilter getVilleId() {
+        return villeId;
     }
 
-    public void setVilleResidenceId(LongFilter villeResidenceId) {
-        this.villeResidenceId = villeResidenceId;
-    }
-
-    public LongFilter getUserId() {
-        return userId;
-    }
-
-    public void setUserId(LongFilter userId) {
-        this.userId = userId;
+    public void setVilleId(LongFilter villeId) {
+        this.villeId = villeId;
     }
 
 
@@ -128,8 +117,7 @@ public class ParticipantCriteria implements Serializable, Criteria {
             Objects.equals(sexe, that.sexe) &&
             Objects.equals(telephone, that.telephone) &&
             Objects.equals(email, that.email) &&
-            Objects.equals(villeResidenceId, that.villeResidenceId) &&
-            Objects.equals(userId, that.userId);
+            Objects.equals(villeId, that.villeId);
     }
 
     @Override
@@ -140,8 +128,7 @@ public class ParticipantCriteria implements Serializable, Criteria {
         sexe,
         telephone,
         email,
-        villeResidenceId,
-        userId
+        villeId
         );
     }
 
@@ -154,8 +141,7 @@ public class ParticipantCriteria implements Serializable, Criteria {
                 (sexe != null ? "sexe=" + sexe + ", " : "") +
                 (telephone != null ? "telephone=" + telephone + ", " : "") +
                 (email != null ? "email=" + email + ", " : "") +
-                (villeResidenceId != null ? "villeResidenceId=" + villeResidenceId + ", " : "") +
-                (userId != null ? "userId=" + userId + ", " : "") +
+                (villeId != null ? "villeId=" + villeId + ", " : "") +
             "}";
     }
 

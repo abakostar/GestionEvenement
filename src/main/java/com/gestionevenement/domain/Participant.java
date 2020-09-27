@@ -34,11 +34,7 @@ public class Participant implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties(value = "participants", allowSetters = true)
-    private Ville villeResidence;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = "participants", allowSetters = true)
-    private User user;
+    private Ville ville;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -101,30 +97,17 @@ public class Participant implements Serializable {
         this.email = email;
     }
 
-    public Ville getVilleResidence() {
-        return villeResidence;
+    public Ville getVille() {
+        return ville;
     }
 
-    public Participant villeResidence(Ville ville) {
-        this.villeResidence = ville;
+    public Participant ville(Ville ville) {
+        this.ville = ville;
         return this;
     }
 
-    public void setVilleResidence(Ville ville) {
-        this.villeResidence = ville;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public Participant user(User user) {
-        this.user = user;
-        return this;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setVille(Ville ville) {
+        this.ville = ville;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

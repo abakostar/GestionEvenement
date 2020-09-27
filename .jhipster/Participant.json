@@ -3,18 +3,10 @@
   "clientRootFolder": "",
   "relationships": [
     {
-      "relationshipName": "villeResidence",
+      "relationshipName": "ville",
       "otherEntityName": "ville",
       "relationshipType": "many-to-one",
       "otherEntityField": "nom",
-      "otherEntityRelationshipName": "participant"
-    },
-    {
-      "relationshipName": "user",
-      "otherEntityName": "user",
-      "relationshipType": "many-to-one",
-      "otherEntityField": "login",
-      "ownerSide": true,
       "otherEntityRelationshipName": "participant"
     }
   ],
@@ -36,7 +28,7 @@
       "fieldType": "String"
     }
   ],
-  "changelogDate": "20200924162844",
+  "changelogDate": "20200927195812",
   "dto": "mapstruct",
   "searchEngine": false,
   "service": "serviceImpl",

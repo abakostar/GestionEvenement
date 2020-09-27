@@ -29,6 +29,10 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./activite/activite.module').then(m => m.GestionevenementappActiviteModule),
       },
       {
+        path: 'inscription',
+        loadChildren: () => import('./inscription/inscription.module').then(m => m.GestionevenementappInscriptionModule),
+      },
+      {
         path: 'participant',
         loadChildren: () => import('./participant/participant.module').then(m => m.GestionevenementappParticipantModule),
       },

@@ -1,0 +1,35 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [
+    {
+      "relationshipName": "activite",
+      "otherEntityName": "activite",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "nom",
+      "otherEntityRelationshipName": "inscription"
+    },
+    {
+      "relationshipName": "participant",
+      "otherEntityName": "participant",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "nom",
+      "otherEntityRelationshipName": "inscription"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "role",
+      "fieldType": "String"
+    }
+  ],
+  "changelogDate": "20200927200446",
+  "dto": "mapstruct",
+  "searchEngine": false,
+  "service": "serviceImpl",
+  "entityTableName": "inscription",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": true,
+  "pagination": "infinite-scroll"
+}

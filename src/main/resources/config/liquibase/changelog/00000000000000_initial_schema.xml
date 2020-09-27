@@ -175,4 +175,12 @@
             <column name="local_date" type="date"/>
         </createTable>
     </changeSet>
+
+    <changeSet author="jhipster" id="00000000000003">
+        <addColumn tableName="jhi_user">
+            <column name="phone" type="varchar(15)"/>
+            <column name="sex" type="varchar(10)"/>
+            <column name="ville_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

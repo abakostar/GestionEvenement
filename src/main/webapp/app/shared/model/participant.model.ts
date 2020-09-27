@@ -4,10 +4,8 @@ export interface IParticipant {
   sexe?: string;
   telephone?: string;
   email?: string;
-  villeResidenceNom?: string;
-  villeResidenceId?: number;
-  userLogin?: string;
-  userId?: number;
+  villeNom?: string;
+  villeId?: number;
 }
 
 export class Participant implements IParticipant {
@@ -17,9 +15,7 @@ export class Participant implements IParticipant {
     public sexe?: string,
     public telephone?: string,
     public email?: string,
-    public villeResidenceNom?: string,
-    public villeResidenceId?: number,
-    public userLogin?: string,
-    public userId?: number
+    public villeNom?: string,
+    public villeId?: number
   ) {}
 }

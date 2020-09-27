@@ -9,10 +9,6 @@ import { IParticipant, Participant } from 'app/shared/model/participant.model';
 import { ParticipantService } from './participant.service';
 import { IVille } from 'app/shared/model/ville.model';
 import { VilleService } from 'app/entities/ville/ville.service';
-import { IUser } from 'app/core/user/user.model';
-import { UserService } from 'app/core/user/user.service';
-
-type SelectableEntity = IVille | IUser;
 
 @Component({
   selector: 'jhi-participant-update',
@@ -21,7 +17,6 @@ type SelectableEntity = IVille | IUser;
 export class ParticipantUpdateComponent implements OnInit {
   isSaving = false;
   villes: IVille[] = [];
-  users: IUser[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -29,14 +24,12 @@ export class ParticipantUpdateComponent implements OnInit {
     sexe: [],
     telephone: [],
     email: [],
-    villeResidenceId: [],
-    userId: [],
+    villeId: [],
   });
 
   constructor(
     protected participantService: ParticipantService,
     protected villeService: VilleService,
-    protected userService: UserService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -46,8 +39,6 @@ export class ParticipantUpdateComponent implements OnInit {
       this.updateForm(participant);
 
       this.villeService.query().subscribe((res: HttpResponse<IVille[]>) => (this.villes = res.body || []));
-
-      this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
     });
   }
 
@@ -58,8 +49,7 @@ export class ParticipantUpdateComponent implements OnInit {
       sexe: participant.sexe,
       telephone: participant.telephone,
       email: participant.email,
-      villeResidenceId: participant.villeResidenceId,
-      userId: participant.userId,
+      villeId: participant.villeId,
     });
   }
 
@@ -85,8 +75,7 @@ export class ParticipantUpdateComponent implements OnInit {
       sexe: this.editForm.get(['sexe'])!.value,
       telephone: this.editForm.get(['telephone'])!.value,
       email: this.editForm.get(['email'])!.value,
-      villeResidenceId: this.editForm.get(['villeResidenceId'])!.value,
-      userId: this.editForm.get(['userId'])!.value,
+      villeId: this.editForm.get(['villeId'])!.value,
     };
   }
 
@@ -106,7 +95,7 @@ export class ParticipantUpdateComponent implements OnInit {
     this.isSaving = false;
   }
 
-  trackById(index: number, item: SelectableEntity): any {
+  trackById(index: number, item: IVille): any {
     return item.id;
   }
 }

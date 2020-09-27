@@ -24,15 +24,11 @@
                 <dd>
                     <span>{{ participant.email }}</span>
                 </dd>
-                <dt><span jhiTranslate="gestionevenementappApp.participant.villeResidence">Ville Residence</span></dt>
+                <dt><span jhiTranslate="gestionevenementappApp.participant.ville">Ville</span></dt>
                 <dd>
-                    <div *ngIf="participant.villeResidenceId">
-                        <a [routerLink]="['/ville', participant.villeResidenceId, 'view']">{{ participant.villeResidenceNom }}</a>
+                    <div *ngIf="participant.villeId">
+                        <a [routerLink]="['/ville', participant.villeId, 'view']">{{ participant.villeNom }}</a>
                     </div>
-                </dd>
-                <dt><span jhiTranslate="gestionevenementappApp.participant.user">User</span></dt>
-                <dd>
-                    {{ participant.userLogin }}
                 </dd>
             </dl>
 

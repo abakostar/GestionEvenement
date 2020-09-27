@@ -6,19 +6,13 @@
     <!--
         Added the constraints for entity Participant.
     -->
-    <changeSet id="20200924162844-2" author="jhipster">
+    <changeSet id="20200927195812-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="ville_residence_id"
+        <addForeignKeyConstraint baseColumnNames="ville_id"
                                  baseTableName="participant"
-                                 constraintName="fk_participant_ville_residence_id"
+                                 constraintName="fk_participant_ville_id"
                                  referencedColumnNames="id"
                                  referencedTableName="ville"/>
-
-        <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="participant"
-                                 constraintName="fk_participant_user_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
 
     </changeSet>
 </databaseChangeLog>

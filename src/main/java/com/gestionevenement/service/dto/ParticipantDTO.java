@@ -18,13 +18,9 @@ public class ParticipantDTO implements Serializable {
     private String email;
 
 
-    private Long villeResidenceId;
+    private Long villeId;
 
-    private String villeResidenceNom;
-
-    private Long userId;
-
-    private String userLogin;
+    private String villeNom;
     
     public Long getId() {
         return id;
@@ -66,36 +62,20 @@ public class ParticipantDTO implements Serializable {
         this.email = email;
     }
 
-    public Long getVilleResidenceId() {
-        return villeResidenceId;
+    public Long getVilleId() {
+        return villeId;
     }
 
-    public void setVilleResidenceId(Long villeId) {
-        this.villeResidenceId = villeId;
+    public void setVilleId(Long villeId) {
+        this.villeId = villeId;
     }
 
-    public String getVilleResidenceNom() {
-        return villeResidenceNom;
+    public String getVilleNom() {
+        return villeNom;
     }
 
-    public void setVilleResidenceNom(String villeNom) {
-        this.villeResidenceNom = villeNom;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getUserLogin() {
-        return userLogin;
-    }
-
-    public void setUserLogin(String userLogin) {
-        this.userLogin = userLogin;
+    public void setVilleNom(String villeNom) {
+        this.villeNom = villeNom;
     }
 
     @Override
@@ -124,10 +104,8 @@ public class ParticipantDTO implements Serializable {
             ", sexe='" + getSexe() + "'" +
             ", telephone='" + getTelephone() + "'" +
             ", email='" + getEmail() + "'" +
-            ", villeResidenceId=" + getVilleResidenceId() +
-            ", villeResidenceNom='" + getVilleResidenceNom() + "'" +
-            ", userId=" + getUserId() +
-            ", userLogin='" + getUserLogin() + "'" +
+            ", villeId=" + getVilleId() +
+            ", villeNom='" + getVilleNom() + "'" +
             "}";
     }
 }

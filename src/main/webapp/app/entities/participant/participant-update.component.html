@@ -36,18 +36,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="gestionevenementappApp.participant.villeResidence" for="field_villeResidence">Ville Residence</label>
-                    <select class="form-control" id="field_villeResidence" name="villeResidence" formControlName="villeResidenceId">
+                    <label class="form-control-label" jhiTranslate="gestionevenementappApp.participant.ville" for="field_ville">Ville</label>
+                    <select class="form-control" id="field_ville" name="ville" formControlName="villeId">
                         <option [ngValue]="null"></option>
                         <option [ngValue]="villeOption.id" *ngFor="let villeOption of villes; trackBy: trackById">{{ villeOption.nom }}</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="gestionevenementappApp.participant.user" for="field_user">User</label>
-                    <select class="form-control" id="field_user" name="user" formControlName="userId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
                     </select>
                 </div>
             </div>
