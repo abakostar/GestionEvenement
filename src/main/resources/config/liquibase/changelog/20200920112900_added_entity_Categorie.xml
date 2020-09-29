@@ -38,5 +38,16 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
+    <changeSet id="20200920112900-1-data" author="jhipster" context="faker">
+        <loadData
+            file="config/liquibase/fake-data/categorie.csv"
+            separator=";"
+            tableName="categorie">
+            <column name="id" type="numeric"/>
+            <column name="code" type="string"/>
+            <column name="nom" type="string"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
 
 </databaseChangeLog>

@@ -35,6 +35,10 @@
                 <tr *ngFor="let participant of participants ;trackBy: trackId">
                     <td><a [routerLink]="['/participant', participant.id, 'view']">{{ participant.id }}</a></td>
                     <td>{{ participant.nom }}</td>
+<!--                    <td><select class="form-control" name = "sexe" [(ngModel)] ="participant.sexe" >
+                        <option  value = "Masculin">Masculin</option>
+                        <option  value = "Feminin">Feminin</option>
+                    </select></td>-->
                     <td>{{ participant.sexe }}</td>
                     <td>{{ participant.telephone }}</td>
                     <td>{{ participant.email }}</td>
