@@ -1,0 +1,25 @@
+{
+  "gestionevenementappApp": {
+    "inscriptionEvenement": {
+      "home": {
+        "title": "InscriptionEvenements",
+        "createLabel": "Créer un nouveau Inscription Evenement",
+        "createOrEditLabel": "Créer ou éditer un Inscription Evenement",
+        "notFound": "Aucun Inscription Evenement trouvé"
+      },
+      "created": "Un nouveau Inscription Evenement a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Inscription Evenement avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Inscription Evenement avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Inscription Evenement {{ id }} ?"
+      },
+      "detail": {
+        "title": "Inscription Evenement"
+      },
+      "loginParticipant": "Login Participant",
+      "passwordParticipant": "Password Participant",
+      "evenement": "Evenement",
+      "participant": "Participant"
+    }
+  }
+}

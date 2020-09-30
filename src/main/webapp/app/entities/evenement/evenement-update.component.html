@@ -40,9 +40,15 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="gestionevenementappApp.evenement.categorie" for="field_categorie">Categorie</label>
                     <select class="form-control" id="field_categorie" name="categorie" formControlName="categorieId">
-                        <option [ngValue]="null"></option>
+                        <option *ngIf="!editForm.get('categorieId')!.value" [ngValue]="null" selected></option>
                         <option [ngValue]="categorieOption.id" *ngFor="let categorieOption of categories; trackBy: trackById">{{ categorieOption.nom }}</option>
                     </select>
+                </div>
+                <div *ngIf="editForm.get('categorieId')!.invalid && (editForm.get('categorieId')!.dirty || editForm.get('categorieId')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('categorieId')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
                 </div>
             </div>
 

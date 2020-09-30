@@ -26,7 +26,7 @@ export class EvenementUpdateComponent implements OnInit {
     dateDebut: [],
     dateFin: [],
     description: [],
-    categorieId: [],
+    categorieId: [null, Validators.required],
   });
 
   constructor(

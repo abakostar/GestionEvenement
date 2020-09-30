@@ -1,19 +1,12 @@
 package com.gestionevenement.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gestionevenement.config.Constants;
 
 import com.gestionevenement.domain.Authority;
-import com.gestionevenement.domain.PersistentToken;
 import com.gestionevenement.domain.User;
-import com.gestionevenement.domain.Ville;
-import com.gestionevenement.domain.enums.Sex;
-import org.hibernate.annotations.BatchSize;
 
-import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -57,14 +50,6 @@ public class UserDTO {
 
     private Set<String> authorities;
 
-    private Sex sex;
-
-    private String phone;
-
-    private Long villeId;
-
-    private String villeName;
-
     public UserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -85,8 +70,6 @@ public class UserDTO {
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
-        this.villeId = user.getVille() == null ? null : user.getVille().getId();
-        this.villeName =  user.getVille() == null ? null : user.getVille().getNom();
     }
 
     public Long getId() {
@@ -191,38 +174,6 @@ public class UserDTO {
 
     public void setAuthorities(Set<String> authorities) {
         this.authorities = authorities;
-    }
-
-    public Sex getSex() {
-        return sex;
-    }
-
-    public void setSex(Sex sex) {
-        this.sex = sex;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public Long getVilleId() {
-        return villeId;
-    }
-
-    public void setVilleId(Long villeId) {
-        this.villeId = villeId;
-    }
-
-    public String getVilleName() {
-        return villeName;
-    }
-
-    public void setVilleName(String villeName) {
-        this.villeName = villeName;
     }
 
     // prettier-ignore

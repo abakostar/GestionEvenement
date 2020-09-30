@@ -6,7 +6,8 @@
       "relationshipName": "categorie",
       "otherEntityName": "categorie",
       "relationshipType": "many-to-one",
-      "otherEntityField": "id",
+      "relationshipValidateRules": ["required"],
+      "otherEntityField": "nom",
       "otherEntityRelationshipName": "evenement"
     }
   ],

@@ -87,6 +87,16 @@ public class EvenementResourceIT {
             .dateDebut(DEFAULT_DATE_DEBUT)
             .dateFin(DEFAULT_DATE_FIN)
             .description(DEFAULT_DESCRIPTION);
+        // Add required entity
+        Categorie categorie;
+        if (TestUtil.findAll(em, Categorie.class).isEmpty()) {
+            categorie = CategorieResourceIT.createEntity(em);
+            em.persist(categorie);
+            em.flush();
+        } else {
+            categorie = TestUtil.findAll(em, Categorie.class).get(0);
+        }
+        evenement.setCategorie(categorie);
         return evenement;
     }
     /**
@@ -101,6 +111,16 @@ public class EvenementResourceIT {
             .dateDebut(UPDATED_DATE_DEBUT)
             .dateFin(UPDATED_DATE_FIN)
             .description(UPDATED_DESCRIPTION);
+        // Add required entity
+        Categorie categorie;
+        if (TestUtil.findAll(em, Categorie.class).isEmpty()) {
+            categorie = CategorieResourceIT.createUpdatedEntity(em);
+            em.persist(categorie);
+            em.flush();
+        } else {
+            categorie = TestUtil.findAll(em, Categorie.class).get(0);
+        }
+        evenement.setCategorie(categorie);
         return evenement;
     }
 
@@ -574,12 +594,8 @@ public class EvenementResourceIT {
     @Test
     @Transactional
     public void getAllEvenementsByCategorieIsEqualToSomething() throws Exception {
-        // Initialize the database
-        evenementRepository.saveAndFlush(evenement);
-        Categorie categorie = CategorieResourceIT.createEntity(em);
-        em.persist(categorie);
-        em.flush();
-        evenement.setCategorie(categorie);
+        // Get already existing entity
+        Categorie categorie = evenement.getCategorie();
         evenementRepository.saveAndFlush(evenement);
         Long categorieId = categorie.getId();
 

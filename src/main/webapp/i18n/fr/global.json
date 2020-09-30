@@ -1,6 +1,6 @@
 {
   "global": {
-    "title": "Gestion Evenement App",
+    "title": "Gestionevenementapp",
     "browsehappy": "Vous utilisez un <strong>ancien</strong> navigateur. Veuillez <a href=\"http://browsehappy.com/?locale=fr\">mettre à jour votre navigateur</a> pour une meilleure expérience.",
     "menu": {
       "home": "Accueil",
@@ -13,8 +13,9 @@
         "ville": "Ville",
         "emplacement": "Emplacement",
         "activite": "Activite",
-        "inscription": "Inscription",
         "participant": "Participant",
+        "inscriptionEvenement": "Inscription Evenement",
+        "inscriptionActivite": "Inscription Activite",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

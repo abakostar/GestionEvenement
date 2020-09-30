@@ -1,0 +1,24 @@
+{
+  "gestionevenementappApp": {
+    "inscriptionActivite": {
+      "home": {
+        "title": "InscriptionActivites",
+        "createLabel": "Créer un nouveau Inscription Activite",
+        "createOrEditLabel": "Créer ou éditer un Inscription Activite",
+        "notFound": "Aucun Inscription Activite trouvé"
+      },
+      "created": "Un nouveau Inscription Activite a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Inscription Activite avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Inscription Activite avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Inscription Activite {{ id }} ?"
+      },
+      "detail": {
+        "title": "Inscription Activite"
+      },
+      "role": "Role",
+      "activite": "Activite",
+      "participant": "Participant"
+    }
+  }
+}

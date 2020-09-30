@@ -3,6 +3,7 @@ package com.gestionevenement.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -33,7 +34,8 @@ public class Evenement implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "evenements", allowSetters = true)
     private Categorie categorie;
 

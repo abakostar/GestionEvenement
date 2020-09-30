@@ -144,8 +144,8 @@ jhipster:
     from: gestionevenementapp@localhost
   swagger:
     default-include-pattern: /api/.*
-    title: Gestion Evenement App API
-    description: Gestion Evenement App API documentation
+    title: gestionevenementapp API
+    description: gestionevenementapp API documentation
     version: 0.0.1
     terms-of-service-url:
     contact-name:

@@ -6,7 +6,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-
+    
     <!--
         Added the entity Categorie.
     -->
@@ -40,9 +40,9 @@
     -->
     <changeSet id="20200920112900-1-data" author="jhipster" context="faker">
         <loadData
-            file="config/liquibase/fake-data/categorie.csv"
-            separator=";"
-            tableName="categorie">
+                  file="config/liquibase/fake-data/categorie.csv"
+                  separator=";"
+                  tableName="categorie">
             <column name="id" type="numeric"/>
             <column name="code" type="string"/>
             <column name="nom" type="string"/>

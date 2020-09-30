@@ -1,13 +1,14 @@
 package com.gestionevenement.service.dto;
 
 import java.time.ZonedDateTime;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 /**
  * A DTO for the {@link com.gestionevenement.domain.Evenement} entity.
  */
 public class EvenementDTO implements Serializable {
-
+    
     private Long id;
 
     private String code;
@@ -22,7 +23,7 @@ public class EvenementDTO implements Serializable {
     private Long categorieId;
 
     private String categorieNom;
-
+    
     public Long getId() {
         return id;
     }
@@ -106,6 +107,7 @@ public class EvenementDTO implements Serializable {
             ", dateFin='" + getDateFin() + "'" +
             ", description='" + getDescription() + "'" +
             ", categorieId=" + getCategorieId() +
+            ", categorieNom='" + getCategorieNom() + "'" +
             "}";
     }
 }

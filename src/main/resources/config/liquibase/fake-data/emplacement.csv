@@ -1,8 +1,11 @@
-id;code;description;capacite;ville_id
-1;AMPHI500;Amphi 500 de l'Université de Douala;500;2
-2;SAL201;Salle de conference de l'université de Yaoundé 1;1000;1
-3;PALAISCONGRESPARIS;Palais de Congrès de la Ville de Paris;5000;5
-4;HOTEL01_101;Salle de Fête de Hôtel de Paris 21;10000;5
-5;PALAISCONGRESYAOUNDE;Palais de Congrès de la Ville de Yaoundé;5000;1
-6;PALAISCONGRESNEWYORK;Palais de Congrès de la Ville de New-York;5000;6
-7;SAL1001;Salle des conferences du Ministère de l'habitat du Cameroun;1001;1
+id;code;description;capacite
+1;Executive;Regional Plastic Multi-layered;75725
+2;open-source Beauty;engineer Branding;38171
+3;Malta calculating Investment Account;turquoise open-source;34190
+4;matrix methodologies Designer;Norwegian Krone;71022
+5;repurpose;multimedia;17498
+6;Accounts Money Market Account;District Administrator port;53465
+7;Handmade Cotton Sausages Concrete;time-frame;33052
+8;cross-platform;deposit;27482
+9;El Salvador Colon US Dollar;Avon Baby Licensed Rubber Bacon;37095
+10;Sausages compressing;bleeding-edge Movies;53893

@@ -6,8 +6,8 @@ export interface IEvenement {
   dateDebut?: Moment;
   dateFin?: Moment;
   description?: string;
-  categorieId?: number;
   categorieNom?: string;
+  categorieId?: number;
 }
 
 export class Evenement implements IEvenement {
@@ -17,6 +17,7 @@ export class Evenement implements IEvenement {
     public dateDebut?: Moment,
     public dateFin?: Moment,
     public description?: string,
+    public categorieNom?: string,
     public categorieId?: number
   ) {}
 }
