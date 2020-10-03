@@ -9,6 +9,10 @@ import { IParticipant, Participant } from 'app/shared/model/participant.model';
 import { ParticipantService } from './participant.service';
 import { IVille } from 'app/shared/model/ville.model';
 import { VilleService } from 'app/entities/ville/ville.service';
+import { IEvenement } from 'app/shared/model/evenement.model';
+import { EvenementService } from 'app/entities/evenement/evenement.service';
+
+type SelectableEntity = IVille | IEvenement;
 
 @Component({
   selector: 'jhi-participant-update',
@@ -17,6 +21,7 @@ import { VilleService } from 'app/entities/ville/ville.service';
 export class ParticipantUpdateComponent implements OnInit {
   isSaving = false;
   villes: IVille[] = [];
+  evenements: IEvenement[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -25,11 +30,13 @@ export class ParticipantUpdateComponent implements OnInit {
     telephone: [],
     email: [],
     villeId: [],
+    evenements: [],
   });
 
   constructor(
     protected participantService: ParticipantService,
     protected villeService: VilleService,
+    protected evenementService: EvenementService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -39,6 +46,8 @@ export class ParticipantUpdateComponent implements OnInit {
       this.updateForm(participant);
 
       this.villeService.query().subscribe((res: HttpResponse<IVille[]>) => (this.villes = res.body || []));
+
+      this.evenementService.query().subscribe((res: HttpResponse<IEvenement[]>) => (this.evenements = res.body || []));
     });
   }
 
@@ -50,6 +59,7 @@ export class ParticipantUpdateComponent implements OnInit {
       telephone: participant.telephone,
       email: participant.email,
       villeId: participant.villeId,
+      evenements: participant.evenements,
     });
   }
 
@@ -76,6 +86,7 @@ export class ParticipantUpdateComponent implements OnInit {
       telephone: this.editForm.get(['telephone'])!.value,
       email: this.editForm.get(['email'])!.value,
       villeId: this.editForm.get(['villeId'])!.value,
+      evenements: this.editForm.get(['evenements'])!.value,
     };
   }
 
@@ -95,7 +106,18 @@ export class ParticipantUpdateComponent implements OnInit {
     this.isSaving = false;
   }
 
-  trackById(index: number, item: IVille): any {
+  trackById(index: number, item: SelectableEntity): any {
     return item.id;
+  }
+
+  getSelected(selectedVals: IEvenement[], option: IEvenement): IEvenement {
+    if (selectedVals) {
+      for (let i = 0; i < selectedVals.length; i++) {
+        if (option.id === selectedVals[i].id) {
+          return selectedVals[i];
+        }
+      }
+    }
+    return option;
   }
 }

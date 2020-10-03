@@ -185,9 +185,10 @@ public class EvenementResourceIT {
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)))
             .andExpect(jsonPath("$.[*].dateDebut").value(hasItem(sameInstant(DEFAULT_DATE_DEBUT))))
             .andExpect(jsonPath("$.[*].dateFin").value(hasItem(sameInstant(DEFAULT_DATE_FIN))))
+            .andExpect(jsonPath("$.[*].nbActivite").value(hasItem(1)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
     }
-    
+
     @Test
     @Transactional
     public void getEvenement() throws Exception {

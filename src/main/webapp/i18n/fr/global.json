@@ -14,7 +14,6 @@
         "emplacement": "Emplacement",
         "activite": "Activite",
         "participant": "Participant",
-        "inscriptionEvenement": "Inscription Evenement",
         "inscriptionActivite": "Inscription Activite",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },

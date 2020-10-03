@@ -1,6 +1,8 @@
 package com.gestionevenement.service.dto;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A DTO for the {@link com.gestionevenement.domain.Participant} entity.
@@ -21,6 +23,7 @@ public class ParticipantDTO implements Serializable {
     private Long villeId;
 
     private String villeNom;
+    private Set<EvenementDTO> evenements = new HashSet<>();
     
     public Long getId() {
         return id;
@@ -78,6 +81,14 @@ public class ParticipantDTO implements Serializable {
         this.villeNom = villeNom;
     }
 
+    public Set<EvenementDTO> getEvenements() {
+        return evenements;
+    }
+
+    public void setEvenements(Set<EvenementDTO> evenements) {
+        this.evenements = evenements;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -106,6 +117,7 @@ public class ParticipantDTO implements Serializable {
             ", email='" + getEmail() + "'" +
             ", villeId=" + getVilleId() +
             ", villeNom='" + getVilleNom() + "'" +
+            ", evenements='" + getEvenements() + "'" +
             "}";
     }
 }

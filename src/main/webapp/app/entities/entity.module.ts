@@ -33,11 +33,6 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./participant/participant.module').then(m => m.GestionevenementappParticipantModule),
       },
       {
-        path: 'inscription-evenement',
-        loadChildren: () =>
-          import('./inscription-evenement/inscription-evenement.module').then(m => m.GestionevenementappInscriptionEvenementModule),
-      },
-      {
         path: 'inscription-activite',
         loadChildren: () =>
           import('./inscription-activite/inscription-activite.module').then(m => m.GestionevenementappInscriptionActiviteModule),

@@ -8,7 +8,7 @@ import java.io.Serializable;
  * A DTO for the {@link com.gestionevenement.domain.Evenement} entity.
  */
 public class EvenementDTO implements Serializable {
-    
+
     private Long id;
 
     private String code;
@@ -23,7 +23,17 @@ public class EvenementDTO implements Serializable {
     private Long categorieId;
 
     private String categorieNom;
-    
+
+    private int nbActivite;
+
+    public int getNbActivite() {
+        return nbActivite;
+    }
+
+    public void setNbActivite(int nbActivite) {
+        this.nbActivite = nbActivite;
+    }
+
     public Long getId() {
         return id;
     }

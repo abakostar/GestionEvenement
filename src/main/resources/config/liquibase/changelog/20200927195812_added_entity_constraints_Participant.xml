@@ -14,5 +14,17 @@
                                  referencedColumnNames="id"
                                  referencedTableName="ville"/>
 
+        <addForeignKeyConstraint baseColumnNames="participant_id"
+                                 baseTableName="participant_evenement"
+                                 constraintName="fk_participant_evenement_participant_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="participant"/>
+
+        <addForeignKeyConstraint baseColumnNames="evenement_id"
+                                 baseTableName="participant_evenement"
+                                 constraintName="fk_participant_evenement_evenement_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="evenement"/>
+        
     </changeSet>
 </databaseChangeLog>

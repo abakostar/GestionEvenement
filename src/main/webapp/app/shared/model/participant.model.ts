@@ -1,3 +1,5 @@
+import { IEvenement } from 'app/shared/model/evenement.model';
+
 export interface IParticipant {
   id?: number;
   nom?: string;
@@ -6,6 +8,7 @@ export interface IParticipant {
   email?: string;
   villeNom?: string;
   villeId?: number;
+  evenements?: IEvenement[];
 }
 
 export class Participant implements IParticipant {
@@ -16,6 +19,7 @@ export class Participant implements IParticipant {
     public telephone?: string,
     public email?: string,
     public villeNom?: string,
-    public villeId?: number
+    public villeId?: number,
+    public evenements?: IEvenement[]
   ) {}
 }

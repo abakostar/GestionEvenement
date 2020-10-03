@@ -20,7 +20,8 @@
       "sexe": "Sexe",
       "telephone": "Telephone",
       "email": "Email",
-      "ville": "Ville"
+      "ville": "Ville",
+      "evenement": "Evenement"
     }
   }
 }

@@ -19,11 +19,8 @@
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="gestionevenementappApp.participant.sexe" for="field_sexe">Sexe</label>
-                    <!-- <input type="text" class="form-control" name="sexe" id="field_sexe" formControlName="sexe"/>-->
-                    <select class="form-control" name = "sexe" id="field_sexe" formControlName="sexe">
-                        <option  value = "Masculin">Masculin</option>
-                        <option  value = "Feminin">Feminin</option>
-                    </select>
+                    <input type="text" class="form-control" name="sexe" id="field_sexe"
+                           formControlName="sexe"/>
                 </div>
 
                 <div class="form-group">
@@ -43,6 +40,13 @@
                     <select class="form-control" id="field_ville" name="ville" formControlName="villeId">
                         <option [ngValue]="null"></option>
                         <option [ngValue]="villeOption.id" *ngFor="let villeOption of villes; trackBy: trackById">{{ villeOption.nom }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label jhiTranslate="gestionevenementappApp.participant.evenement" for="field_evenements">Evenement</label>
+                    <select class="form-control" id="field_evenements" multiple name="evenements" formControlName="evenements">
+                        <option [ngValue]="getSelected(editForm.get('evenements')!.value, evenementOption)" *ngFor="let evenementOption of evenements; trackBy: trackById">{{ evenementOption.code }}</option>
                     </select>
                 </div>
             </div>
