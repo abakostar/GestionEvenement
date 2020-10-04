@@ -1,41 +1,44 @@
 package com.gestionevenement.service.dto;
 
+import com.gestionevenement.domain.User;
+import com.gestionevenement.security.AuthoritiesConstants;
+import com.gestionevenement.web.rest.vm.ManagedUserVM;
+
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A DTO for the {@link com.gestionevenement.domain.Participant} entity.
  */
 public class ParticipantDTO implements Serializable {
-    
-    private Long id;
 
-    private String nom;
+    private Long id;
 
     private String sexe;
 
     private String telephone;
 
-    private String email;
+    private String login;
 
+    private String password;
+
+    private String firstName;
+
+    private String lastName;
+
+    private String email;
 
     private Long villeId;
 
     private String villeNom;
-    
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
     }
 
     public String getSexe() {
@@ -54,12 +57,44 @@ public class ParticipantDTO implements Serializable {
         this.telephone = telephone;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Long getVilleId() {
@@ -100,12 +135,33 @@ public class ParticipantDTO implements Serializable {
     public String toString() {
         return "ParticipantDTO{" +
             "id=" + getId() +
-            ", nom='" + getNom() + "'" +
             ", sexe='" + getSexe() + "'" +
             ", telephone='" + getTelephone() + "'" +
+            ", login='" + getLogin() + "'" +
+            ", firstName='" + getFirstName() + "'" +
+            ", lastName='" + getLastName() + "'" +
             ", email='" + getEmail() + "'" +
+            ", password='" + getPassword() + "'" +
             ", villeId=" + getVilleId() +
             ", villeNom='" + getVilleNom() + "'" +
             "}";
+    }
+
+    public ManagedUserVM getUser() {
+        ManagedUserVM user = new ManagedUserVM();
+        user.setLogin(login);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setImageUrl("http://placehold.it/50x50");
+        user.setLangKey("fr");
+        user.setPassword(password);
+        user.setActivated(true);
+        return user;
+    }
+
+    public void setUser(User user) {
+        setFirstName(user.getFirstName());
+        setLastName(user.getLastName());
     }
 }

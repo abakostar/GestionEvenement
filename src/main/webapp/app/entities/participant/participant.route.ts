@@ -11,6 +11,8 @@ import { ParticipantService } from './participant.service';
 import { ParticipantComponent } from './participant.component';
 import { ParticipantDetailComponent } from './participant-detail.component';
 import { ParticipantUpdateComponent } from './participant-update.component';
+import {UserManagementDetailComponent} from "../../admin/user-management/user-management-detail.component";
+import {UserManagementResolve} from "../../admin/user-management/user-management.route";
 
 @Injectable({ providedIn: 'root' })
 export class ParticipantResolve implements Resolve<IParticipant> {
@@ -80,4 +82,11 @@ export const participantRoute: Routes = [
     },
     canActivate: [UserRouteAccessService],
   },
+  {
+    path: ':login/view',
+    component: UserManagementDetailComponent,
+    resolve: {
+      user: UserManagementResolve,
+    },
+  }
 ];

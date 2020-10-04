@@ -25,7 +25,7 @@
                     <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="role"><span jhiTranslate="gestionevenementappApp.inscriptionActivite.role">Role</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="activiteNom"><span jhiTranslate="gestionevenementappApp.inscriptionActivite.activite">Activite</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="participantNom"><span jhiTranslate="gestionevenementappApp.inscriptionActivite.participant">Participant</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="participantFirstName"><span jhiTranslate="gestionevenementappApp.inscriptionActivite.participant">Participant</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -40,7 +40,7 @@
                     </td>
                     <td>
                         <div *ngIf="inscriptionActivite.participantId">
-                            <a [routerLink]="['/participant', inscriptionActivite.participantId , 'view']" >{{ inscriptionActivite.participantNom }}</a>
+                            <a [routerLink]="['/participant', inscriptionActivite.participantId , 'view']" >{{ inscriptionActivite.participantFirstName }}</a>
                         </div>
                     </td>
                     <td class="text-right">

@@ -4,7 +4,7 @@ export interface IInscriptionEvenement {
   passwordParticipant?: string;
   evenementDescription?: string;
   evenementId?: number;
-  participantNom?: string;
+  participantFirstName?: string;
   participantId?: number;
 }
 
@@ -15,7 +15,7 @@ export class InscriptionEvenement implements IInscriptionEvenement {
     public passwordParticipant?: string,
     public evenementDescription?: string,
     public evenementId?: number,
-    public participantNom?: string,
+    public participantFirstName?: string,
     public participantId?: number
   ) {}
 }

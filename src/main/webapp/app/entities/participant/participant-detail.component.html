@@ -8,10 +8,6 @@
             <jhi-alert-error></jhi-alert-error>
 
             <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="gestionevenementappApp.participant.nom">Nom</span></dt>
-                <dd>
-                    <span>{{ participant.nom }}</span>
-                </dd>
                 <dt><span jhiTranslate="gestionevenementappApp.participant.sexe">Sexe</span></dt>
                 <dd>
                     <span>{{ participant.sexe }}</span>
@@ -20,9 +16,23 @@
                 <dd>
                     <span>{{ participant.telephone }}</span>
                 </dd>
-                <dt><span jhiTranslate="gestionevenementappApp.participant.email">Email</span></dt>
+                <dt><span jhiTranslate="gestionevenementappApp.participant.login">Login</span></dt>
                 <dd>
-                    <span>{{ participant.email }}</span>
+                    <span>{{ participant.login }}</span>
+                </dd>
+                <dt><span jhiTranslate="gestionevenementappApp.participant.firstName">First Name</span></dt>
+                <dd>
+                    <span>{{ participant.firstName }}</span>
+                </dd>
+                <dt><span jhiTranslate="gestionevenementappApp.participant.lastName">Last Name</span></dt>
+                <dd>
+                    <span>{{ participant.lastName }}</span>
+                </dd>
+                <dt><span jhiTranslate="gestionevenementappApp.participant.login">Login</span></dt>
+                <dd>
+                    <div *ngIf="participant.villeId">
+                        <a [routerLink]="['/admin/user-management', participant.login, 'view']">{{ participant.login }}</a>
+                    </div>
                 </dd>
                 <dt><span jhiTranslate="gestionevenementappApp.participant.ville">Ville</span></dt>
                 <dd>
@@ -43,6 +53,7 @@
                     class="btn btn-primary">
                 <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
             </button>
+
         </div>
     </div>
 </div>

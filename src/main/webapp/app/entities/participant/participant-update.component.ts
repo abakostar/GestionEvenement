@@ -4,6 +4,7 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import * as moment from 'moment';
 
 import { IParticipant, Participant } from 'app/shared/model/participant.model';
 import { ParticipantService } from './participant.service';
@@ -20,10 +21,20 @@ export class ParticipantUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    nom: [],
     sexe: [],
     telephone: [],
+    userId: [],
+    login: [],
+    firstName: [],
+    lastName: [],
     email: [],
+    activated: [],
+    langKey: [],
+    createdBy: [],
+    createdDate: [],
+    lastModifiedBy: [],
+    lastModifiedDate: [],
+    password: [],
     villeId: [],
   });
 
@@ -36,6 +47,12 @@ export class ParticipantUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ participant }) => {
+      if (!participant.id) {
+        const today = moment().startOf('day');
+        participant.createdDate = today;
+        participant.lastModifiedDate = today;
+      }
+
       this.updateForm(participant);
 
       this.villeService.query().subscribe((res: HttpResponse<IVille[]>) => (this.villes = res.body || []));
@@ -45,10 +62,13 @@ export class ParticipantUpdateComponent implements OnInit {
   updateForm(participant: IParticipant): void {
     this.editForm.patchValue({
       id: participant.id,
-      nom: participant.nom,
       sexe: participant.sexe,
       telephone: participant.telephone,
+      login: participant.login,
+      firstName: participant.firstName,
+      lastName: participant.lastName,
       email: participant.email,
+      password: participant.password,
       villeId: participant.villeId,
     });
   }
@@ -71,10 +91,13 @@ export class ParticipantUpdateComponent implements OnInit {
     return {
       ...new Participant(),
       id: this.editForm.get(['id'])!.value,
-      nom: this.editForm.get(['nom'])!.value,
       sexe: this.editForm.get(['sexe'])!.value,
       telephone: this.editForm.get(['telephone'])!.value,
+      login: this.editForm.get(['login'])!.value,
+      firstName: this.editForm.get(['firstName'])!.value,
+      lastName: this.editForm.get(['lastName'])!.value,
       email: this.editForm.get(['email'])!.value,
+      password: this.editForm.get(['password'])!.value,
       villeId: this.editForm.get(['villeId'])!.value,
     };
   }

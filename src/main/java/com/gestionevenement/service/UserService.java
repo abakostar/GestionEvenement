@@ -86,6 +86,11 @@ public class UserService {
     }
 
     public User registerUser(UserDTO userDTO, String password) {
+        return registerUser(userDTO, Collections.singleton(AuthoritiesConstants.USER), password, false);
+    }
+
+
+    public User registerUser(UserDTO userDTO, Set<String> authoritiesAsString, String password, boolean activated) {
         userRepository.findOneByLogin(userDTO.getLogin().toLowerCase()).ifPresent(existingUser -> {
             boolean removed = removeNonActivatedUser(existingUser);
             if (!removed) {
@@ -111,11 +116,11 @@ public class UserService {
         newUser.setImageUrl(userDTO.getImageUrl());
         newUser.setLangKey(userDTO.getLangKey());
         // new user is not active
-        newUser.setActivated(false);
+        newUser.setActivated(activated);
         // new user gets registration key
         newUser.setActivationKey(RandomUtil.generateActivationKey());
-        Set<Authority> authorities = new HashSet<>();
-        authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
+
+        Set<Authority> authorities = new HashSet<>(authorityRepository.findAllById(authoritiesAsString));
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
@@ -300,4 +305,7 @@ public class UserService {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
     }
 
+    public User findByLogin(String login) {
+        return userRepository.findOneByLogin(login).orElse(null);
+    }
 }

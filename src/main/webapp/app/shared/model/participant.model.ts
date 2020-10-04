@@ -1,9 +1,12 @@
 export interface IParticipant {
   id?: number;
-  nom?: string;
   sexe?: string;
   telephone?: string;
+  login?: string;
+  firstName?: string;
+  lastName?: string;
   email?: string;
+  password?: string;
   villeNom?: string;
   villeId?: number;
 }
@@ -11,11 +14,15 @@ export interface IParticipant {
 export class Participant implements IParticipant {
   constructor(
     public id?: number,
-    public nom?: string,
     public sexe?: string,
     public telephone?: string,
+    public login?: string,
+    public firstName?: string,
+    public lastName?: string,
     public email?: string,
+    public password?: string,
     public villeNom?: string,
     public villeId?: number
-  ) {}
+  ) {
+  }
 }

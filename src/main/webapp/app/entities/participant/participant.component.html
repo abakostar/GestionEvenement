@@ -23,24 +23,30 @@
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
                     <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="nom"><span jhiTranslate="gestionevenementappApp.participant.nom">Nom</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="firstName"><span jhiTranslate="gestionevenementappApp.participant.firstName">First Name</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="lastName"><span jhiTranslate="gestionevenementappApp.participant.lastName">Last Name</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="sexe"><span jhiTranslate="gestionevenementappApp.participant.sexe">Sexe</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="telephone"><span jhiTranslate="gestionevenementappApp.participant.telephone">Telephone</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="email"><span jhiTranslate="gestionevenementappApp.participant.email">Email</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="villeNom"><span jhiTranslate="gestionevenementappApp.participant.ville">Ville</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="villeNom"><span jhiTranslate="gestionevenementappApp.participant.login">Login</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                 <tr *ngFor="let participant of participants ;trackBy: trackId">
                     <td><a [routerLink]="['/participant', participant.id, 'view']">{{ participant.id }}</a></td>
-                    <td>{{ participant.nom }}</td>
+                    <td>{{ participant.firstName }}</td>
+                    <td>{{ participant.lastName }}</td>
                     <td>{{ participant.sexe }}</td>
                     <td>{{ participant.telephone }}</td>
-                    <td>{{ participant.email }}</td>
                     <td>
                         <div *ngIf="participant.villeId">
                             <a [routerLink]="['/ville', participant.villeId , 'view']" >{{ participant.villeNom }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="participant.villeId">
+                            <a [routerLink]="['/admin/user-management', participant.login , 'view']" >{{ participant.login }}</a>
                         </div>
                     </td>
                     <td class="text-right">

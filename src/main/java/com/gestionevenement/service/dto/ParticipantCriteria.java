@@ -10,6 +10,7 @@ import io.github.jhipster.service.filter.FloatFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
+import io.github.jhipster.service.filter.ZonedDateTimeFilter;
 
 /**
  * Criteria class for the {@link com.gestionevenement.domain.Participant} entity. This class is used
@@ -26,13 +27,11 @@ public class ParticipantCriteria implements Serializable, Criteria {
 
     private LongFilter id;
 
-    private StringFilter nom;
-
     private StringFilter sexe;
 
     private StringFilter telephone;
 
-    private StringFilter email;
+    private StringFilter login;
 
     private LongFilter villeId;
 
@@ -41,10 +40,9 @@ public class ParticipantCriteria implements Serializable, Criteria {
 
     public ParticipantCriteria(ParticipantCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
-        this.nom = other.nom == null ? null : other.nom.copy();
         this.sexe = other.sexe == null ? null : other.sexe.copy();
         this.telephone = other.telephone == null ? null : other.telephone.copy();
-        this.email = other.email == null ? null : other.email.copy();
+        this.login = other.login == null ? null : other.login.copy();
         this.villeId = other.villeId == null ? null : other.villeId.copy();
     }
 
@@ -59,14 +57,6 @@ public class ParticipantCriteria implements Serializable, Criteria {
 
     public void setId(LongFilter id) {
         this.id = id;
-    }
-
-    public StringFilter getNom() {
-        return nom;
-    }
-
-    public void setNom(StringFilter nom) {
-        this.nom = nom;
     }
 
     public StringFilter getSexe() {
@@ -85,12 +75,12 @@ public class ParticipantCriteria implements Serializable, Criteria {
         this.telephone = telephone;
     }
 
-    public StringFilter getEmail() {
-        return email;
+    public StringFilter getLogin() {
+        return login;
     }
 
-    public void setEmail(StringFilter email) {
-        this.email = email;
+    public void setLogin(StringFilter login) {
+        this.login = login;
     }
 
     public LongFilter getVilleId() {
@@ -113,10 +103,9 @@ public class ParticipantCriteria implements Serializable, Criteria {
         final ParticipantCriteria that = (ParticipantCriteria) o;
         return
             Objects.equals(id, that.id) &&
-            Objects.equals(nom, that.nom) &&
             Objects.equals(sexe, that.sexe) &&
             Objects.equals(telephone, that.telephone) &&
-            Objects.equals(email, that.email) &&
+            Objects.equals(login, that.login) &&
             Objects.equals(villeId, that.villeId);
     }
 
@@ -124,10 +113,9 @@ public class ParticipantCriteria implements Serializable, Criteria {
     public int hashCode() {
         return Objects.hash(
         id,
-        nom,
         sexe,
         telephone,
-        email,
+        login,
         villeId
         );
     }
@@ -137,10 +125,9 @@ public class ParticipantCriteria implements Serializable, Criteria {
     public String toString() {
         return "ParticipantCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
-                (nom != null ? "nom=" + nom + ", " : "") +
                 (sexe != null ? "sexe=" + sexe + ", " : "") +
                 (telephone != null ? "telephone=" + telephone + ", " : "") +
-                (email != null ? "email=" + email + ", " : "") +
+                (login != null ? "login=" + login + ", " : "") +
                 (villeId != null ? "villeId=" + villeId + ", " : "") +
             "}";
     }

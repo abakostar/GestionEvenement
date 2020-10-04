@@ -41,7 +41,7 @@
                     <label class="form-control-label" jhiTranslate="gestionevenementappApp.inscriptionEvenement.participant" for="field_participant">Participant</label>
                     <select class="form-control" id="field_participant" name="participant" formControlName="participantId">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="participantOption.id" *ngFor="let participantOption of participants; trackBy: trackById">{{ participantOption.nom }}</option>
+                        <option [ngValue]="participantOption.id" *ngFor="let participantOption of participants; trackBy: trackById">{{ participantOption.firstName }}</option>
                     </select>
                 </div>
             </div>

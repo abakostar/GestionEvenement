@@ -3,7 +3,7 @@ export interface IInscriptionActivite {
   role?: string;
   activiteNom?: string;
   activiteId?: number;
-  participantNom?: string;
+  participantFirstName?: string;
   participantId?: number;
 }
 
@@ -13,7 +13,7 @@ export class InscriptionActivite implements IInscriptionActivite {
     public role?: string,
     public activiteNom?: string,
     public activiteId?: number,
-    public participantNom?: string,
+    public participantFirstName?: string,
     public participantId?: number
   ) {}
 }

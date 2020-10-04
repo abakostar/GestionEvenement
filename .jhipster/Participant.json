@@ -12,7 +12,7 @@
   ],
   "fields": [
     {
-      "fieldName": "nom",
+      "fieldName": "login",
       "fieldType": "String"
     },
     {
@@ -21,10 +21,6 @@
     },
     {
       "fieldName": "telephone",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "email",
       "fieldType": "String"
     }
   ],

@@ -15,7 +15,7 @@ public interface InscriptionActiviteMapper extends EntityMapper<InscriptionActiv
     @Mapping(source = "activite.id", target = "activiteId")
     @Mapping(source = "activite.nom", target = "activiteNom")
     @Mapping(source = "participant.id", target = "participantId")
-    @Mapping(source = "participant.nom", target = "participantNom")
+    @Mapping(source = "participant.login", target = "participantFirstName")
     InscriptionActiviteDTO toDto(InscriptionActivite inscriptionActivite);
 
     @Mapping(source = "activiteId", target = "activite")

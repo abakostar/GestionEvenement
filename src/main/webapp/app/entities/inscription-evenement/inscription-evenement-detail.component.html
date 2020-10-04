@@ -25,7 +25,7 @@
                 <dt><span jhiTranslate="gestionevenementappApp.inscriptionEvenement.participant">Participant</span></dt>
                 <dd>
                     <div *ngIf="inscriptionEvenement.participantId">
-                        <a [routerLink]="['/participant', inscriptionEvenement.participantId, 'view']">{{ inscriptionEvenement.participantNom }}</a>
+                        <a [routerLink]="['/participant', inscriptionEvenement.participantId, 'view']">{{ inscriptionEvenement.participantFirstName }}</a>
                     </div>
                 </dd>
             </dl>

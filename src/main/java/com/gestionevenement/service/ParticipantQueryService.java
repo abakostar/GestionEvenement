@@ -91,17 +91,14 @@ public class ParticipantQueryService extends QueryService<Participant> {
             if (criteria.getId() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getId(), Participant_.id));
             }
-            if (criteria.getNom() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getNom(), Participant_.nom));
-            }
             if (criteria.getSexe() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getSexe(), Participant_.sexe));
             }
             if (criteria.getTelephone() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getTelephone(), Participant_.telephone));
             }
-            if (criteria.getEmail() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getEmail(), Participant_.email));
+            if (criteria.getLogin() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getLogin(), Participant_.login));
             }
             if (criteria.getVilleId() != null) {
                 specification = specification.and(buildSpecification(criteria.getVilleId(),

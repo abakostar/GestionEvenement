@@ -16,10 +16,20 @@
       "detail": {
         "title": "Participant"
       },
-      "nom": "Nom",
       "sexe": "Sexe",
       "telephone": "Telephone",
+      "userId": "User Id",
+      "login": "Login",
+      "firstName": "Nom",
+      "lastName": "Prenom",
       "email": "Email",
+      "activated": "Activated",
+      "langKey": "Lang Key",
+      "createdBy": "Created By",
+      "createdDate": "Created Date",
+      "lastModifiedBy": "Last Modified By",
+      "lastModifiedDate": "Last Modified Date",
+      "password": "Password",
       "ville": "Ville"
     }
   }

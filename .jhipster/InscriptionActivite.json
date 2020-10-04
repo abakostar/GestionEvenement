@@ -13,7 +13,7 @@
       "relationshipName": "participant",
       "otherEntityName": "participant",
       "relationshipType": "many-to-one",
-      "otherEntityField": "nom",
+      "otherEntityField": "login",
       "otherEntityRelationshipName": "inscriptionActivite"
     }
   ],

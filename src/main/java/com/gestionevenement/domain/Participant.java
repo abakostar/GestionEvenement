@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 
 /**
  * A Participant.
@@ -20,17 +21,14 @@ public class Participant implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "nom")
-    private String nom;
-
     @Column(name = "sexe")
     private String sexe;
 
     @Column(name = "telephone")
     private String telephone;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "login")
+    private String login;
 
     @ManyToOne
     @JsonIgnoreProperties(value = "participants", allowSetters = true)
@@ -43,19 +41,6 @@ public class Participant implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public Participant nom(String nom) {
-        this.nom = nom;
-        return this;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
     }
 
     public String getSexe() {
@@ -84,17 +69,17 @@ public class Participant implements Serializable {
         this.telephone = telephone;
     }
 
-    public String getEmail() {
-        return email;
+    public String getLogin() {
+        return login;
     }
 
-    public Participant email(String email) {
-        this.email = email;
+    public Participant login(String login) {
+        this.login = login;
         return this;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public Ville getVille() {
@@ -132,10 +117,9 @@ public class Participant implements Serializable {
     public String toString() {
         return "Participant{" +
             "id=" + getId() +
-            ", nom='" + getNom() + "'" +
             ", sexe='" + getSexe() + "'" +
             ", telephone='" + getTelephone() + "'" +
-            ", email='" + getEmail() + "'" +
+            ", login=" + getLogin() +
             "}";
     }
 }

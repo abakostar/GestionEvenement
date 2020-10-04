@@ -1,11 +1,16 @@
 package com.gestionevenement.web.rest;
 
+import com.gestionevenement.domain.User;
+import com.gestionevenement.security.AuthoritiesConstants;
 import com.gestionevenement.service.ParticipantService;
+import com.gestionevenement.service.UserService;
+import com.gestionevenement.service.dto.UserDTO;
 import com.gestionevenement.web.rest.errors.BadRequestAlertException;
 import com.gestionevenement.service.dto.ParticipantDTO;
 import com.gestionevenement.service.dto.ParticipantCriteria;
 import com.gestionevenement.service.ParticipantQueryService;
 
+import com.gestionevenement.web.rest.vm.ManagedUserVM;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -22,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,8 +49,11 @@ public class ParticipantResource {
 
     private final ParticipantQueryService participantQueryService;
 
-    public ParticipantResource(ParticipantService participantService, ParticipantQueryService participantQueryService) {
+    private final UserService userService;
+
+    public ParticipantResource(ParticipantService participantService, UserService userService, ParticipantQueryService participantQueryService) {
         this.participantService = participantService;
+        this.userService = userService;
         this.participantQueryService = participantQueryService;
     }
 
@@ -61,7 +70,12 @@ public class ParticipantResource {
         if (participantDTO.getId() != null) {
             throw new BadRequestAlertException("A new participant cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
         ParticipantDTO result = participantService.save(participantDTO);
+
+        // create user
+        ManagedUserVM user = participantDTO.getUser();
+        userService.registerUser(user, Collections.singleton(AuthoritiesConstants.PARTICIPANT), user.getPassword(), true);
         return ResponseEntity.created(new URI("/api/participants/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -99,6 +113,10 @@ public class ParticipantResource {
     public ResponseEntity<List<ParticipantDTO>> getAllParticipants(ParticipantCriteria criteria, Pageable pageable) {
         log.debug("REST request to get Participants by criteria: {}", criteria);
         Page<ParticipantDTO> page = participantQueryService.findByCriteria(criteria, pageable);
+        page.forEach(participantDTO -> {
+            User user = userService.findByLogin(participantDTO.getLogin());
+            if(user != null) participantDTO.setUser(user);
+        });
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -125,6 +143,10 @@ public class ParticipantResource {
     public ResponseEntity<ParticipantDTO> getParticipant(@PathVariable Long id) {
         log.debug("REST request to get Participant : {}", id);
         Optional<ParticipantDTO> participantDTO = participantService.findOne(id);
+        participantDTO.ifPresent(participantDTO1 -> {
+            User user = userService.findByLogin(participantDTO1.getLogin());
+            if(user != null) participantDTO1.setUser(user);
+        });
         return ResponseUtil.wrapOrNotFound(participantDTO);
     }
 
@@ -137,7 +159,13 @@ public class ParticipantResource {
     @DeleteMapping("/participants/{id}")
     public ResponseEntity<Void> deleteParticipant(@PathVariable Long id) {
         log.debug("REST request to delete Participant : {}", id);
-        participantService.delete(id);
+        Optional<ParticipantDTO> result = participantService.findOne(id);
+        result.ifPresent(participantDTO -> {
+            userService.deleteUser(participantDTO.getLogin());
+            participantService.delete(id);
+            // delete evements
+            // delete activite
+        });
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

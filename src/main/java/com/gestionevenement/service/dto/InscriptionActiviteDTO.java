@@ -18,7 +18,7 @@ public class InscriptionActiviteDTO implements Serializable {
 
     private Long participantId;
 
-    private String participantNom;
+    private String participantFirstName;
     
     public Long getId() {
         return id;
@@ -60,12 +60,12 @@ public class InscriptionActiviteDTO implements Serializable {
         this.participantId = participantId;
     }
 
-    public String getParticipantNom() {
-        return participantNom;
+    public String getParticipantFirstName() {
+        return participantFirstName;
     }
 
-    public void setParticipantNom(String participantNom) {
-        this.participantNom = participantNom;
+    public void setParticipantFirstName(String participantFirstName) {
+        this.participantFirstName = participantFirstName;
     }
 
     @Override
@@ -94,7 +94,7 @@ public class InscriptionActiviteDTO implements Serializable {
             ", activiteId=" + getActiviteId() +
             ", activiteNom='" + getActiviteNom() + "'" +
             ", participantId=" + getParticipantId() +
-            ", participantNom='" + getParticipantNom() + "'" +
+            ", participantFirstName='" + getParticipantFirstName() + "'" +
             "}";
     }
 }

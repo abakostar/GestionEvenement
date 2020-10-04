@@ -7,7 +7,6 @@ import com.gestionevenement.repository.ParticipantRepository;
 import com.gestionevenement.service.ParticipantService;
 import com.gestionevenement.service.dto.ParticipantDTO;
 import com.gestionevenement.service.mapper.ParticipantMapper;
-import com.gestionevenement.service.dto.ParticipantCriteria;
 import com.gestionevenement.service.ParticipantQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -19,9 +18,15 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.util.List;
 
+import static com.gestionevenement.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -36,17 +41,50 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WithMockUser
 public class ParticipantResourceIT {
 
-    private static final String DEFAULT_NOM = "AAAAAAAAAA";
-    private static final String UPDATED_NOM = "BBBBBBBBBB";
-
     private static final String DEFAULT_SEXE = "AAAAAAAAAA";
     private static final String UPDATED_SEXE = "BBBBBBBBBB";
 
     private static final String DEFAULT_TELEPHONE = "AAAAAAAAAA";
     private static final String UPDATED_TELEPHONE = "BBBBBBBBBB";
 
+    private static final Long DEFAULT_USER_ID = 1L;
+    private static final Long UPDATED_USER_ID = 2L;
+    private static final Long SMALLER_USER_ID = 1L - 1L;
+
+    private static final String DEFAULT_LOGIN = "AAAAAAAAAA";
+    private static final String UPDATED_LOGIN = "BBBBBBBBBB";
+
+    private static final String DEFAULT_FIRST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_FIRST_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_LAST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_LAST_NAME = "BBBBBBBBBB";
+
     private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
     private static final String UPDATED_EMAIL = "BBBBBBBBBB";
+
+    private static final Boolean DEFAULT_ACTIVATED = false;
+    private static final Boolean UPDATED_ACTIVATED = true;
+
+    private static final String DEFAULT_LANG_KEY = "AAAAAAAAAA";
+    private static final String UPDATED_LANG_KEY = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CREATED_BY = "AAAAAAAAAA";
+    private static final String UPDATED_CREATED_BY = "BBBBBBBBBB";
+
+    private static final ZonedDateTime DEFAULT_CREATED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_CREATED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+    private static final ZonedDateTime SMALLER_CREATED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(-1L), ZoneOffset.UTC);
+
+    private static final String DEFAULT_LAST_MODIFIED_BY = "AAAAAAAAAA";
+    private static final String UPDATED_LAST_MODIFIED_BY = "BBBBBBBBBB";
+
+    private static final ZonedDateTime DEFAULT_LAST_MODIFIED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_LAST_MODIFIED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+    private static final ZonedDateTime SMALLER_LAST_MODIFIED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(-1L), ZoneOffset.UTC);
+
+    private static final String DEFAULT_PASSWORD = "AAAAAAAAAA";
+    private static final String UPDATED_PASSWORD = "BBBBBBBBBB";
 
     @Autowired
     private ParticipantRepository participantRepository;
@@ -70,30 +108,29 @@ public class ParticipantResourceIT {
 
     /**
      * Create an entity for this test.
-     *
+     * <p>
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
     public static Participant createEntity(EntityManager em) {
         Participant participant = new Participant()
-            .nom(DEFAULT_NOM)
             .sexe(DEFAULT_SEXE)
             .telephone(DEFAULT_TELEPHONE)
-            .email(DEFAULT_EMAIL);
+            .login(DEFAULT_LOGIN);
         return participant;
     }
+
     /**
      * Create an updated entity for this test.
-     *
+     * <p>
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
     public static Participant createUpdatedEntity(EntityManager em) {
         Participant participant = new Participant()
-            .nom(UPDATED_NOM)
             .sexe(UPDATED_SEXE)
             .telephone(UPDATED_TELEPHONE)
-            .email(UPDATED_EMAIL);
+            .login(UPDATED_LOGIN);
         return participant;
     }
 
@@ -108,6 +145,11 @@ public class ParticipantResourceIT {
         int databaseSizeBeforeCreate = participantRepository.findAll().size();
         // Create the Participant
         ParticipantDTO participantDTO = participantMapper.toDto(participant);
+        participantDTO.setLogin(DEFAULT_LOGIN);
+        participantDTO.setPassword("password");
+        participantDTO.setFirstName("FirstName");
+        participantDTO.setLastName("LastName");
+        participantDTO.setEmail("email@gmail.com");
         restParticipantMockMvc.perform(post("/api/participants").with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(participantDTO)))
@@ -117,10 +159,9 @@ public class ParticipantResourceIT {
         List<Participant> participantList = participantRepository.findAll();
         assertThat(participantList).hasSize(databaseSizeBeforeCreate + 1);
         Participant testParticipant = participantList.get(participantList.size() - 1);
-        assertThat(testParticipant.getNom()).isEqualTo(DEFAULT_NOM);
         assertThat(testParticipant.getSexe()).isEqualTo(DEFAULT_SEXE);
         assertThat(testParticipant.getTelephone()).isEqualTo(DEFAULT_TELEPHONE);
-        assertThat(testParticipant.getEmail()).isEqualTo(DEFAULT_EMAIL);
+        assertThat(testParticipant.getLogin()).isEqualTo(DEFAULT_LOGIN);
     }
 
     @Test
@@ -155,12 +196,11 @@ public class ParticipantResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(participant.getId().intValue())))
-            .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM)))
             .andExpect(jsonPath("$.[*].sexe").value(hasItem(DEFAULT_SEXE)))
             .andExpect(jsonPath("$.[*].telephone").value(hasItem(DEFAULT_TELEPHONE)))
-            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)));
+            .andExpect(jsonPath("$.[*].login").value(hasItem(DEFAULT_LOGIN)));
     }
-    
+
     @Test
     @Transactional
     public void getParticipant() throws Exception {
@@ -172,10 +212,9 @@ public class ParticipantResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(participant.getId().intValue()))
-            .andExpect(jsonPath("$.nom").value(DEFAULT_NOM))
             .andExpect(jsonPath("$.sexe").value(DEFAULT_SEXE))
             .andExpect(jsonPath("$.telephone").value(DEFAULT_TELEPHONE))
-            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL));
+            .andExpect(jsonPath("$.login").value(DEFAULT_LOGIN));
     }
 
 
@@ -195,84 +234,6 @@ public class ParticipantResourceIT {
 
         defaultParticipantShouldBeFound("id.lessThanOrEqual=" + id);
         defaultParticipantShouldNotBeFound("id.lessThan=" + id);
-    }
-
-
-    @Test
-    @Transactional
-    public void getAllParticipantsByNomIsEqualToSomething() throws Exception {
-        // Initialize the database
-        participantRepository.saveAndFlush(participant);
-
-        // Get all the participantList where nom equals to DEFAULT_NOM
-        defaultParticipantShouldBeFound("nom.equals=" + DEFAULT_NOM);
-
-        // Get all the participantList where nom equals to UPDATED_NOM
-        defaultParticipantShouldNotBeFound("nom.equals=" + UPDATED_NOM);
-    }
-
-    @Test
-    @Transactional
-    public void getAllParticipantsByNomIsNotEqualToSomething() throws Exception {
-        // Initialize the database
-        participantRepository.saveAndFlush(participant);
-
-        // Get all the participantList where nom not equals to DEFAULT_NOM
-        defaultParticipantShouldNotBeFound("nom.notEquals=" + DEFAULT_NOM);
-
-        // Get all the participantList where nom not equals to UPDATED_NOM
-        defaultParticipantShouldBeFound("nom.notEquals=" + UPDATED_NOM);
-    }
-
-    @Test
-    @Transactional
-    public void getAllParticipantsByNomIsInShouldWork() throws Exception {
-        // Initialize the database
-        participantRepository.saveAndFlush(participant);
-
-        // Get all the participantList where nom in DEFAULT_NOM or UPDATED_NOM
-        defaultParticipantShouldBeFound("nom.in=" + DEFAULT_NOM + "," + UPDATED_NOM);
-
-        // Get all the participantList where nom equals to UPDATED_NOM
-        defaultParticipantShouldNotBeFound("nom.in=" + UPDATED_NOM);
-    }
-
-    @Test
-    @Transactional
-    public void getAllParticipantsByNomIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        participantRepository.saveAndFlush(participant);
-
-        // Get all the participantList where nom is not null
-        defaultParticipantShouldBeFound("nom.specified=true");
-
-        // Get all the participantList where nom is null
-        defaultParticipantShouldNotBeFound("nom.specified=false");
-    }
-                @Test
-    @Transactional
-    public void getAllParticipantsByNomContainsSomething() throws Exception {
-        // Initialize the database
-        participantRepository.saveAndFlush(participant);
-
-        // Get all the participantList where nom contains DEFAULT_NOM
-        defaultParticipantShouldBeFound("nom.contains=" + DEFAULT_NOM);
-
-        // Get all the participantList where nom contains UPDATED_NOM
-        defaultParticipantShouldNotBeFound("nom.contains=" + UPDATED_NOM);
-    }
-
-    @Test
-    @Transactional
-    public void getAllParticipantsByNomNotContainsSomething() throws Exception {
-        // Initialize the database
-        participantRepository.saveAndFlush(participant);
-
-        // Get all the participantList where nom does not contain DEFAULT_NOM
-        defaultParticipantShouldNotBeFound("nom.doesNotContain=" + DEFAULT_NOM);
-
-        // Get all the participantList where nom does not contain UPDATED_NOM
-        defaultParticipantShouldBeFound("nom.doesNotContain=" + UPDATED_NOM);
     }
 
 
@@ -327,7 +288,8 @@ public class ParticipantResourceIT {
         // Get all the participantList where sexe is null
         defaultParticipantShouldNotBeFound("sexe.specified=false");
     }
-                @Test
+
+    @Test
     @Transactional
     public void getAllParticipantsBySexeContainsSomething() throws Exception {
         // Initialize the database
@@ -405,7 +367,8 @@ public class ParticipantResourceIT {
         // Get all the participantList where telephone is null
         defaultParticipantShouldNotBeFound("telephone.specified=false");
     }
-                @Test
+
+    @Test
     @Transactional
     public void getAllParticipantsByTelephoneContainsSomething() throws Exception {
         // Initialize the database
@@ -431,83 +394,97 @@ public class ParticipantResourceIT {
         defaultParticipantShouldBeFound("telephone.doesNotContain=" + UPDATED_TELEPHONE);
     }
 
-
     @Test
     @Transactional
-    public void getAllParticipantsByEmailIsEqualToSomething() throws Exception {
+    public void getAllParticipantsByLoginIsEqualToSomething() throws Exception {
         // Initialize the database
         participantRepository.saveAndFlush(participant);
 
-        // Get all the participantList where email equals to DEFAULT_EMAIL
-        defaultParticipantShouldBeFound("email.equals=" + DEFAULT_EMAIL);
+        // Get all the participantList where login equals to DEFAULT_LOGIN
+        defaultParticipantShouldBeFound("login.equals=" + DEFAULT_LOGIN);
 
-        // Get all the participantList where email equals to UPDATED_EMAIL
-        defaultParticipantShouldNotBeFound("email.equals=" + UPDATED_EMAIL);
-    }
-
-    @Test
-    @Transactional
-    public void getAllParticipantsByEmailIsNotEqualToSomething() throws Exception {
-        // Initialize the database
-        participantRepository.saveAndFlush(participant);
-
-        // Get all the participantList where email not equals to DEFAULT_EMAIL
-        defaultParticipantShouldNotBeFound("email.notEquals=" + DEFAULT_EMAIL);
-
-        // Get all the participantList where email not equals to UPDATED_EMAIL
-        defaultParticipantShouldBeFound("email.notEquals=" + UPDATED_EMAIL);
+        // Get all the participantList where login equals to UPDATED_LOGIN
+        defaultParticipantShouldNotBeFound("login.equals=" + UPDATED_LOGIN);
     }
 
     @Test
     @Transactional
-    public void getAllParticipantsByEmailIsInShouldWork() throws Exception {
+    public void getAllParticipantsByLoginIsNotEqualToSomething() throws Exception {
         // Initialize the database
         participantRepository.saveAndFlush(participant);
 
-        // Get all the participantList where email in DEFAULT_EMAIL or UPDATED_EMAIL
-        defaultParticipantShouldBeFound("email.in=" + DEFAULT_EMAIL + "," + UPDATED_EMAIL);
+        // Get all the participantList where login not equals to DEFAULT_LOGIN
+        defaultParticipantShouldNotBeFound("login.notEquals=" + DEFAULT_LOGIN);
 
-        // Get all the participantList where email equals to UPDATED_EMAIL
-        defaultParticipantShouldNotBeFound("email.in=" + UPDATED_EMAIL);
+        // Get all the participantList where login not equals to UPDATED_LOGIN
+        defaultParticipantShouldBeFound("login.notEquals=" + UPDATED_LOGIN);
     }
 
     @Test
     @Transactional
-    public void getAllParticipantsByEmailIsNullOrNotNull() throws Exception {
+    public void getAllParticipantsByLoginIsInShouldWork() throws Exception {
         // Initialize the database
         participantRepository.saveAndFlush(participant);
 
-        // Get all the participantList where email is not null
-        defaultParticipantShouldBeFound("email.specified=true");
+        // Get all the participantList where login in DEFAULT_LOGIN or UPDATED_LOGIN
+        defaultParticipantShouldBeFound("login.in=" + DEFAULT_LOGIN + "," + UPDATED_LOGIN);
 
-        // Get all the participantList where email is null
-        defaultParticipantShouldNotBeFound("email.specified=false");
-    }
-                @Test
-    @Transactional
-    public void getAllParticipantsByEmailContainsSomething() throws Exception {
-        // Initialize the database
-        participantRepository.saveAndFlush(participant);
-
-        // Get all the participantList where email contains DEFAULT_EMAIL
-        defaultParticipantShouldBeFound("email.contains=" + DEFAULT_EMAIL);
-
-        // Get all the participantList where email contains UPDATED_EMAIL
-        defaultParticipantShouldNotBeFound("email.contains=" + UPDATED_EMAIL);
+        // Get all the participantList where login equals to UPDATED_LOGIN
+        defaultParticipantShouldNotBeFound("login.in=" + UPDATED_LOGIN);
     }
 
     @Test
     @Transactional
-    public void getAllParticipantsByEmailNotContainsSomething() throws Exception {
+    public void getAllParticipantsByLoginIsNullOrNotNull() throws Exception {
         // Initialize the database
         participantRepository.saveAndFlush(participant);
 
-        // Get all the participantList where email does not contain DEFAULT_EMAIL
-        defaultParticipantShouldNotBeFound("email.doesNotContain=" + DEFAULT_EMAIL);
+        // Get all the participantList where login is not null
+        defaultParticipantShouldBeFound("login.specified=true");
 
-        // Get all the participantList where email does not contain UPDATED_EMAIL
-        defaultParticipantShouldBeFound("email.doesNotContain=" + UPDATED_EMAIL);
+        // Get all the participantList where login is null
+        defaultParticipantShouldNotBeFound("login.specified=false");
     }
+
+    @Test
+    @Transactional
+    public void getAllParticipantsByLoginContainsSomething() throws Exception {
+        // Initialize the database
+        participantRepository.saveAndFlush(participant);
+
+        // Get all the participantList where login contains DEFAULT_LOGIN
+        defaultParticipantShouldBeFound("login.contains=" + DEFAULT_LOGIN);
+
+        // Get all the participantList where login contains UPDATED_LOGIN
+        defaultParticipantShouldNotBeFound("login.contains=" + UPDATED_LOGIN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllParticipantsByLoginNotContainsSomething() throws Exception {
+        // Initialize the database
+        participantRepository.saveAndFlush(participant);
+
+        // Get all the participantList where login does not contain DEFAULT_LOGIN
+        defaultParticipantShouldNotBeFound("login.doesNotContain=" + DEFAULT_LOGIN);
+
+        // Get all the participantList where login does not contain UPDATED_LOGIN
+        defaultParticipantShouldBeFound("login.doesNotContain=" + UPDATED_LOGIN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllParticipantsByPasswordContainsSomething() throws Exception {
+        // Initialize the database
+        participantRepository.saveAndFlush(participant);
+
+        // Get all the participantList where password contains DEFAULT_PASSWORD
+        defaultParticipantShouldBeFound("password.contains=" + DEFAULT_PASSWORD);
+
+        // Get all the participantList where password contains UPDATED_PASSWORD
+    }
+
+
 
 
     @Test
@@ -537,10 +514,9 @@ public class ParticipantResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(participant.getId().intValue())))
-            .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM)))
             .andExpect(jsonPath("$.[*].sexe").value(hasItem(DEFAULT_SEXE)))
             .andExpect(jsonPath("$.[*].telephone").value(hasItem(DEFAULT_TELEPHONE)))
-            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)));
+            .andExpect(jsonPath("$.[*].login").value(hasItem(DEFAULT_LOGIN)));
 
         // Check, that the count call also returns 1
         restParticipantMockMvc.perform(get("/api/participants/count?sort=id,desc&" + filter))
@@ -587,10 +563,9 @@ public class ParticipantResourceIT {
         // Disconnect from session so that the updates on updatedParticipant are not directly saved in db
         em.detach(updatedParticipant);
         updatedParticipant
-            .nom(UPDATED_NOM)
             .sexe(UPDATED_SEXE)
             .telephone(UPDATED_TELEPHONE)
-            .email(UPDATED_EMAIL);
+            .login(UPDATED_LOGIN);
         ParticipantDTO participantDTO = participantMapper.toDto(updatedParticipant);
 
         restParticipantMockMvc.perform(put("/api/participants").with(csrf())
@@ -602,10 +577,9 @@ public class ParticipantResourceIT {
         List<Participant> participantList = participantRepository.findAll();
         assertThat(participantList).hasSize(databaseSizeBeforeUpdate);
         Participant testParticipant = participantList.get(participantList.size() - 1);
-        assertThat(testParticipant.getNom()).isEqualTo(UPDATED_NOM);
         assertThat(testParticipant.getSexe()).isEqualTo(UPDATED_SEXE);
         assertThat(testParticipant.getTelephone()).isEqualTo(UPDATED_TELEPHONE);
-        assertThat(testParticipant.getEmail()).isEqualTo(UPDATED_EMAIL);
+        assertThat(testParticipant.getLogin()).isEqualTo(UPDATED_LOGIN);
     }
 
     @Test

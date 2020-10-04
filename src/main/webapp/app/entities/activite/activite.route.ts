@@ -39,7 +39,7 @@ export const activiteRoute: Routes = [
     path: '',
     component: ActiviteComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.USER, Authority.PARTICIPANT],
       pageTitle: 'gestionevenementappApp.activite.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const activiteRoute: Routes = [
       activite: ActiviteResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.USER, Authority.PARTICIPANT],
       pageTitle: 'gestionevenementappApp.activite.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -63,7 +63,7 @@ export const activiteRoute: Routes = [
       activite: ActiviteResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.USER, Authority.PARTICIPANT],
       pageTitle: 'gestionevenementappApp.activite.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -75,7 +75,7 @@ export const activiteRoute: Routes = [
       activite: ActiviteResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.USER, Authority.PARTICIPANT],
       pageTitle: 'gestionevenementappApp.activite.home.title',
     },
     canActivate: [UserRouteAccessService],
