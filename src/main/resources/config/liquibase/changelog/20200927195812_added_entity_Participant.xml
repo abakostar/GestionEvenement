@@ -54,6 +54,9 @@
             <column name="participant_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
+            <column name="role" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
         <addPrimaryKey columnNames="participant_id, activite_id" tableName="participant_activite"/>
