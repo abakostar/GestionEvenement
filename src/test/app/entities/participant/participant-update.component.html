@@ -49,6 +49,13 @@
                         <option [ngValue]="getSelected(editForm.get('evenements')!.value, evenementOption)" *ngFor="let evenementOption of evenements; trackBy: trackById">{{ evenementOption.code }}</option>
                     </select>
                 </div>
+
+                <div class="form-group">
+                    <label jhiTranslate="gestionevenementappApp.participant.activite" for="field_activites">Activite</label>
+                    <select class="form-control" id="field_activites" multiple name="activites" formControlName="activites">
+                        <option [ngValue]="getSelected(editForm.get('activites')!.value, activiteOption)" *ngFor="let activiteOption of activites; trackBy: trackById">{{ activiteOption.nom }}</option>
+                    </select>
+                </div>
             </div>
 
             <div>

@@ -11,8 +11,12 @@ import { IVille } from 'app/shared/model/ville.model';
 import { VilleService } from 'app/entities/ville/ville.service';
 import { IEvenement } from 'app/shared/model/evenement.model';
 import { EvenementService } from 'app/entities/evenement/evenement.service';
+import { IActivite } from 'app/shared/model/activite.model';
+import { ActiviteService } from 'app/entities/activite/activite.service';
 
-type SelectableEntity = IVille | IEvenement;
+type SelectableEntity = IVille | IEvenement | IActivite;
+
+type SelectableManyToManyEntity = IEvenement | IActivite;
 
 @Component({
   selector: 'jhi-participant-update',
@@ -22,6 +26,7 @@ export class ParticipantUpdateComponent implements OnInit {
   isSaving = false;
   villes: IVille[] = [];
   evenements: IEvenement[] = [];
+  activites: IActivite[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -31,12 +36,14 @@ export class ParticipantUpdateComponent implements OnInit {
     email: [],
     villeId: [],
     evenements: [],
+    activites: [],
   });
 
   constructor(
     protected participantService: ParticipantService,
     protected villeService: VilleService,
     protected evenementService: EvenementService,
+    protected activiteService: ActiviteService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -48,6 +55,8 @@ export class ParticipantUpdateComponent implements OnInit {
       this.villeService.query().subscribe((res: HttpResponse<IVille[]>) => (this.villes = res.body || []));
 
       this.evenementService.query().subscribe((res: HttpResponse<IEvenement[]>) => (this.evenements = res.body || []));
+
+      this.activiteService.query().subscribe((res: HttpResponse<IActivite[]>) => (this.activites = res.body || []));
     });
   }
 
@@ -60,6 +69,7 @@ export class ParticipantUpdateComponent implements OnInit {
       email: participant.email,
       villeId: participant.villeId,
       evenements: participant.evenements,
+      activites: participant.activites,
     });
   }
 
@@ -87,6 +97,7 @@ export class ParticipantUpdateComponent implements OnInit {
       email: this.editForm.get(['email'])!.value,
       villeId: this.editForm.get(['villeId'])!.value,
       evenements: this.editForm.get(['evenements'])!.value,
+      activites: this.editForm.get(['activites'])!.value,
     };
   }
 
@@ -110,7 +121,7 @@ export class ParticipantUpdateComponent implements OnInit {
     return item.id;
   }
 
-  getSelected(selectedVals: IEvenement[], option: IEvenement): IEvenement {
+  getSelected(selectedVals: SelectableManyToManyEntity[], option: SelectableManyToManyEntity): SelectableManyToManyEntity {
     if (selectedVals) {
       for (let i = 0; i < selectedVals.length; i++) {
         if (option.id === selectedVals[i].id) {

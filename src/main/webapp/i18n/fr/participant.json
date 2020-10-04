@@ -21,7 +21,8 @@
       "telephone": "Telephone",
       "email": "Email",
       "ville": "Ville",
-      "evenement": "Evenement"
+      "evenement": "Evenement",
+      "activite": "Activite"
     }
   }
 }

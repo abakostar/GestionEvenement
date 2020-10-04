@@ -111,6 +111,10 @@ public class ParticipantQueryService extends QueryService<Participant> {
                 specification = specification.and(buildSpecification(criteria.getEvenementId(),
                     root -> root.join(Participant_.evenements, JoinType.LEFT).get(Evenement_.id)));
             }
+            if (criteria.getActiviteId() != null) {
+                specification = specification.and(buildSpecification(criteria.getActiviteId(),
+                    root -> root.join(Participant_.activites, JoinType.LEFT).get(Activite_.id)));
+            }
         }
         return specification;
     }

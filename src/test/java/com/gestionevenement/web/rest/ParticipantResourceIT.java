@@ -4,6 +4,7 @@ import com.gestionevenement.GestionevenementappApp;
 import com.gestionevenement.domain.Participant;
 import com.gestionevenement.domain.Ville;
 import com.gestionevenement.domain.Evenement;
+import com.gestionevenement.domain.Activite;
 import com.gestionevenement.repository.ParticipantRepository;
 import com.gestionevenement.service.ParticipantService;
 import com.gestionevenement.service.dto.ParticipantDTO;
@@ -582,6 +583,26 @@ public class ParticipantResourceIT {
 
         // Get all the participantList where evenement equals to evenementId + 1
         defaultParticipantShouldNotBeFound("evenementId.equals=" + (evenementId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllParticipantsByActiviteIsEqualToSomething() throws Exception {
+        // Initialize the database
+        participantRepository.saveAndFlush(participant);
+        Activite activite = ActiviteResourceIT.createEntity(em);
+        em.persist(activite);
+        em.flush();
+        participant.addActivite(activite);
+        participantRepository.saveAndFlush(participant);
+        Long activiteId = activite.getId();
+
+        // Get all the participantList where activite equals to activiteId
+        defaultParticipantShouldBeFound("activiteId.equals=" + activiteId);
+
+        // Get all the participantList where activite equals to activiteId + 1
+        defaultParticipantShouldNotBeFound("activiteId.equals=" + (activiteId + 1));
     }
 
     /**

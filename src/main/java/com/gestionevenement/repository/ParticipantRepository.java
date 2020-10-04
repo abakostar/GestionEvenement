@@ -17,13 +17,13 @@ import java.util.Optional;
 @Repository
 public interface ParticipantRepository extends JpaRepository<Participant, Long>, JpaSpecificationExecutor<Participant> {
 
-    @Query(value = "select distinct participant from Participant participant left join fetch participant.evenements",
+    @Query(value = "select distinct participant from Participant participant left join fetch participant.evenements left join fetch participant.activites",
         countQuery = "select count(distinct participant) from Participant participant")
     Page<Participant> findAllWithEagerRelationships(Pageable pageable);
 
-    @Query("select distinct participant from Participant participant left join fetch participant.evenements")
+    @Query("select distinct participant from Participant participant left join fetch participant.evenements left join fetch participant.activites")
     List<Participant> findAllWithEagerRelationships();
 
-    @Query("select participant from Participant participant left join fetch participant.evenements where participant.id =:id")
+    @Query("select participant from Participant participant left join fetch participant.evenements left join fetch participant.activites where participant.id =:id")
     Optional<Participant> findOneWithEagerRelationships(@Param("id") Long id);
 }

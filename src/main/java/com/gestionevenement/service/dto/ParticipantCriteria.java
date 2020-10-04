@@ -38,6 +38,8 @@ public class ParticipantCriteria implements Serializable, Criteria {
 
     private LongFilter evenementId;
 
+    private LongFilter activiteId;
+
     public ParticipantCriteria() {
     }
 
@@ -49,6 +51,7 @@ public class ParticipantCriteria implements Serializable, Criteria {
         this.email = other.email == null ? null : other.email.copy();
         this.villeId = other.villeId == null ? null : other.villeId.copy();
         this.evenementId = other.evenementId == null ? null : other.evenementId.copy();
+        this.activiteId = other.activiteId == null ? null : other.activiteId.copy();
     }
 
     @Override
@@ -112,6 +115,14 @@ public class ParticipantCriteria implements Serializable, Criteria {
         this.evenementId = evenementId;
     }
 
+    public LongFilter getActiviteId() {
+        return activiteId;
+    }
+
+    public void setActiviteId(LongFilter activiteId) {
+        this.activiteId = activiteId;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -129,7 +140,8 @@ public class ParticipantCriteria implements Serializable, Criteria {
             Objects.equals(telephone, that.telephone) &&
             Objects.equals(email, that.email) &&
             Objects.equals(villeId, that.villeId) &&
-            Objects.equals(evenementId, that.evenementId);
+            Objects.equals(evenementId, that.evenementId) &&
+            Objects.equals(activiteId, that.activiteId);
     }
 
     @Override
@@ -141,7 +153,8 @@ public class ParticipantCriteria implements Serializable, Criteria {
         telephone,
         email,
         villeId,
-        evenementId
+        evenementId,
+        activiteId
         );
     }
 
@@ -156,6 +169,7 @@ public class ParticipantCriteria implements Serializable, Criteria {
                 (email != null ? "email=" + email + ", " : "") +
                 (villeId != null ? "villeId=" + villeId + ", " : "") +
                 (evenementId != null ? "evenementId=" + evenementId + ", " : "") +
+                (activiteId != null ? "activiteId=" + activiteId + ", " : "") +
             "}";
     }
 

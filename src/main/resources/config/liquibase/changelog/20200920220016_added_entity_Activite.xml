@@ -6,7 +6,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    
+
     <!--
         Added the entity Activite.
     -->
@@ -70,6 +70,8 @@
             <column name="date_activite" type="date"/>
             <column name="heure_debut" type="datetime"/>
             <column name="heure_fin" type="datetime"/>
+            <column name="evenement_id" type="numeric"/>
+            <column name="emplacement_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

@@ -16,6 +16,14 @@
       "otherEntityField": "code",
       "ownerSide": true,
       "otherEntityRelationshipName": "participant"
+    },
+    {
+      "relationshipName": "activite",
+      "otherEntityName": "activite",
+      "relationshipType": "many-to-many",
+      "otherEntityField": "nom",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "participant"
     }
   ],
   "fields": [
