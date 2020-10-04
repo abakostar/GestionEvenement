@@ -28,6 +28,13 @@ public interface ParticipantService {
      */
     Page<ParticipantDTO> findAll(Pageable pageable);
 
+    /**
+     * Get all the participants with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    Page<ParticipantDTO> findAllWithEagerRelationships(Pageable pageable);
+
 
     /**
      * Get the "id" participant.

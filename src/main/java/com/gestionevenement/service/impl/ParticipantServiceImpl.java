@@ -50,11 +50,15 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
 
+    public Page<ParticipantDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return participantRepository.findAllWithEagerRelationships(pageable).map(participantMapper::toDto);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public Optional<ParticipantDTO> findOne(Long id) {
         log.debug("Request to get Participant : {}", id);
-        return participantRepository.findById(id)
+        return participantRepository.findOneWithEagerRelationships(id)
             .map(participantMapper::toDto);
     }
 

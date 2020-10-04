@@ -31,6 +31,9 @@
       "lastModifiedDate": "Last Modified Date",
       "password": "Password",
       "ville": "Ville"
+      "ville": "Ville",
+      "evenement": "Evenement",
+      "activite": "Activite"
     }
   }
 }

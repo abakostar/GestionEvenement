@@ -35,6 +35,10 @@ public class ParticipantCriteria implements Serializable, Criteria {
 
     private LongFilter villeId;
 
+    private LongFilter evenementId;
+
+    private LongFilter activiteId;
+
     public ParticipantCriteria() {
     }
 
@@ -44,6 +48,8 @@ public class ParticipantCriteria implements Serializable, Criteria {
         this.telephone = other.telephone == null ? null : other.telephone.copy();
         this.login = other.login == null ? null : other.login.copy();
         this.villeId = other.villeId == null ? null : other.villeId.copy();
+        this.evenementId = other.evenementId == null ? null : other.evenementId.copy();
+        this.activiteId = other.activiteId == null ? null : other.activiteId.copy();
     }
 
     @Override
@@ -91,6 +97,22 @@ public class ParticipantCriteria implements Serializable, Criteria {
         this.villeId = villeId;
     }
 
+    public LongFilter getEvenementId() {
+        return evenementId;
+    }
+
+    public void setEvenementId(LongFilter evenementId) {
+        this.evenementId = evenementId;
+    }
+
+    public LongFilter getActiviteId() {
+        return activiteId;
+    }
+
+    public void setActiviteId(LongFilter activiteId) {
+        this.activiteId = activiteId;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -107,6 +129,9 @@ public class ParticipantCriteria implements Serializable, Criteria {
             Objects.equals(telephone, that.telephone) &&
             Objects.equals(login, that.login) &&
             Objects.equals(villeId, that.villeId);
+            Objects.equals(villeId, that.villeId) &&
+            Objects.equals(evenementId, that.evenementId) &&
+            Objects.equals(activiteId, that.activiteId);
     }
 
     @Override
@@ -117,6 +142,9 @@ public class ParticipantCriteria implements Serializable, Criteria {
         telephone,
         login,
         villeId
+        villeId,
+        evenementId,
+        activiteId
         );
     }
 
@@ -129,6 +157,8 @@ public class ParticipantCriteria implements Serializable, Criteria {
                 (telephone != null ? "telephone=" + telephone + ", " : "") +
                 (login != null ? "login=" + login + ", " : "") +
                 (villeId != null ? "villeId=" + villeId + ", " : "") +
+                (evenementId != null ? "evenementId=" + evenementId + ", " : "") +
+                (activiteId != null ? "activiteId=" + activiteId + ", " : "") +
             "}";
     }
 

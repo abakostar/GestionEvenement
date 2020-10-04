@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.time.ZonedDateTime;
 
 /**
@@ -33,6 +35,18 @@ public class Participant implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties(value = "participants", allowSetters = true)
     private Ville ville;
+
+    @ManyToMany
+    @JoinTable(name = "participant_evenement",
+               joinColumns = @JoinColumn(name = "participant_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "evenement_id", referencedColumnName = "id"))
+    private Set<Evenement> evenements = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "participant_activite",
+               joinColumns = @JoinColumn(name = "participant_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "activite_id", referencedColumnName = "id"))
+    private Set<Activite> activites = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -93,6 +107,56 @@ public class Participant implements Serializable {
 
     public void setVille(Ville ville) {
         this.ville = ville;
+    }
+
+    public Set<Evenement> getEvenements() {
+        return evenements;
+    }
+
+    public Participant evenements(Set<Evenement> evenements) {
+        this.evenements = evenements;
+        return this;
+    }
+
+    public Participant addEvenement(Evenement evenement) {
+        this.evenements.add(evenement);
+        //evenement.getParticipants().add(this);
+        return this;
+    }
+
+    public Participant removeEvenement(Evenement evenement) {
+        this.evenements.remove(evenement);
+        //evenement.getParticipants().remove(this);
+        return this;
+    }
+
+    public void setEvenements(Set<Evenement> evenements) {
+        this.evenements = evenements;
+    }
+
+    public Set<Activite> getActivites() {
+        return activites;
+    }
+
+    public Participant activites(Set<Activite> activites) {
+        this.activites = activites;
+        return this;
+    }
+
+    public Participant addActivite(Activite activite) {
+        this.activites.add(activite);
+        //activite.getParticipants().add(this);
+        return this;
+    }
+
+    public Participant removeActivite(Activite activite) {
+        this.activites.remove(activite);
+        //activite.getParticipants().remove(this);
+        return this;
+    }
+
+    public void setActivites(Set<Activite> activites) {
+        this.activites = activites;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

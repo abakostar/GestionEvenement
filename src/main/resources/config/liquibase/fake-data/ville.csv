@@ -1,11 +1,7 @@
-id;nom
-1;Handmade Concrete Chair
-2;infrastructures
-3;SDD
-4;indexing
-5;hacking Stand-alone Won
-6;Burundi
-7;deposit SAS
-8;workforce firmware Awesome Wooden Gloves
-9;Avon turquoise efficient
-10;white Money Market Account
+id;nom;pays_id
+1;Yaounde;1
+2;Douala;1
+3;Libreville;2
+4;Paris;3
+5;Londres;4
+

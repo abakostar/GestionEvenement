@@ -33,6 +33,31 @@
 
     <changeSet id="20200927195812-1-relations" author="jhipster">
 
+        <createTable tableName="participant_evenement">
+            <column name="evenement_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="participant_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="participant_id, evenement_id" tableName="participant_evenement"/>
+
+        <createTable tableName="participant_activite">
+            <column name="activite_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="participant_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="participant_id, activite_id" tableName="participant_activite"/>
+
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 
@@ -53,6 +78,7 @@
             <column name="sexe" type="string"/>
             <column name="telephone" type="string"/>
             <column name="login" type="string"/>
+            <column name="ville_id" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

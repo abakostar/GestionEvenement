@@ -33,6 +33,9 @@ public class ParticipantDTO implements Serializable {
 
     private String villeNom;
 
+    private Set<EvenementDTO> evenements = new HashSet<>();
+    private Set<ActiviteDTO> activites = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -113,6 +116,22 @@ public class ParticipantDTO implements Serializable {
         this.villeNom = villeNom;
     }
 
+    public Set<EvenementDTO> getEvenements() {
+        return evenements;
+    }
+
+    public void setEvenements(Set<EvenementDTO> evenements) {
+        this.evenements = evenements;
+    }
+
+    public Set<ActiviteDTO> getActivites() {
+        return activites;
+    }
+
+    public void setActivites(Set<ActiviteDTO> activites) {
+        this.activites = activites;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -144,6 +163,8 @@ public class ParticipantDTO implements Serializable {
             ", password='" + getPassword() + "'" +
             ", villeId=" + getVilleId() +
             ", villeNom='" + getVilleNom() + "'" +
+            ", evenements='" + getEvenements() + "'" +
+            ", activites='" + getActivites() + "'" +
             "}";
     }
 

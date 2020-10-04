@@ -40,6 +40,18 @@
                         <a [routerLink]="['/ville', participant.villeId, 'view']">{{ participant.villeNom }}</a>
                     </div>
                 </dd>
+                <dt><span jhiTranslate="gestionevenementappApp.participant.evenement">Evenement</span></dt>
+                <dd>
+                    <span *ngFor="let evenement of participant.evenements; let last = last">
+                        <a [routerLink]="['/evenement', evenement?.id, 'view']">{{ evenement.code }}</a>{{ last ? '' : ', ' }}
+                    </span>
+                </dd>
+                <dt><span jhiTranslate="gestionevenementappApp.participant.activite">Activite</span></dt>
+                <dd>
+                    <span *ngFor="let activite of participant.activites; let last = last">
+                        <a [routerLink]="['/activite', activite?.id, 'view']">{{ activite.nom }}</a>{{ last ? '' : ', ' }}
+                    </span>
+                </dd>
             </dl>
 
             <button type="submit"

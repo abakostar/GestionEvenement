@@ -1,11 +1,6 @@
-id;nom;description;etatclos;date_activite;heure_debut;heure_fin
-1;alarm Extension eco-centric;Unbranded;false;2020-09-19;2020-09-20T07:35:48;2020-09-20T12:25:24
-2;National Automotive;Buckinghamshire Steel;true;2020-09-20;2020-09-20T16:32:22;2020-09-20T00:51:12
-3;Assistant Marketing Digitized;global Bedfordshire Tasty;false;2020-09-20;2020-09-20T21:22:04;2020-09-20T07:13:56
-4;budgetary management Switzerland;Lake;false;2020-09-20;2020-09-20T09:28:56;2020-09-20T02:51:23
-5;Metal;Anguilla District Maryland;false;2020-09-20;2020-09-20T20:27:03;2020-09-20T00:44:00
-6;Electronics convergence Rhode Island;redundant channels;true;2020-09-20;2020-09-19T23:39:48;2020-09-19T22:27:03
-7;Virgin Islands, British;circuit virtual Concrete;false;2020-09-20;2020-09-20T08:40:16;2020-09-20T15:08:33
-8;Legacy online;architectures;true;2020-09-20;2020-09-20T19:05:01;2020-09-20T14:06:04
-9;France;fresh-thinking Dynamic Granite;true;2020-09-20;2020-09-20T11:18:37;2020-09-20T01:08:36
-10;bypass Steel Frozen;backing up;true;2020-09-20;2020-09-20T18:11:13;2020-09-20T21:35:42
+id;nom;description;etatclos;date_activite;heure_debut;heure_fin;evenement_id;emplacement_id
+1;Céremonie d'ouverture CRI;Cérémonie d'ouverture du CRI;false;2020-09-19;2020-09-20T07:35:48;2020-09-20T12:25:24;1;1
+2;Exposés;Exposés des articles à la CRI;true;2020-09-20;2020-09-20T16:32:22;2020-09-20T00:51:12;1;1
+3;Descente sur le terrain;Descente sur le terrain à l'Université de Yaoundé;false;2020-09-20;2020-09-20T21:22:04;2020-09-20T07:13:56;1;1
+4;Cloture;Cloture de CRI;false;2020-09-20;2020-09-20T09:28:56;2020-09-20T02:51:23;1;1
+

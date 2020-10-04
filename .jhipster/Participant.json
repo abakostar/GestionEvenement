@@ -8,6 +8,22 @@
       "relationshipType": "many-to-one",
       "otherEntityField": "nom",
       "otherEntityRelationshipName": "participant"
+    },
+    {
+      "relationshipName": "evenement",
+      "otherEntityName": "evenement",
+      "relationshipType": "many-to-many",
+      "otherEntityField": "code",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "participant"
+    },
+    {
+      "relationshipName": "activite",
+      "otherEntityName": "activite",
+      "relationshipType": "many-to-many",
+      "otherEntityField": "nom",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "participant"
     }
   ],
   "fields": [

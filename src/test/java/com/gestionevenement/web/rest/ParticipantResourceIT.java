@@ -3,6 +3,8 @@ package com.gestionevenement.web.rest;
 import com.gestionevenement.GestionevenementappApp;
 import com.gestionevenement.domain.Participant;
 import com.gestionevenement.domain.Ville;
+import com.gestionevenement.domain.Evenement;
+import com.gestionevenement.domain.Activite;
 import com.gestionevenement.repository.ParticipantRepository;
 import com.gestionevenement.service.ParticipantService;
 import com.gestionevenement.service.dto.ParticipantDTO;
@@ -11,15 +13,21 @@ import com.gestionevenement.service.ParticipantQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.ZoneOffset;
@@ -30,6 +38,7 @@ import static com.gestionevenement.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -37,6 +46,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link ParticipantResource} REST controller.
  */
 @SpringBootTest(classes = GestionevenementappApp.class)
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 public class ParticipantResourceIT {
@@ -89,8 +99,14 @@ public class ParticipantResourceIT {
     @Autowired
     private ParticipantRepository participantRepository;
 
+    @Mock
+    private ParticipantRepository participantRepositoryMock;
+
     @Autowired
     private ParticipantMapper participantMapper;
+
+    @Mock
+    private ParticipantService participantServiceMock;
 
     @Autowired
     private ParticipantService participantService;
@@ -199,6 +215,27 @@ public class ParticipantResourceIT {
             .andExpect(jsonPath("$.[*].sexe").value(hasItem(DEFAULT_SEXE)))
             .andExpect(jsonPath("$.[*].telephone").value(hasItem(DEFAULT_TELEPHONE)))
             .andExpect(jsonPath("$.[*].login").value(hasItem(DEFAULT_LOGIN)));
+    }
+
+
+    @SuppressWarnings({"unchecked"})
+    public void getAllParticipantsWithEagerRelationshipsIsEnabled() throws Exception {
+        when(participantServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restParticipantMockMvc.perform(get("/api/participants?eagerload=true"))
+            .andExpect(status().isOk());
+
+        verify(participantServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public void getAllParticipantsWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(participantServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restParticipantMockMvc.perform(get("/api/participants?eagerload=true"))
+            .andExpect(status().isOk());
+
+        verify(participantServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test
@@ -504,6 +541,46 @@ public class ParticipantResourceIT {
 
         // Get all the participantList where ville equals to villeId + 1
         defaultParticipantShouldNotBeFound("villeId.equals=" + (villeId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllParticipantsByEvenementIsEqualToSomething() throws Exception {
+        // Initialize the database
+        participantRepository.saveAndFlush(participant);
+        Evenement evenement = EvenementResourceIT.createEntity(em);
+        em.persist(evenement);
+        em.flush();
+        participant.addEvenement(evenement);
+        participantRepository.saveAndFlush(participant);
+        Long evenementId = evenement.getId();
+
+        // Get all the participantList where evenement equals to evenementId
+        defaultParticipantShouldBeFound("evenementId.equals=" + evenementId);
+
+        // Get all the participantList where evenement equals to evenementId + 1
+        defaultParticipantShouldNotBeFound("evenementId.equals=" + (evenementId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllParticipantsByActiviteIsEqualToSomething() throws Exception {
+        // Initialize the database
+        participantRepository.saveAndFlush(participant);
+        Activite activite = ActiviteResourceIT.createEntity(em);
+        em.persist(activite);
+        em.flush();
+        participant.addActivite(activite);
+        participantRepository.saveAndFlush(participant);
+        Long activiteId = activite.getId();
+
+        // Get all the participantList where activite equals to activiteId
+        defaultParticipantShouldBeFound("activiteId.equals=" + activiteId);
+
+        // Get all the participantList where activite equals to activiteId + 1
+        defaultParticipantShouldNotBeFound("activiteId.equals=" + (activiteId + 1));
     }
 
     /**

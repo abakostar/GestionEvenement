@@ -9,7 +9,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Participant} and its DTO {@link ParticipantDTO}.
  */
-@Mapper(componentModel = "spring", uses = {VilleMapper.class})
+@Mapper(componentModel = "spring", uses = {VilleMapper.class, EvenementMapper.class, ActiviteMapper.class})
 public interface ParticipantMapper extends EntityMapper<ParticipantDTO, Participant> {
 
     @Mapping(source = "ville.id", target = "villeId")
@@ -17,6 +17,8 @@ public interface ParticipantMapper extends EntityMapper<ParticipantDTO, Particip
     ParticipantDTO toDto(Participant participant);
 
     @Mapping(source = "villeId", target = "ville")
+    @Mapping(target = "removeEvenement", ignore = true)
+    @Mapping(target = "removeActivite", ignore = true)
     Participant toEntity(ParticipantDTO participantDTO);
 
     default Participant fromId(Long id) {
