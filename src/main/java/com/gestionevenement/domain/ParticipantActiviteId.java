@@ -1,6 +1,5 @@
 package com.gestionevenement.domain;
 
-import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -9,10 +8,12 @@ public class ParticipantActiviteId implements Serializable {
     private Long activiteId;
 
     public ParticipantActiviteId(){}
+
     public ParticipantActiviteId(Long participantId, Long activiteId){
         this.participantId = participantId;
         this.activiteId = activiteId;
     }
+
     public Long getParticipantId() {
         return participantId;
     }
