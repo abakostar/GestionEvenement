@@ -1,21 +1,21 @@
 {
   "global": {
-    "title": "Gestionevenementapp",
+    "title": "Gestioneventapp",
     "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
     "menu": {
       "home": "Home",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
-        "main": "Entities",
-        "categorie": "Categorie",
-        "evenement": "Evenement",
-        "pays": "Pays",
-        "ville": "Ville",
-        "emplacement": "Emplacement",
-        "activite": "Activite",
-        "participant": "Participant",
-        "inscriptionEvenement": "Inscription Evenement",
-        "inscriptionActivite": "Inscription Activite",
+        "main": "Application features",
+        "categorie": "Category Management",
+        "evenement": "Event Management",
+        "pays": "Country Management",
+        "ville": "City Management",
+        "emplacement": "Location Management",
+        "activite": "Activity Management",
+        "participant": "Participant Management",
+        "inscriptionEvenement": "Inscription Event",
+        "inscriptionActivite": "Inscription Activity",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

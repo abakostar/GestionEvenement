@@ -3,21 +3,21 @@
     "categorie": {
       "home": {
         "title": "Categories",
-        "createLabel": "Create a new Categorie",
-        "createOrEditLabel": "Create or edit a Categorie",
+        "createLabel": "Create a new Category",
+        "createOrEditLabel": "Create or edit a Category",
         "notFound": "No Categories found"
       },
-      "created": "A new Categorie is created with identifier {{ param }}",
-      "updated": "A Categorie is updated with identifier {{ param }}",
-      "deleted": "A Categorie is deleted with identifier {{ param }}",
+      "created": "A new Category is created with identifier {{ param }}",
+      "updated": "A Category is updated with identifier {{ param }}",
+      "deleted": "A Category is deleted with identifier {{ param }}",
       "delete": {
-        "question": "Are you sure you want to delete Categorie {{ id }}?"
+        "question": "Are you sure you want to delete Category {{ id }}?"
       },
       "detail": {
-        "title": "Categorie"
+        "title": "Category"
       },
       "code": "Code",
-      "nom": "Nom"
+      "nom": "Name"
     }
   }
 }

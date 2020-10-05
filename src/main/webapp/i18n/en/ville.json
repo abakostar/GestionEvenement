@@ -2,22 +2,22 @@
   "gestionevenementappApp": {
     "ville": {
       "home": {
-        "title": "Villes",
-        "createLabel": "Create a new Ville",
-        "createOrEditLabel": "Create or edit a Ville",
-        "notFound": "No Villes found"
+        "title": "Cities",
+        "createLabel": "Create a new City",
+        "createOrEditLabel": "Create or edit a City",
+        "notFound": "No Cities found"
       },
-      "created": "A new Ville is created with identifier {{ param }}",
-      "updated": "A Ville is updated with identifier {{ param }}",
-      "deleted": "A Ville is deleted with identifier {{ param }}",
+      "created": "A new City is created with identifier {{ param }}",
+      "updated": "A City is updated with identifier {{ param }}",
+      "deleted": "A City is deleted with identifier {{ param }}",
       "delete": {
-        "question": "Are you sure you want to delete Ville {{ id }}?"
+        "question": "Are you sure you want to delete City {{ id }}?"
       },
       "detail": {
-        "title": "Ville"
+        "title": "City"
       },
-      "nom": "Nom",
-      "pays": "Pays"
+      "nom": "Name",
+      "pays": "Country"
     }
   }
 }
