@@ -1,4 +1,2 @@
-id;nom;sexe;telephone;ville_id
-1;ABOUBAKAR SIDDIKI;Masculin;1-597-469-9002;1
-2;PRISO NOUMO;Masculin;(297) 474-0821 x25014;4
-
+id;sexe;telephone;login;ville_id
+1;Masculin;1-597-469-9002;participant;1

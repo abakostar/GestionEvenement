@@ -1,10 +1,8 @@
 package com.gestionevenement.web.rest;
 
 import com.gestionevenement.GestionevenementappApp;
-import com.gestionevenement.domain.Participant;
-import com.gestionevenement.domain.Ville;
-import com.gestionevenement.domain.Evenement;
-import com.gestionevenement.domain.Activite;
+import com.gestionevenement.domain.*;
+import com.gestionevenement.repository.ParticipantActiviteRepository;
 import com.gestionevenement.repository.ParticipantRepository;
 import com.gestionevenement.service.ParticipantService;
 import com.gestionevenement.service.dto.ParticipantDTO;
@@ -33,6 +31,7 @@ import java.time.ZonedDateTime;
 import java.time.ZoneOffset;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
 
 import static com.gestionevenement.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -113,6 +112,9 @@ public class ParticipantResourceIT {
 
     @Autowired
     private ParticipantQueryService participantQueryService;
+
+    @Autowired
+    private ParticipantActiviteRepository participantActiviteRepository;
 
     @Autowired
     private EntityManager em;
@@ -574,6 +576,18 @@ public class ParticipantResourceIT {
         em.flush();
         participant.addActivite(activite);
         participantRepository.saveAndFlush(participant);
+
+        ParticipantActiviteId participantActiviteId = new ParticipantActiviteId(participant.getId(), activite.getId());
+        Optional<ParticipantActivite> result = participantActiviteRepository.findById(participantActiviteId);
+        assertThat(result.get().getRole()).isNull();
+
+        ParticipantActivite participantActivite = new ParticipantActivite();
+        participantActivite.setParticipantActiviteId(participantActiviteId);
+        participantActivite.setRole("Role");
+        participantActiviteRepository.save(participantActivite);
+        result = participantActiviteRepository.findById(participantActiviteId);
+        assertThat(result.get().getRole()).isEqualTo("Role");
+
         Long activiteId = activite.getId();
 
         // Get all the participantList where activite equals to activiteId

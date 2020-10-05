@@ -27,11 +27,9 @@ export class Participant implements IParticipant {
     public email?: string,
     public password?: string,
     public villeNom?: string,
-    public villeId?: number
-  ) {
-  }
     public villeId?: number,
     public evenements?: IEvenement[],
     public activites?: IActivite[]
-  ) {}
+  ) {
+  }
 }

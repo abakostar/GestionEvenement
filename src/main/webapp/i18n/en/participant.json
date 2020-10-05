@@ -30,8 +30,7 @@
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
       "password": "Password",
-      "ville": "Ville"
-      "ville": "Ville",
+      "ville": "City",
       "evenement": "Evenement",
       "activite": "Activite"
     }

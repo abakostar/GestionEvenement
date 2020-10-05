@@ -128,7 +128,6 @@ public class ParticipantCriteria implements Serializable, Criteria {
             Objects.equals(sexe, that.sexe) &&
             Objects.equals(telephone, that.telephone) &&
             Objects.equals(login, that.login) &&
-            Objects.equals(villeId, that.villeId);
             Objects.equals(villeId, that.villeId) &&
             Objects.equals(evenementId, that.evenementId) &&
             Objects.equals(activiteId, that.activiteId);
@@ -141,7 +140,6 @@ public class ParticipantCriteria implements Serializable, Criteria {
         sexe,
         telephone,
         login,
-        villeId
         villeId,
         evenementId,
         activiteId

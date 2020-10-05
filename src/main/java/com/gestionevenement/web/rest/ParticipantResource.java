@@ -74,11 +74,24 @@ public class ParticipantResource {
         ParticipantDTO result = participantService.save(participantDTO);
 
         // create user
-        ManagedUserVM user = participantDTO.getUser();
+        ManagedUserVM user = getManagedUserVM(participantDTO);
         userService.registerUser(user, Collections.singleton(AuthoritiesConstants.PARTICIPANT), user.getPassword(), true);
         return ResponseEntity.created(new URI("/api/participants/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
+    }
+
+    private ManagedUserVM getManagedUserVM(ParticipantDTO participantDTO) {
+        ManagedUserVM user = new ManagedUserVM();
+        user.setLogin(participantDTO.getLogin());
+        user.setFirstName(participantDTO.getFirstName());
+        user.setLastName(participantDTO.getLastName());
+        user.setEmail(participantDTO.getEmail());
+        user.setImageUrl("http://placehold.it/50x50");
+        user.setLangKey("fr");
+        user.setPassword(participantDTO.getPassword());
+        user.setActivated(true);
+        return user;
     }
 
     /**
@@ -115,7 +128,7 @@ public class ParticipantResource {
         Page<ParticipantDTO> page = participantQueryService.findByCriteria(criteria, pageable);
         page.forEach(participantDTO -> {
             User user = userService.findByLogin(participantDTO.getLogin());
-            if(user != null) participantDTO.setUser(user);
+            if (user != null) participantDTO.setUser(user);
         });
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
@@ -145,7 +158,7 @@ public class ParticipantResource {
         Optional<ParticipantDTO> participantDTO = participantService.findOne(id);
         participantDTO.ifPresent(participantDTO1 -> {
             User user = userService.findByLogin(participantDTO1.getLogin());
-            if(user != null) participantDTO1.setUser(user);
+            if (user != null) participantDTO1.setUser(user);
         });
         return ResponseUtil.wrapOrNotFound(participantDTO);
     }

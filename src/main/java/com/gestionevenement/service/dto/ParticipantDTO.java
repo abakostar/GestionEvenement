@@ -168,19 +168,6 @@ public class ParticipantDTO implements Serializable {
             "}";
     }
 
-    public ManagedUserVM getUser() {
-        ManagedUserVM user = new ManagedUserVM();
-        user.setLogin(login);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setEmail(email);
-        user.setImageUrl("http://placehold.it/50x50");
-        user.setLangKey("fr");
-        user.setPassword(password);
-        user.setActivated(true);
-        return user;
-    }
-
     public void setUser(User user) {
         setFirstName(user.getFirstName());
         setLastName(user.getLastName());
