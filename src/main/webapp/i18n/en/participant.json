@@ -16,8 +16,8 @@
       "detail": {
         "title": "Participant"
       },
-      "sexe": "Sexe",
-      "telephone": "Telephone",
+      "sexe": "Sex",
+      "telephone": "Phone number",
       "userId": "User Id",
       "login": "Login",
       "firstName": "First Name",
