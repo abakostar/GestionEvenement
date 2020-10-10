@@ -60,6 +60,6 @@ public class ParticipantActivite {
 
     public void setParticipantActiviteId(ParticipantActiviteId participantActiviteId) {
         setParticipantId(participantActiviteId.getParticipantId());
-        setActiviteId(participantActiviteId.getEvenementId());
+        setActiviteId(participantActiviteId.getActiviteId());
     }
 }

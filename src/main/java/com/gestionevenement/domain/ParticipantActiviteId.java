@@ -22,11 +22,11 @@ public class ParticipantActiviteId implements Serializable {
         this.participantId = participantId;
     }
 
-    public Long getEvenementId() {
+    public Long getActiviteId() {
         return activiteId;
     }
 
-    public void setEvenementId(Long activiteId) {
+    public void setActiviteId(Long activiteId) {
         this.activiteId = activiteId;
     }
 
