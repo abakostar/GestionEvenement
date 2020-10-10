@@ -29,8 +29,8 @@ export class EvenementParticipantComponent implements OnInit {
     this.page = 0;
     this.links = {
       last: 0,
-    };vgt8g
-    // g2v25this.evenement = null;
+    };
+    this.evenement = {};
   }
 
   ngOnInit(): void {
