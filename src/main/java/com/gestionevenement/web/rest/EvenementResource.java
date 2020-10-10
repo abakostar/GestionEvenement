@@ -1,11 +1,14 @@
 package com.gestionevenement.web.rest;
 
-import com.gestionevenement.service.EvenementService;
-import com.gestionevenement.web.rest.errors.BadRequestAlertException;
-import com.gestionevenement.service.dto.EvenementDTO;
-import com.gestionevenement.service.dto.EvenementCriteria;
+import com.gestionevenement.domain.ParticipantEvenement;
+import com.gestionevenement.domain.ParticipantEvenemrntId;
+import com.gestionevenement.repository.ParticipantEvenementRepository;
 import com.gestionevenement.service.EvenementQueryService;
-
+import com.gestionevenement.service.EvenementService;
+import com.gestionevenement.service.dto.EvenementCriteria;
+import com.gestionevenement.service.dto.EvenementDTO;
+import com.gestionevenement.web.rest.errors.BadRequestAlertException;
+import com.gestionevenement.web.rest.vm.ParticipantEvenementIdVM;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -15,10 +18,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -44,9 +46,12 @@ public class EvenementResource {
 
     private final EvenementQueryService evenementQueryService;
 
-    public EvenementResource(EvenementService evenementService, EvenementQueryService evenementQueryService) {
+    private final ParticipantEvenementRepository participantEvenementRepository;
+
+    public EvenementResource(EvenementService evenementService, EvenementQueryService evenementQueryService, ParticipantEvenementRepository participantEvenementRepository) {
         this.evenementService = evenementService;
         this.evenementQueryService = evenementQueryService;
+        this.participantEvenementRepository = participantEvenementRepository;
     }
 
     /**
@@ -140,5 +145,26 @@ public class EvenementResource {
         log.debug("REST request to delete Evenement : {}", id);
         evenementService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    @PostMapping("/evenements/addParticipant")
+    public ResponseEntity<ParticipantEvenementIdVM> addParticipant(@Valid @RequestBody ParticipantEvenementIdVM participantEvenementIdVM) throws URISyntaxException {
+        log.debug("REST request to save Evenement : {}", participantEvenementIdVM);
+        if (participantEvenementIdVM.getEvenementId() == null || participantEvenementIdVM.getParticipantId() == null) {
+            throw new BadRequestAlertException("A new evenement cannot already have an participantId or evenementId", "ParticipantEvenementId", "idexists");
+        }
+        ParticipantEvenemrntId participantEvenemrntId = new ParticipantEvenemrntId(participantEvenementIdVM.getParticipantId(), participantEvenementIdVM.getEvenementId());
+        Optional<ParticipantEvenement> evenementRepositoryById = participantEvenementRepository.findById(participantEvenemrntId);
+        if(participantEvenementIdVM.isRegistered() && !evenementRepositoryById.isPresent()){
+            ParticipantEvenement participantEvenement = new ParticipantEvenement();
+            participantEvenement.setEvenementId(participantEvenementIdVM.getEvenementId());
+            participantEvenement.setParticipantId(participantEvenementIdVM.getParticipantId());
+            participantEvenementRepository.save(participantEvenement);
+        } else if(!participantEvenementIdVM.isRegistered() && evenementRepositoryById.isPresent()){
+            participantEvenementRepository.deleteById(participantEvenemrntId);
+        }
+        return ResponseEntity.created(new URI("/api/evenements/addParticipant/" + participantEvenementIdVM.getEvenementId() + "/" + participantEvenementIdVM.getParticipantId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, participantEvenementIdVM.getEvenementId().toString() + "_" + participantEvenementIdVM.getParticipantId()))
+            .body(participantEvenementIdVM);
     }
 }

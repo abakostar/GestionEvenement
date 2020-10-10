@@ -1,4 +1,5 @@
 import { Moment } from 'moment';
+import {IParticipantEvenement} from "./participant-evenement.model";
 
 export interface IEvenement {
   id?: number;
@@ -8,6 +9,7 @@ export interface IEvenement {
   description?: string;
   categorieNom?: string;
   categorieId?: number;
+  participants?: IParticipantEvenement[]
 }
 
 export class Evenement implements IEvenement {
@@ -18,6 +20,7 @@ export class Evenement implements IEvenement {
     public dateFin?: Moment,
     public description?: string,
     public categorieNom?: string,
-    public categorieId?: number
+    public categorieId?: number,
+    public participants?: IParticipantEvenement[]
   ) {}
 }

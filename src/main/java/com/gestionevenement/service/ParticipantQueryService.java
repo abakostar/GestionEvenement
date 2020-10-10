@@ -37,9 +37,12 @@ public class ParticipantQueryService extends QueryService<Participant> {
 
     private final ParticipantMapper participantMapper;
 
-    public ParticipantQueryService(ParticipantRepository participantRepository, ParticipantMapper participantMapper) {
+    private final UserService userService;
+
+    public ParticipantQueryService(ParticipantRepository participantRepository, UserService userService, ParticipantMapper participantMapper) {
         this.participantRepository = participantRepository;
         this.participantMapper = participantMapper;
+        this.userService = userService;
     }
 
     /**
@@ -51,7 +54,12 @@ public class ParticipantQueryService extends QueryService<Participant> {
     public List<ParticipantDTO> findByCriteria(ParticipantCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
         final Specification<Participant> specification = createSpecification(criteria);
-        return participantMapper.toDto(participantRepository.findAll(specification));
+        List<ParticipantDTO> participantDTOS = participantMapper.toDto(participantRepository.findAll(specification));
+        participantDTOS.forEach(participantDTO -> {
+            User user = userService.findByLogin(participantDTO.getLogin());
+            if (user != null) participantDTO.setUser(user);
+        });
+        return participantDTOS;
     }
 
     /**
@@ -64,8 +72,12 @@ public class ParticipantQueryService extends QueryService<Participant> {
     public Page<ParticipantDTO> findByCriteria(ParticipantCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<Participant> specification = createSpecification(criteria);
-        return participantRepository.findAll(specification, page)
-            .map(participantMapper::toDto);
+        Page<ParticipantDTO> pageResult = participantRepository.findAll(specification, page).map(participantMapper::toDto);
+        pageResult.forEach(participantDTO -> {
+            User user = userService.findByLogin(participantDTO.getLogin());
+            if (user != null) participantDTO.setUser(user);
+        });
+        return pageResult;
     }
 
     /**

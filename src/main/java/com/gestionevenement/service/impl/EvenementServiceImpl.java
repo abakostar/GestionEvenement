@@ -1,9 +1,14 @@
 package com.gestionevenement.service.impl;
 
+import com.gestionevenement.domain.ParticipantEvenement;
+import com.gestionevenement.repository.ParticipantEvenementRepository;
 import com.gestionevenement.service.EvenementService;
 import com.gestionevenement.domain.Evenement;
 import com.gestionevenement.repository.EvenementRepository;
+import com.gestionevenement.service.ParticipantQueryService;
 import com.gestionevenement.service.dto.EvenementDTO;
+import com.gestionevenement.service.dto.ParticipantDTO;
+import com.gestionevenement.service.dto.ParticipantEventDTO;
 import com.gestionevenement.service.mapper.EvenementMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Service Implementation for managing {@link Evenement}.
@@ -28,9 +33,18 @@ public class EvenementServiceImpl implements EvenementService {
 
     private final EvenementMapper evenementMapper;
 
-    public EvenementServiceImpl(EvenementRepository evenementRepository, EvenementMapper evenementMapper) {
+    private final ParticipantEvenementRepository participantEvenementRepository;
+
+    private final ParticipantQueryService participantQueryService;
+
+    public EvenementServiceImpl(EvenementRepository evenementRepository,
+                                ParticipantEvenementRepository participantEvenementRepository,
+                                ParticipantQueryService participantQueryService,
+                                EvenementMapper evenementMapper) {
         this.evenementRepository = evenementRepository;
         this.evenementMapper = evenementMapper;
+        this.participantEvenementRepository = participantEvenementRepository;
+        this.participantQueryService = participantQueryService;
     }
 
     @Override
@@ -55,7 +69,32 @@ public class EvenementServiceImpl implements EvenementService {
     public Optional<EvenementDTO> findOne(Long id) {
         log.debug("Request to get Evenement : {}", id);
         return evenementRepository.findById(id)
-            .map(evenementMapper::toDto);
+            .map(evenement -> {
+                EvenementDTO evenementDTO = evenementMapper.toDto(evenement);
+                evenementDTO.setParticipants(computeParticipantEvent(evenementDTO.getId()));
+                return evenementDTO;
+            });
+    }
+
+    private List<ParticipantEventDTO> computeParticipantEvent(Long id) {
+        Map<Long, ParticipantEventDTO> map = new HashMap<>();
+        List<ParticipantDTO> participantDTOS = participantQueryService.findByCriteria(null);
+        if (participantDTOS == null || participantDTOS.size() == 0) {
+            return new ArrayList<>();
+        } else {
+            participantDTOS.forEach(participantDTO -> map.put(participantDTO.getId(), new ParticipantEventDTO(participantDTO, false)));
+        }
+
+        List<ParticipantEvenement> evenements = participantEvenementRepository.findAllByEvenementId(id);
+        if (evenements != null && evenements.size() > 0) {
+            evenements.forEach(participantEvenement -> {
+                ParticipantEventDTO participantEventDTO = map.get(participantEvenement.getParticipantId());
+                if(participantEventDTO != null){
+                    participantEventDTO.setRegistered(true);
+                }
+            });
+        }
+        return new ArrayList<>(map.values());
     }
 
     @Override

@@ -126,10 +126,6 @@ public class ParticipantResource {
     public ResponseEntity<List<ParticipantDTO>> getAllParticipants(ParticipantCriteria criteria, Pageable pageable) {
         log.debug("REST request to get Participants by criteria: {}", criteria);
         Page<ParticipantDTO> page = participantQueryService.findByCriteria(criteria, pageable);
-        page.forEach(participantDTO -> {
-            User user = userService.findByLogin(participantDTO.getLogin());
-            if (user != null) participantDTO.setUser(user);
-        });
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

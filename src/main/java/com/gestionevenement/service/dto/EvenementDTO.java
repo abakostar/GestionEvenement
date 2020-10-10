@@ -3,6 +3,8 @@ package com.gestionevenement.service.dto;
 import java.time.ZonedDateTime;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A DTO for the {@link com.gestionevenement.domain.Evenement} entity.
@@ -25,6 +27,8 @@ public class EvenementDTO implements Serializable {
     private String categorieNom;
 
     private int nbActivite;
+
+    private List<ParticipantEventDTO> participants;
 
     public int getNbActivite() {
         return nbActivite;
@@ -88,6 +92,14 @@ public class EvenementDTO implements Serializable {
 
     public void setCategorieNom(String categorieNom) {
         this.categorieNom = categorieNom;
+    }
+
+    public List<ParticipantEventDTO> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<ParticipantEventDTO> participants) {
+        this.participants = participants;
     }
 
     @Override

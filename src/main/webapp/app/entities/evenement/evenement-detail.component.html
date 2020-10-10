@@ -43,6 +43,13 @@
                     class="btn btn-primary">
                 <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
             </button>
+
         </div>
+        <div *ngIf="evenement && evenement.participants && evenement.participants.length>0">
+            <jhi-evenement-participant
+                [participants]="evenement.participants"
+                [evenement]="evenement"></jhi-evenement-participant>
+        </div>
+
     </div>
 </div>

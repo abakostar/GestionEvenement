@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IEvenement } from 'app/shared/model/evenement.model';
+import {IParticipantEvenement} from "../../shared/model/participant-evenement.model";
 
 type EntityResponseType = HttpResponse<IEvenement>;
 type EntityArrayResponseType = HttpResponse<IEvenement[]>;
@@ -21,6 +22,13 @@ export class EvenementService {
     const copy = this.convertDateFromClient(evenement);
     return this.http
       .post<IEvenement>(this.resourceUrl, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  addParticipant(participantEvenement: IParticipantEvenement): Observable<EntityResponseType> {
+    const url = this.resourceUrl+"/addParticipant"
+    return this.http
+      .post<IParticipantEvenement>(url, participantEvenement, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
