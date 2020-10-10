@@ -3,4 +3,7 @@ id;login;password_hash;first_name;last_name;email;image_url;activated;lang_key;c
 2;anonymoususer;$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO;Anonymous;User;anonymous@localhost;;true;fr;system;system
 3;admin;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;Administrator;Administrator;admin@localhost;;true;fr;system;system
 4;user;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;User;User;user@localhost;;true;fr;system;system
-5;participant;$2y$10$wjfiEI3FzqCLTpQNQOu/IOc.z/4tl6565BpUP7KjsPHS/.w6n1pfy;Participant;Participant;participant@localhost;;true;fr;system;system
+5;abakostar;$2a$10$ST.zYEtXTADak6AYdaS2xuolDqYKyE/PfwYTFWYQA678DOZIJeSQm;ABOUBAKAR;SIDDIKI;abakostar@gmail.com;;true;fr;system;system
+6;ahmadou;$2a$10$2MEfANcj/tygUKba1juS7edJdCyoPwHX9fgDB2aaUwiZXSrtKSGTS;AHMADOU;SARDAOUNA;ahmadou.sardaouna@yahoo.fr;;TRUE;fr;admin;admin
+7;bodjona;$2a$10$O5MnwkKaahyI9gzAmTLp7.coYlKAYlIGu3V760PVxdOMFwb.QgScK;BODJONA;Bataka Pignanti;bobgentil77@gmail.com;;TRUE;fr;admin;admin
+8;test;$2a$10$TLBsNnqjWB1hgv6m9kBmTuz5EorKx2BQpkgCLJ.ORdfYRq8CjBQ5a;Participant;Participant;participant@gmail.com;;TRUE;fr;admin;admin

@@ -37,7 +37,7 @@ export class ParticipantUpdateComponent implements OnInit {
     login: [],
     firstName: [],
     lastName: [],
-    email: [],
+    email: ['', [Validators.minLength(5), Validators.maxLength(254), Validators.email]],
     activated: [],
     langKey: [],
     createdBy: [],

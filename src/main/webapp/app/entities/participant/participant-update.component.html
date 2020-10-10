@@ -23,16 +23,40 @@
                            formControlName="lastName"/>
                 </div>
 
-                <div class="form-group" [hidden]="editForm.get('id')!.value">
+                <div class="form-group" [hidden]="editForm.get('id')!.value" >
                     <label class="form-control-label" jhiTranslate="gestionevenementappApp.participant.email" for="field_email">Email</label>
                     <input type="text" class="form-control" name="email" id="field_email"
                            formControlName="email"/>
+            <!--    </div>
+                <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">-->
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('email')?.errors?.maxlength"
+                           jhiTranslate="entity.validation.maxlength"
+                           [translateValues]="{ max: 100 }">
+                        This field cannot be longer than 100 characters.
+                    </small>
+
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('email')?.errors?.minlength"
+                           jhiTranslate="entity.validation.minlength"
+                           [translateValues]="{ min: 5 }">
+                        This field is required to be at least 5 characters.
+                    </small>
+
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('email')?.errors?.email"
+                           jhiTranslate="global.messages.validate.email.invalid">
+                        Your email is invalid.
+                    </small>
                 </div>
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="gestionevenementappApp.participant.sexe" for="field_sexe">Sexe</label>
-                    <input type="text" class="form-control" name="sexe" id="field_sexe"
-                           formControlName="sexe"/>
+                    <select class="form-control" id="field_sexe" name="sexe" formControlName="sexe">
+                        <option >Masculin</option>
+                        <option >Feminin</option>
+                    </select>
+<!--                    <input type="text" class="form-control" name="sexe" id="field_sexe" formControlName="sexe"/>-->
                 </div>
 
                 <div class="form-group">

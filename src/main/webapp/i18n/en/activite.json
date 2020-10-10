@@ -2,28 +2,28 @@
   "gestionevenementappApp": {
     "activite": {
       "home": {
-        "title": "Activites",
-        "createLabel": "Create a new Activite",
-        "createOrEditLabel": "Create or edit a Activite",
-        "notFound": "No Activites found"
+        "title": "Activities",
+        "createLabel": "Create a new Activity",
+        "createOrEditLabel": "Create or edit a Activity",
+        "notFound": "No Activities found"
       },
-      "created": "A new Activite is created with identifier {{ param }}",
-      "updated": "A Activite is updated with identifier {{ param }}",
-      "deleted": "A Activite is deleted with identifier {{ param }}",
+      "created": "A new Activity is created with identifier {{ param }}",
+      "updated": "A Activity is updated with identifier {{ param }}",
+      "deleted": "A Activity is deleted with identifier {{ param }}",
       "delete": {
-        "question": "Are you sure you want to delete Activite {{ id }}?"
+        "question": "Are you sure you want to delete Activity {{ id }}?"
       },
       "detail": {
-        "title": "Activite"
+        "title": "Activity"
       },
-      "nom": "Nom",
+      "nom": "Name",
       "description": "Description",
-      "etatclos": "Etatclos",
-      "dateActivite": "Date Activite",
-      "heureDebut": "Heure Debut",
-      "heureFin": "Heure Fin",
-      "evenement": "Evenement",
-      "emplacement": "Emplacement"
+      "etatclos": "Clos Status",
+      "dateActivite": "Activity Date",
+      "heureDebut": "First Hour",
+      "heureFin": "End Hour",
+      "evenement": "Event",
+      "emplacement": "Location"
     }
   }
 }
