@@ -20,7 +20,11 @@
       "dateDebut": "Date Debut",
       "dateFin": "Date Fin",
       "description": "Description",
-      "categorie": "Categorie"
+      "categorie": "Categorie",
+      "programme": "Voir programme",
+      "participantsins": "Voir Participants",
+      "titreprogramme": "Programme de l'evenement",
+      "participantinscrit": "Inscrire/désinscrire Participants"
     }
   }
 }

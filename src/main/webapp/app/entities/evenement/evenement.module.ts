@@ -8,10 +8,18 @@ import { EvenementUpdateComponent } from './evenement-update.component';
 import { EvenementDeleteDialogComponent } from './evenement-delete-dialog.component';
 import { EvenementParticipantComponent } from './evenement-participant/evenement-participant.component';
 import { evenementRoute } from './evenement.route';
+import { EvenementActiviteComponent } from './evenement-activite/evenement-activite.component';
 
 @NgModule({
   imports: [GestionevenementappSharedModule, RouterModule.forChild(evenementRoute)],
-  declarations: [EvenementComponent, EvenementDetailComponent, EvenementUpdateComponent, EvenementDeleteDialogComponent, EvenementParticipantComponent],
+  declarations: [
+    EvenementComponent,
+    EvenementDetailComponent,
+    EvenementUpdateComponent,
+    EvenementDeleteDialogComponent,
+    EvenementParticipantComponent,
+    EvenementActiviteComponent,
+  ],
   entryComponents: [EvenementDeleteDialogComponent],
 })
 export class GestionevenementappEvenementModule {}

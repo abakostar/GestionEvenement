@@ -1,0 +1,61 @@
+<div>
+    <h3 id="page-heading" >
+        <span jhiTranslate="gestionevenementappApp.evenement.titreprogramme">Programme de l'Evenement</span>
+   </h3>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="activites?.length === 0">
+        <span jhiTranslate="gestionevenementappApp.activite.home.notFound">No activites found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="activites && activites.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dateActivite"><span jhiTranslate="gestionevenementappApp.activite.dateActivite">Date Activite</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="nom"><span jhiTranslate="gestionevenementappApp.activite.nom">Nom</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="heureDebut"><span jhiTranslate="gestionevenementappApp.activite.heureDebut">Heure Debut</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="heureFin"><span jhiTranslate="gestionevenementappApp.activite.heureFin">Heure Fin</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="evenementCode"><span jhiTranslate="gestionevenementappApp.activite.evenement">Evenement</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="emplacementCode"><span jhiTranslate="gestionevenementappApp.activite.emplacement">Emplacement</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="etatclos"><span jhiTranslate="gestionevenementappApp.activite.etatclos">Etatclos</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+                <tr *ngFor="let activite of activites ;trackBy: trackId">
+                    <td><a [routerLink]="['/activite', activite.id, 'view']">{{ activite.id }}</a></td>
+                    <td>{{ activite.dateActivite | date:'mediumDate' }}</td>
+                    <td>{{ activite.nom }}</td>
+                    <td>{{ activite.heureDebut | date:'medium' }}</td>
+                    <td>{{ activite.heureFin | date:'medium' }}</td>
+                    <td>
+                        <div *ngIf="activite.evenementId">
+                            <a [routerLink]="['/evenement', activite.evenementId , 'view']" >{{ activite.evenementCode }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="activite.emplacementId">
+                            <a [routerLink]="['/emplacement', activite.emplacementId , 'view']" >{{ activite.emplacementCode }}</a>
+                        </div>
+                    </td>
+                    <td>{{ activite.etatclos }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/activite', activite.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

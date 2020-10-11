@@ -20,7 +20,11 @@
       "dateDebut": "First date",
       "dateFin": "End Date",
       "description": "Description",
-      "categorie": "Category"
+      "categorie": "Category",
+      "programme": "View program",
+      "participantsins": "View Participants",
+      "titreprogramme": "Event Program",
+      "participantinscrit": "Register/Unregister Participants"
     }
   }
 }

@@ -1,55 +1,70 @@
 <div class="row justify-content-center">
-    <div class="col-8">
+    <div class="col-12">
         <div *ngIf="evenement">
-            <h2><span jhiTranslate="gestionevenementappApp.evenement.detail.title">Evenement</span> {{ evenement.id }}</h2>
+            <h3><span jhiTranslate="gestionevenementappApp.evenement.detail.title">Evenement</span> {{ evenement.id }} : {{ evenement.code }}</h3>
 
             <hr>
 
             <jhi-alert-error></jhi-alert-error>
+            <table class="table table-striped" aria-describedby="page-heading">
+                <thead>
+                    <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending">
+                        <th scope="col"  jhiSortBy="code"><span jhiTranslate="gestionevenementappApp.evenement.code">Code</span> <fa-icon icon="sort"></fa-icon></th>
+                        <th scope="col"  jhiSortBy="dateDebut"><span jhiTranslate="gestionevenementappApp.evenement.dateDebut">Date Debut</span> <fa-icon icon="sort"></fa-icon></th>
+                        <th scope="col"  jhiSortBy="dateFin"><span jhiTranslate="gestionevenementappApp.evenement.dateFin">Date Fin</span> <fa-icon icon="sort"></fa-icon></th>
+                        <th scope="col"  jhiSortBy="description"><span jhiTranslate="gestionevenementappApp.evenement.description">Description</span> <fa-icon icon="sort"></fa-icon></th>
+                        <th scope="col"  jhiSortBy="categorieNom"><span jhiTranslate="gestionevenementappApp.evenement.categorie">Categorie</span> <fa-icon icon="sort"></fa-icon></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody >
+                    <tr>
+                        <td>{{ evenement.code }}</td>
+                        <td>{{ evenement.dateDebut | date:'medium' }}</td>
+                        <td>{{ evenement.dateFin | date:'medium' }}</td>
+                        <td>{{ evenement.description }}</td>
+                        <td>
+                            <div *ngIf="evenement.categorieId">
+                                <a [routerLink]="['/categorie', evenement.categorieId, 'view']">{{ evenement.categorieNom }}</a>
+                            </div>
+                        </td>
+                        <td class="text-right">
+                            <div class="btn-group">
+                                <button type="submit" (click)="programview()" [hidden] = "viewpgme"
+                                    class="btn btn-success">
+                                    <fa-icon icon="eye"></fa-icon>&nbsp;<span jhiTranslate="gestionevenementappApp.evenement.programme">Voir Programme</span>
+                                </button>
+                                <button type="submit" (click)="programview()" [hidden] = "viewparticipants"
+                                    class="btn btn-danger">
+                                    <fa-icon icon="eye"></fa-icon>&nbsp;<span jhiTranslate="gestionevenementappApp.evenement.participantsins">Voir Participants</span>
+                                </button>
+                                <button type="submit" (click)="previousState()"
+                                        class="btn btn-info">
+                                    <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+                                </button>
 
-            <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="gestionevenementappApp.evenement.code">Code</span></dt>
-                <dd>
-                    <span>{{ evenement.code }}</span>
-                </dd>
-                <dt><span jhiTranslate="gestionevenementappApp.evenement.dateDebut">Date Debut</span></dt>
-                <dd>
-                    <span>{{ evenement.dateDebut }}</span>
-                </dd>
-                <dt><span jhiTranslate="gestionevenementappApp.evenement.dateFin">Date Fin</span></dt>
-                <dd>
-                    <span>{{ evenement.dateFin }}</span>
-                </dd>
-                <dt><span jhiTranslate="gestionevenementappApp.evenement.description">Description</span></dt>
-                <dd>
-                    <span>{{ evenement.description }}</span>
-                </dd>
-                <dt><span jhiTranslate="gestionevenementappApp.evenement.categorie">Categorie</span></dt>
-                <dd>
-                    <div *ngIf="evenement.categorieId">
-                        <a [routerLink]="['/categorie', evenement.categorieId, 'view']">{{ evenement.categorieNom }}</a>
-                    </div>
-                </dd>
-            </dl>
-
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/evenement', evenement.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
-            </button>
-
+                                <button type="button"
+                                        [routerLink]="['/evenement', evenement.id, 'edit']"
+                                        class="btn btn-primary">
+                                    <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div *ngIf="evenement && evenement.participants && evenement.participants.length>0">
-            <jhi-evenement-participant
-                [participants]="evenement.participants"
-                [evenement]="evenement"></jhi-evenement-participant>
-        </div>
-
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-12" *ngIf="evenement && evenement.activites && evenement.activites.length>0 && viewpgme">
+        <jhi-evenement-activite
+        [activites]="evenement.activites"
+        [evenement]="evenement"></jhi-evenement-activite>
+    </div>
+    <div class="col-12" *ngIf="evenement && evenement.participants && evenement.participants.length>0 && viewparticipants">
+        <jhi-evenement-participant
+            [participants]="evenement.participants"
+            [evenement]="evenement"></jhi-evenement-participant>
     </div>
 </div>

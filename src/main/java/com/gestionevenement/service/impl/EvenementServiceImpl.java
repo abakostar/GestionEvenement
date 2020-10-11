@@ -2,14 +2,14 @@ package com.gestionevenement.service.impl;
 
 import com.gestionevenement.domain.ParticipantEvenement;
 import com.gestionevenement.repository.ParticipantEvenementRepository;
+import com.gestionevenement.service.ActiviteQueryService;
 import com.gestionevenement.service.EvenementService;
 import com.gestionevenement.domain.Evenement;
 import com.gestionevenement.repository.EvenementRepository;
 import com.gestionevenement.service.ParticipantQueryService;
-import com.gestionevenement.service.dto.EvenementDTO;
-import com.gestionevenement.service.dto.ParticipantDTO;
-import com.gestionevenement.service.dto.ParticipantEventDTO;
+import com.gestionevenement.service.dto.*;
 import com.gestionevenement.service.mapper.EvenementMapper;
+import io.github.jhipster.service.filter.LongFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,14 +37,18 @@ public class EvenementServiceImpl implements EvenementService {
 
     private final ParticipantQueryService participantQueryService;
 
+    private final ActiviteQueryService activiteQueryService;
+
     public EvenementServiceImpl(EvenementRepository evenementRepository,
                                 ParticipantEvenementRepository participantEvenementRepository,
                                 ParticipantQueryService participantQueryService,
-                                EvenementMapper evenementMapper) {
+                                EvenementMapper evenementMapper,
+                                ActiviteQueryService activiteQueryService) {
         this.evenementRepository = evenementRepository;
         this.evenementMapper = evenementMapper;
         this.participantEvenementRepository = participantEvenementRepository;
         this.participantQueryService = participantQueryService;
+        this.activiteQueryService = activiteQueryService;
     }
 
     @Override
@@ -72,11 +76,23 @@ public class EvenementServiceImpl implements EvenementService {
             .map(evenement -> {
                 EvenementDTO evenementDTO = evenementMapper.toDto(evenement);
                 evenementDTO.setParticipants(computeParticipantEvent(evenementDTO.getId()));
+                evenementDTO.setActivites(computeActiviteEvent(evenementDTO.getId()));
                 return evenementDTO;
             });
     }
 
-    private List<ParticipantEventDTO> computeParticipantEvent(Long id) {
+    private List<ActiviteDTO> computeActiviteEvent(Long id) {
+        ActiviteCriteria activiteCriteria  = new ActiviteCriteria();
+        LongFilter longFilter = new LongFilter();
+        longFilter.setEquals(id);
+        activiteCriteria.setEvenementId(longFilter);
+        return activiteQueryService.findByCriteria(activiteCriteria);
+    }
+
+
+
+
+        private List<ParticipantEventDTO> computeParticipantEvent(Long id) {
         Map<Long, ParticipantEventDTO> map = new HashMap<>();
         List<ParticipantDTO> participantDTOS = participantQueryService.findByCriteria(null);
         if (participantDTOS == null || participantDTOS.size() == 0) {
