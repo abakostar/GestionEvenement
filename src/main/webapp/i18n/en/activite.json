@@ -2,10 +2,11 @@
   "gestionevenementappApp": {
     "activite": {
       "home": {
-        "title": "Activities",
+        "title": "Activities Management",
         "createLabel": "Create a new Activity",
         "createOrEditLabel": "Create or edit a Activity",
-        "notFound": "No Activities found"
+        "notFound": "No Activities found",
+        "activityparticipate": "Participation to activity"
       },
       "created": "A new Activity is created with identifier {{ param }}",
       "updated": "A Activity is updated with identifier {{ param }}",

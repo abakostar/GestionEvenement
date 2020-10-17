@@ -1,22 +1,21 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ActiviteService } from 'app/entities/activite/activite.service';
-import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { IActivite } from 'app/shared/model/activite.model';
-import { IEvenement } from 'app/shared/model/evenement.model';
-import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
+import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { IActivite } from 'app/shared/model/activite.model';
+
+import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
+import { ActiviteService } from '../activite.service';
 
 @Component({
-  selector: 'jhi-evenement-activite',
-  templateUrl: './evenement-activite.component.html',
-  styleUrls: ['./evenement-activite.component.scss'],
+  selector: 'jhi-inscription-activite',
+  templateUrl: './inscription-activite.component.html',
+  styleUrls: ['./inscription-activite.component.scss'],
 })
-export class EvenementActiviteComponent implements OnInit, OnDestroy {
-  @Input() activites: IActivite[];
-  @Input() evenement: IEvenement;
-
+export class InscriptionActiviteComponent implements OnInit, OnDestroy {
+  activites: IActivite[];
   eventSubscriber?: Subscription;
   itemsPerPage: number;
   links: any;
@@ -38,7 +37,6 @@ export class EvenementActiviteComponent implements OnInit, OnDestroy {
     };
     this.predicate = 'id';
     this.ascending = true;
-    this.evenement = {};
   }
 
   loadAll(): void {
@@ -59,13 +57,14 @@ export class EvenementActiviteComponent implements OnInit, OnDestroy {
 
   loadPage(page: number): void {
     this.page = page;
-    // this.loadAll();
+    this.loadAll();
   }
 
   ngOnInit(): void {
-    // this.loadAll();
+    this.loadAll();
     this.registerChangeInActivites();
   }
+
   ngOnDestroy(): void {
     if (this.eventSubscriber) {
       this.eventManager.destroy(this.eventSubscriber);

@@ -5,7 +5,8 @@
         "title": "Events",
         "createLabel": "Create a new Event",
         "createOrEditLabel": "Create or edit a Event",
-        "notFound": "No Events found"
+        "notFound": "No Events found",
+        "insriptionEvent": "Register to Events"
       },
       "created": "A new Event is created with identifier {{ param }}",
       "updated": "A Event is updated with identifier {{ param }}",

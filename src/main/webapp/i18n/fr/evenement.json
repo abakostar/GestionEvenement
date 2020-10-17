@@ -5,7 +5,8 @@
         "title": "Evenements",
         "createLabel": "Créer un nouveau Evenement",
         "createOrEditLabel": "Créer ou éditer un Evenement",
-        "notFound": "Aucun Evenement trouvé"
+        "notFound": "Aucun Evenement trouvé",
+        "insriptionEvent": "Inscription aux événements"
       },
       "created": "Un nouveau Evenement a été créé avec l'identifiant {{ param }}",
       "updated": "Le Evenement avec l'identifiant {{ param }} a été mis à jour",

@@ -14,8 +14,8 @@
         "emplacement": "Location Management",
         "activite": "Activity Management",
         "participant": "Participant Management",
-        "inscriptionEvenement": "Inscription Event",
-        "inscriptionActivite": "Inscription Activity",
+        "inscriptionevent": "Inscription Event",
+        "inscriptionactivity": "Inscription Activity",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

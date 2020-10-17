@@ -1,22 +1,19 @@
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ActiviteService } from 'app/entities/activite/activite.service';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { IActivite } from 'app/shared/model/activite.model';
 import { IEvenement } from 'app/shared/model/evenement.model';
 import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
+import { EvenementService } from '../evenement.service';
 
 @Component({
-  selector: 'jhi-evenement-activite',
-  templateUrl: './evenement-activite.component.html',
-  styleUrls: ['./evenement-activite.component.scss'],
+  selector: 'jhi-inscription-evenement',
+  templateUrl: './inscription-evenement.component.html',
+  styleUrls: ['./inscription-evenement.component.scss'],
 })
-export class EvenementActiviteComponent implements OnInit, OnDestroy {
-  @Input() activites: IActivite[];
-  @Input() evenement: IEvenement;
-
+export class InscriptionEvenementComponent implements OnInit, OnDestroy {
+  evenements: IEvenement[];
   eventSubscriber?: Subscription;
   itemsPerPage: number;
   links: any;
@@ -25,12 +22,12 @@ export class EvenementActiviteComponent implements OnInit, OnDestroy {
   ascending: boolean;
 
   constructor(
-    protected activiteService: ActiviteService,
+    protected evenementService: EvenementService,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
     protected parseLinks: JhiParseLinks
   ) {
-    this.activites = [];
+    this.evenements = [];
     this.itemsPerPage = ITEMS_PER_PAGE;
     this.page = 0;
     this.links = {
@@ -38,33 +35,27 @@ export class EvenementActiviteComponent implements OnInit, OnDestroy {
     };
     this.predicate = 'id';
     this.ascending = true;
-    this.evenement = {};
   }
 
   loadAll(): void {
-    this.activiteService
+    this.evenementService
       .query({
         page: this.page,
         size: this.itemsPerPage,
         sort: this.sort(),
       })
-      .subscribe((res: HttpResponse<IActivite[]>) => this.paginateActivites(res.body, res.headers));
+      .subscribe((res: HttpResponse<IEvenement[]>) => this.paginateEvenements(res.body, res.headers));
   }
 
   reset(): void {
     this.page = 0;
-    this.activites = [];
+    this.evenements = [];
     this.loadAll();
   }
 
   loadPage(page: number): void {
     this.page = page;
-    // this.loadAll();
-  }
-
-  ngOnInit(): void {
-    // this.loadAll();
-    this.registerChangeInActivites();
+    this.loadAll();
   }
   ngOnDestroy(): void {
     if (this.eventSubscriber) {
@@ -72,13 +63,17 @@ export class EvenementActiviteComponent implements OnInit, OnDestroy {
     }
   }
 
-  trackId(index: number, item: IActivite): number {
+  ngOnInit(): void {
+    this.loadAll();
+    this.registerChangeInEvenements();
+  }
+  trackId(index: number, item: IEvenement): number {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     return item.id!;
   }
 
-  registerChangeInActivites(): void {
-    this.eventSubscriber = this.eventManager.subscribe('activiteListModification', () => this.reset());
+  registerChangeInEvenements(): void {
+    this.eventSubscriber = this.eventManager.subscribe('evenementListModification', () => this.reset());
   }
 
   sort(): string[] {
@@ -89,12 +84,12 @@ export class EvenementActiviteComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  protected paginateActivites(data: IActivite[] | null, headers: HttpHeaders): void {
+  protected paginateEvenements(data: IEvenement[] | null, headers: HttpHeaders): void {
     const headersLink = headers.get('link');
     this.links = this.parseLinks.parse(headersLink ? headersLink : '');
     if (data) {
       for (let i = 0; i < data.length; i++) {
-        this.activites.push(data[i]);
+        this.evenements.push(data[i]);
       }
     }
   }

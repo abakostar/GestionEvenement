@@ -1,13 +1,6 @@
 <div>
     <h2 id="page-heading">
-        <span jhiTranslate="gestionevenementappApp.activite.home.title">Gestion Activités</span>
-
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-activite" [routerLink]="['/activite/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span  jhiTranslate="gestionevenementappApp.activite.home.createLabel">
-            Create a new Activite
-            </span>
-        </button>
+        <span jhiTranslate="gestionevenementappApp.activite.home.activityparticipate">Participation aux activites</span>
     </h2>
 
     <jhi-alert-error></jhi-alert-error>
@@ -66,13 +59,7 @@
                                     [routerLink]="['/activite', activite.id, 'edit']"
                                     class="btn btn-primary btn-sm">
                                 <fa-icon icon="pencil-alt"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                            </button>
-
-                            <button type="submit" (click)="delete(activite)"
-                                    class="btn btn-danger btn-sm">
-                                <fa-icon icon="times"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">S'ajouter</span>
                             </button>
                         </div>
                     </td>
@@ -81,3 +68,4 @@
         </table>
     </div>
 </div>
+
