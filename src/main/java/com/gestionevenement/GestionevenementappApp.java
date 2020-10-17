@@ -22,7 +22,7 @@ import java.util.Collection;
 
 @SpringBootApplication
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
-public class GestionevenementappApp {
+public class    GestionevenementappApp {
 
     private static final Logger log = LoggerFactory.getLogger(GestionevenementappApp.class);
 

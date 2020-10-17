@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ParticipantActiviteRepository extends JpaRepository<ParticipantActivite, ParticipantActiviteId>, JpaSpecificationExecutor<Activite> {
+public interface ParticipantActiviteRepository extends JpaRepository<ParticipantActivite, ParticipantActiviteId>, JpaSpecificationExecutor<ParticipantActivite> {
 
     List<ParticipantActivite> findAllByParticipantId(Long participantId);
 

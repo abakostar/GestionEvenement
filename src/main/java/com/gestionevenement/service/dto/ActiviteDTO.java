@@ -3,12 +3,13 @@ package com.gestionevenement.service.dto;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * A DTO for the {@link com.gestionevenement.domain.Activite} entity.
  */
 public class ActiviteDTO implements Serializable {
-    
+
     private Long id;
 
     private String nom;
@@ -31,7 +32,9 @@ public class ActiviteDTO implements Serializable {
     private Long emplacementId;
 
     private String emplacementCode;
-    
+
+    private List<ParticipantActiviteDTO> participants;
+
     public Long getId() {
         return id;
     }
@@ -120,6 +123,10 @@ public class ActiviteDTO implements Serializable {
         this.emplacementCode = emplacementCode;
     }
 
+    public List<ParticipantActiviteDTO> getParticipants() { return participants; }
+
+    public void setParticipants(List<ParticipantActiviteDTO> participants) { this.participants = participants; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -154,4 +161,5 @@ public class ActiviteDTO implements Serializable {
             ", emplacementCode='" + getEmplacementCode() + "'" +
             "}";
     }
+
 }

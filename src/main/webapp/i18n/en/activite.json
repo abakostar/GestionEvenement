@@ -18,7 +18,7 @@
       },
       "nom": "Name",
       "description": "Description",
-      "etatclos": "Clos Status",
+      "etatclos": "Place available",
       "dateActivite": "Activity Date",
       "heureDebut": "First Hour",
       "heureFin": "End Hour",

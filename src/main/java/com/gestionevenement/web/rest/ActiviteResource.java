@@ -1,5 +1,6 @@
 package com.gestionevenement.web.rest;
 
+import com.gestionevenement.repository.ParticipantActiviteRepository;
 import com.gestionevenement.service.ActiviteService;
 import com.gestionevenement.web.rest.errors.BadRequestAlertException;
 import com.gestionevenement.service.dto.ActiviteDTO;
@@ -15,7 +16,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,9 +43,12 @@ public class ActiviteResource {
 
     private final ActiviteQueryService activiteQueryService;
 
-    public ActiviteResource(ActiviteService activiteService, ActiviteQueryService activiteQueryService) {
+    private final ParticipantActiviteRepository participantActiviteRepository;
+
+    public ActiviteResource(ActiviteService activiteService, ActiviteQueryService activiteQueryService, ParticipantActiviteRepository participantActiviteRepository) {
         this.activiteService = activiteService;
         this.activiteQueryService = activiteQueryService;
+        this.participantActiviteRepository = participantActiviteRepository;
     }
 
     /**
@@ -140,4 +143,6 @@ public class ActiviteResource {
         activiteService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+
+
 }
