@@ -1,8 +1,9 @@
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { IEvenement } from 'app/shared/model/evenement.model';
+import { IParticipantEvenement } from 'app/shared/model/participant-evenement.model';
 import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 import { EvenementService } from '../evenement.service';
@@ -13,6 +14,9 @@ import { EvenementService } from '../evenement.service';
   styleUrls: ['./inscription-evenement.component.scss'],
 })
 export class InscriptionEvenementComponent implements OnInit, OnDestroy {
+  @Input() participants: IParticipantEvenement[];
+  @Input() evenement: IEvenement;
+
   evenements: IEvenement[];
   eventSubscriber?: Subscription;
   itemsPerPage: number;
@@ -27,7 +31,9 @@ export class InscriptionEvenementComponent implements OnInit, OnDestroy {
     protected modalService: NgbModal,
     protected parseLinks: JhiParseLinks
   ) {
+    this.participants = [];
     this.evenements = [];
+    this.evenement = {};
     this.itemsPerPage = ITEMS_PER_PAGE;
     this.page = 0;
     this.links = {
@@ -92,5 +98,15 @@ export class InscriptionEvenementComponent implements OnInit, OnDestroy {
         this.evenements.push(data[i]);
       }
     }
+  }
+  save(participant: IParticipantEvenement): void {
+    participant.evenementId = this.evenement.id;
+    participant.participantId = participant.id;
+    participant.registered = !participant.registered;
+    this.evenementService.addParticipant(participant).subscribe((res: HttpResponse<IParticipantEvenement>) => {
+      if (res && res.body) {
+        this.participants[0].registered = res.body.registered;
+      }
+    });
   }
 }
