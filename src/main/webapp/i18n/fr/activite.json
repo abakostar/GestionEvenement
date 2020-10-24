@@ -19,7 +19,7 @@
       },
       "nom": "Nom",
       "description": "Description",
-      "etatclos": "Place disponible",
+      "etatclos": "Place saturée ?",
       "dateActivite": "Date Activite",
       "heureDebut": "Heure Debut",
       "heureFin": "Heure Fin",

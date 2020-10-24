@@ -57,9 +57,9 @@
     "messages": {
       "info": {
         "authenticated": {
-          "prefix": "If you want to ",
-          "link": "sign in",
-          "suffix": ", you can try the default accounts:<br/>- Administrator (login=\"admin\" and password=\"admin\") <br/>- User (login=\"user\" and password=\"user\")."
+          "prefix": " Click here :<<",
+          "link": "Sign in",
+          "suffix": " >> If you want to sign in, <br/> - You can try the default accounts"
         },
         "register": {
           "noaccount": "You don't have an account yet?",
@@ -145,5 +145,6 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
-  "footer": "This is your footer"
+  "footer": "Copyright Master IASIG: Web Technology Workshop",
+  "team": "Realised by ABOUBAKAR Siddiki, AHMADOU Sardaouna and BODJONA Bataka"
 }

@@ -14,8 +14,8 @@ import { EvenementService } from '../evenement.service';
   styleUrls: ['./inscription-evenement.component.scss'],
 })
 export class InscriptionEvenementComponent implements OnInit, OnDestroy {
-  @Input() participants: IParticipantEvenement[];
-  @Input() evenement: IEvenement;
+  @Input() participant: IParticipantEvenement;
+  // @Input() evenement: IEvenement;
 
   evenements: IEvenement[];
   eventSubscriber?: Subscription;
@@ -31,9 +31,9 @@ export class InscriptionEvenementComponent implements OnInit, OnDestroy {
     protected modalService: NgbModal,
     protected parseLinks: JhiParseLinks
   ) {
-    this.participants = [];
+    this.participant = {};
     this.evenements = [];
-    this.evenement = {};
+    // this.evenement = {};
     this.itemsPerPage = ITEMS_PER_PAGE;
     this.page = 0;
     this.links = {
@@ -99,13 +99,13 @@ export class InscriptionEvenementComponent implements OnInit, OnDestroy {
       }
     }
   }
-  save(participant: IParticipantEvenement): void {
-    participant.evenementId = this.evenement.id;
-    participant.participantId = participant.id;
-    participant.registered = !participant.registered;
-    this.evenementService.addParticipant(participant).subscribe((res: HttpResponse<IParticipantEvenement>) => {
+  saveInscription(participantEvent: IParticipantEvenement, evenId?: number | undefined, partiId?: number | undefined): void {
+    participantEvent.evenementId = evenId;
+    participantEvent.participantId = partiId;
+    participantEvent.registered = !participantEvent.registered;
+    this.evenementService.addParticipant(participantEvent).subscribe((res: HttpResponse<IParticipantEvenement>) => {
       if (res && res.body) {
-        this.participants[0].registered = res.body.registered;
+        this.participant.registered = res.body.registered;
       }
     });
   }

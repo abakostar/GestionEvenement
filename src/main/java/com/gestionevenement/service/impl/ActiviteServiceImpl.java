@@ -5,12 +5,11 @@ import com.gestionevenement.repository.ParticipantActiviteRepository;
 import com.gestionevenement.service.ActiviteService;
 import com.gestionevenement.domain.Activite;
 import com.gestionevenement.repository.ActiviteRepository;
+import com.gestionevenement.service.EmplacementService;
 import com.gestionevenement.service.ParticipantQueryService;
-import com.gestionevenement.service.dto.ActiviteDTO;
-import com.gestionevenement.service.dto.ParticipantActiviteDTO;
-import com.gestionevenement.service.dto.ParticipantDTO;
-import com.gestionevenement.service.dto.ParticipantEventDTO;
+import com.gestionevenement.service.dto.*;
 import com.gestionevenement.service.mapper.ActiviteMapper;
+import io.github.jhipster.service.filter.LongFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,15 +34,17 @@ public class ActiviteServiceImpl implements ActiviteService {
     private final ActiviteMapper activiteMapper;
     private final ParticipantActiviteRepository participantActiviteRepository;
     private final ParticipantQueryService participantQueryService;
+    private  final EmplacementService emplacementService;
 
 
     public ActiviteServiceImpl(ActiviteRepository activiteRepository, ActiviteMapper activiteMapper,
                                ParticipantQueryService participantQueryService,
-                               ParticipantActiviteRepository participantActiviteRepository) {
+                               ParticipantActiviteRepository participantActiviteRepository, EmplacementService emplacementService) {
         this.activiteRepository = activiteRepository;
         this.activiteMapper = activiteMapper;
         this.participantQueryService = participantQueryService;
         this.participantActiviteRepository = participantActiviteRepository;
+        this.emplacementService = emplacementService;
     }
 
     @Override
@@ -75,6 +76,26 @@ public class ActiviteServiceImpl implements ActiviteService {
             return  activiteDTO;
         });
     }
+
+    // Ajout AS
+
+    public boolean placedispo(Long id){
+        EmplacementDTO emplacementDTO = new EmplacementDTO();
+        EmplacementCriteria emplacementCriteria = new EmplacementCriteria();
+        LongFilter longFilter = new LongFilter();
+        longFilter.setEquals(id);
+        emplacementCriteria.setId(longFilter);
+        emplacementDTO = emplacementService.findOne(id).orElse(null);
+        Integer nbparticipant = ((int) participantActiviteRepository.findAllByActiviteId(id).stream().count());
+        if (emplacementDTO.getCapacite() !=null && nbparticipant != 0){
+          if   (emplacementDTO.getCapacite() > nbparticipant ){
+              return true;
+          }
+        }
+        return  false;
+    }
+
+
     private List<ParticipantActiviteDTO> ajoutParticipantActivite(Long id) {
         Map<Long, ParticipantActiviteDTO> map = new HashMap<>();
         List<ParticipantDTO> participantsDTO = participantQueryService.findByCriteria(null);

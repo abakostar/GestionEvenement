@@ -37,25 +37,18 @@
                         </div>
                     </td>
                     <td class="text-right">
-                        <div class="btn-group">
-                            <button type="submit"
-                                    [routerLink]="['/evenement', evenement.id, 'view']"
-                                    class="btn btn-info btn-sm">
-                                <fa-icon icon="eye"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                            </button>
-                            <div class="text-right" class="form-check"><label class="form-check-label" for="activated">
+                        <!-- <div class="text-right" class="form-check"> -->
+                            <label class="form-check-label" for="activated">
                                     <input class="form-check-input"
                                            [checked]="participant.registered"
                                            type="checkbox"
                                            id="activated"
                                            name="activated"
-                                           (click)="save(participant)"
+                                           (click)="saveInscription(participant,evenement.id,1)"
                                            formControlName="activated">
                                     <span>{{ participant.registered ? 'Inscris':'Non Inscris' }}</span>
                             </label>
-                            </div>
-                        </div>
+                        <!-- </div> -->
                     </td>
                 </tr>
             </tbody>

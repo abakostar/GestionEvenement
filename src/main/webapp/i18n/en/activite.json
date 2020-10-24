@@ -19,7 +19,7 @@
       },
       "nom": "Name",
       "description": "Description",
-      "etatclos": "Place available",
+      "etatclos": "Place unavailable ?",
       "dateActivite": "Activity Date",
       "heureDebut": "First Hour",
       "heureFin": "End Hour",

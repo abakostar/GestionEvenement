@@ -7,11 +7,11 @@
     },
     "question": "Menu d'accès rapide :",
     "link": {
-      "homepage": "Page d'accueil de JHipster",
-      "stackoverflow": "JHipster sur Stack Overflow",
-      "bugtracker": "JHipster bug tracker",
-      "chat": "JHipster public chat room",
-      "follow": "Suivez @jhipster sur Twitter"
+      "evenement": "Gestion des événements",
+      "emplacement": "Gestion des emplacements",
+      "participant": "Gestion des participants",
+      "activite": "Gestion des activités",
+      "categorie": "Gestion des categories"
     },
     "like": "Si vous aimez JHipster, donnez nous une étoile sur",
     "github": "GitHub "

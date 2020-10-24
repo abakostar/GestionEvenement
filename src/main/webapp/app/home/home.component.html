@@ -24,21 +24,19 @@
                 <a class="alert-link" routerLink="account/register" jhiTranslate="global.messages.info.register.link">Register a new account</a>
             </div>
         </div>
+        <div *ngIf="account" >
+            <p jhiTranslate="home.question">
+                Quick access menu:
+            </p>
 
-        <p jhiTranslate="home.question">
-            Quick access menu:
-        </p>
+            <ul>
+                <li><a href="evenement" jhiTranslate="home.link.evenement" >Evenement</a></li>
+                <li><a href="activite" jhiTranslate="home.link.activite">Activité</a></li>
+                <li><a href="participant"  jhiTranslate="home.link.participant">Participant</a></li>
+                <li><a href="emplacement" jhiTranslate="home.link.emplacement">Emplacement</a></li>
+                <li><a href="categorie" jhiTranslate="home.link.categorie">Catégorie</a></li>
+            </ul>
+        </div>
 
-        <ul>
-            <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.homepage">JHipster homepage</a></li>
-            <li><a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.stackoverflow">JHipster on Stack Overflow</a></li>
-            <li><a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.bugtracker">JHipster bug tracker</a></li>
-            <li><a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.chat">JHipster public chat room</a></li>
-            <li><a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.follow">follow @jhipster on Twitter</a></li>
-        </ul>
-
-        <p>
-            <span jhiTranslate="home.like">If you like JHipster, don't forget to give us a star on</span> <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.github">GitHub</a>!
-        </p>
     </div>
 </div>

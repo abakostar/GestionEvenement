@@ -1,7 +1,7 @@
-import {IParticipant, Participant} from "./participant.model";
+import { IParticipant } from './participant.model';
 
 export interface IParticipantEvenement {
-  id?: number,
+  id?: number;
   participant?: IParticipant;
   registered?: boolean;
   evenementId?: number;

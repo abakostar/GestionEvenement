@@ -57,9 +57,9 @@
     "messages": {
       "info": {
         "authenticated": {
-          "prefix": "Si vous voulez vous ",
-          "link": "connecter",
-          "suffix": ", vous pouvez utiliser les comptes par défaut : <br/> - Administrateur (nom d'utilisateur=\"admin\" et mot de passe =\"admin\") <br/> - Utilisateur (nom d'utilisateur=\"user\" et mot de passe =\"user\")."
+          "prefix": "Cliquez ici << ",
+          "link": "Connecter",
+          "suffix": ", >> Si vous voulez vous connecter <br/> - Vous pouvez utiliser les comptes par défaut."
         },
         "register": {
           "noaccount": "Vous n'avez pas encore de compte ?",
@@ -145,5 +145,6 @@
       "not.image": "Le fichier doit être une image et non du type \"{{ fileType }}\""
     }
   },
-  "footer": "Ceci est votre pied de page"
+  "footer": "Copyright Master IASIG: TP Technologie Web ",
+  "team": "Realisé par ABOUBAKAR Siddiki, AHMADOU Sardaouna et BODJONA Bataka"
 }

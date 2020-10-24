@@ -26,6 +26,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -182,6 +184,18 @@ public class UserResource {
         return ResponseUtil.wrapOrNotFound(
             userService.getUserWithAuthoritiesByLogin(login)
                 .map(UserDTO::new));
+    }
+
+    // mon ajout personnel ABOUBAKAR SIDDIKI
+    @RequestMapping("/currentUser")
+    public String Usercourant(Model model, @AuthenticationPrincipal User currentUser){
+        User user = (User) userRepository.findOneByLogin(currentUser.getLogin()).orElse(null);
+        if (user.getId() !=null){
+            model.addAttribute("currentUser",user);
+            return "currentUser";
+        }
+        else
+        { return  null;}
     }
 
     /**
