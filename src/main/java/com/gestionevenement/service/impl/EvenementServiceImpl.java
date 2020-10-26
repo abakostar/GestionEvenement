@@ -3,6 +3,7 @@ package com.gestionevenement.service.impl;
 import com.gestionevenement.domain.ParticipantEvenement;
 import com.gestionevenement.repository.ParticipantEvenementRepository;
 import com.gestionevenement.service.ActiviteQueryService;
+import com.gestionevenement.service.EvenementQueryService;
 import com.gestionevenement.service.EvenementService;
 import com.gestionevenement.domain.Evenement;
 import com.gestionevenement.repository.EvenementRepository;
@@ -37,13 +38,15 @@ public class EvenementServiceImpl implements EvenementService {
 
     private final ParticipantQueryService participantQueryService;
 
+
     private final ActiviteQueryService activiteQueryService;
 
     public EvenementServiceImpl(EvenementRepository evenementRepository,
                                 ParticipantEvenementRepository participantEvenementRepository,
                                 ParticipantQueryService participantQueryService,
                                 EvenementMapper evenementMapper,
-                                ActiviteQueryService activiteQueryService) {
+                                ActiviteQueryService activiteQueryService,
+                                EvenementQueryService evenementQueryService) {
         this.evenementRepository = evenementRepository;
         this.evenementMapper = evenementMapper;
         this.participantEvenementRepository = participantEvenementRepository;
@@ -89,10 +92,29 @@ public class EvenementServiceImpl implements EvenementService {
         return activiteQueryService.findByCriteria(activiteCriteria);
     }
 
+/*     private List<ParticipantEventDTO> registerParticipantEvent(Long id){
+        Map<Long, ParticipantEventDTO> map = new HashMap<>();
+        List<EvenementDTO> evenementDTOs = evenementQueryService.findByCriteria(null);
+        if (evenementDTOs == null || evenementDTOs.size() == 0){
+            return new ArrayList<>();
+        }else{
+            evenementDTOs.forEach(evenementparticipant -> map.put(evenementparticipant.getId(), new ParticipantEventDTO(evenementparticipant, false)));
+        }
+
+        List<ParticipantEvenement> participants = participantEvenementRepository.findByParticipantId(id);
+        if (participants != null && participants.size() > 0) {
+            participants.forEach(participantEvenement -> {
+                ParticipantEventDTO participantEventDTO = map.get(participantEvenement.getEvenementId());
+                if(participantEventDTO != null){
+                    participantEventDTO.setRegistered(true);
+                }
+            });
+            return new ArrayList<>(map.values());
+        }
+    } */
 
 
-
-        private List<ParticipantEventDTO> computeParticipantEvent(Long id) {
+    private List<ParticipantEventDTO> computeParticipantEvent(Long id) {
         Map<Long, ParticipantEventDTO> map = new HashMap<>();
         List<ParticipantDTO> participantDTOS = participantQueryService.findByCriteria(null);
         if (participantDTOS == null || participantDTOS.size() == 0) {

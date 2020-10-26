@@ -9,8 +9,13 @@ import { IParticipant } from 'app/shared/model/participant.model';
 })
 export class ParticipantDetailComponent implements OnInit {
   participant: IParticipant | null = null;
+  predicate: string;
+  ascending: boolean;
 
-  constructor(protected activatedRoute: ActivatedRoute) {}
+  constructor(protected activatedRoute: ActivatedRoute) {
+    this.predicate = 'id';
+    this.ascending = true;
+  }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ participant }) => (this.participant = participant));

@@ -11,8 +11,9 @@ import { ParticipantService } from './participant.service';
 import { ParticipantComponent } from './participant.component';
 import { ParticipantDetailComponent } from './participant-detail.component';
 import { ParticipantUpdateComponent } from './participant-update.component';
-import {UserManagementDetailComponent} from "../../admin/user-management/user-management-detail.component";
-import {UserManagementResolve} from "../../admin/user-management/user-management.route";
+import { UserManagementDetailComponent } from '../../admin/user-management/user-management-detail.component';
+import { UserManagementResolve } from '../../admin/user-management/user-management.route';
+import { InscriptionEvenementComponent } from './inscription-evenement/inscription-evenement.component';
 
 @Injectable({ providedIn: 'root' })
 export class ParticipantResolve implements Resolve<IParticipant> {
@@ -88,5 +89,14 @@ export const participantRoute: Routes = [
     resolve: {
       user: UserManagementResolve,
     },
-  }
+  },
+  {
+    path: 'inscriptionevent',
+    component: InscriptionEvenementComponent,
+    data: {
+      authorities: [Authority.USER, Authority.PARTICIPANT],
+      pageTitle: 'gestionevenementappApp.evenement.home.insriptionEvent',
+    },
+    canActivate: [UserRouteAccessService],
+  },
 ];

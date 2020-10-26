@@ -23,7 +23,7 @@
         </tr>
         </thead>
         <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
-            <tr *ngFor="let participant of participants ;trackBy: trackId">
+            <tr *ngFor="let participant of participants ;trackBy: trackId; let i=index">
                 <td><a [routerLink]="['/participant', participant.id, 'view']">{{ participant.id }}</a></td>
                 <td *ngIf="participant.participant">{{ participant.participant.firstName }}</td>
                 <td *ngIf="participant.participant">{{ participant.participant.lastName }}</td>
@@ -39,8 +39,8 @@
                                    type="checkbox"
                                    id="activated"
                                    name="activated"
-                                   (click)="save(participant)"
-                                   formControlName="activated">
+                                   (click)="save(participant,i)"
+                                   formControlName="activated" />
                             <span>{{ participant.registered ? 'Inscris':'Non Inscris' }}</span>
                         </label>
                     </div>

@@ -11,4 +11,5 @@ import java.util.List;
 public interface ParticipantEvenementRepository extends JpaRepository<ParticipantEvenement, ParticipantEvenemrntId>, JpaSpecificationExecutor<ParticipantEvenement> {
 
     List<ParticipantEvenement> findAllByEvenementId(Long evenementId);
+    List<ParticipantEvenement> findAllByParticipantId(Long participantId);
 }

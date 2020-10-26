@@ -1,5 +1,5 @@
 <div class="row justify-content-center">
-    <div class="col-8">
+    <div class="col-12">
         <div *ngIf="participant">
             <h2><span jhiTranslate="gestionevenementappApp.participant.detail.title">Participant</span> {{ participant.id }}</h2>
 
@@ -7,65 +7,48 @@
 
             <jhi-alert-error></jhi-alert-error>
 
-            <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="gestionevenementappApp.participant.sexe">Sexe</span></dt>
-                <dd>
-                    <span>{{ participant.sexe }}</span>
-                </dd>
-                <dt><span jhiTranslate="gestionevenementappApp.participant.telephone">Telephone</span></dt>
-                <dd>
-                    <span>{{ participant.telephone }}</span>
-                </dd>
-                <dt><span jhiTranslate="gestionevenementappApp.participant.login">Login</span></dt>
-                <dd>
-                    <span>{{ participant.login }}</span>
-                </dd>
-                <dt><span jhiTranslate="gestionevenementappApp.participant.firstName">First Name</span></dt>
-                <dd>
-                    <span>{{ participant.firstName }}</span>
-                </dd>
-                <dt><span jhiTranslate="gestionevenementappApp.participant.lastName">Last Name</span></dt>
-                <dd>
-                    <span>{{ participant.lastName }}</span>
-                </dd>
-                <dt><span jhiTranslate="gestionevenementappApp.participant.login">Login</span></dt>
-                <dd>
-                    <div *ngIf="participant.villeId">
-                        <a [routerLink]="['/admin/user-management', participant.login, 'view']">{{ participant.login }}</a>
-                    </div>
-                </dd>
-                <dt><span jhiTranslate="gestionevenementappApp.participant.ville">Ville</span></dt>
-                <dd>
-                    <div *ngIf="participant.villeId">
-                        <a [routerLink]="['/ville', participant.villeId, 'view']">{{ participant.villeNom }}</a>
-                    </div>
-                </dd>
-                <dt><span jhiTranslate="gestionevenementappApp.participant.evenement">Evenement</span></dt>
-                <dd>
-                    <span *ngFor="let evenement of participant.evenements; let last = last">
-                        <a [routerLink]="['/evenement', evenement?.id, 'view']">{{ evenement.code }}</a>{{ last ? '' : ', ' }}
-                    </span>
-                </dd>
-                <dt><span jhiTranslate="gestionevenementappApp.participant.activite">Activite</span></dt>
-                <dd>
-                    <span *ngFor="let activite of participant.activites; let last = last">
-                        <a [routerLink]="['/activite', activite?.id, 'view']">{{ activite.nom }}</a>{{ last ? '' : ', ' }}
-                    </span>
-                </dd>
-            </dl>
+            <table class="table table-striped" aria-describedby="page-heading">
+                <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending">
+                    <th scope="col"  jhiSortBy="firstName"><span jhiTranslate="gestionevenementappApp.participant.firstName">First Name</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="lastName"><span jhiTranslate="gestionevenementappApp.participant.lastName">Last Name</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="sexe"><span jhiTranslate="gestionevenementappApp.participant.sexe">Sexe</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="telephone"><span jhiTranslate="gestionevenementappApp.participant.telephone">Telephone</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="villeNom"><span jhiTranslate="gestionevenementappApp.participant.ville">Ville</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="villeNom"><span jhiTranslate="gestionevenementappApp.participant.login">Login</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </thead>
+                <tbody >
+                    <tr>
+                        <td>{{ participant.firstName }}</td>
+                        <td>{{ participant.lastName }}</td>
+                        <td>{{ participant.sexe }}</td>
+                        <td>{{ participant.villeNom }}</td>
+                        <td>{{ participant.telephone }}</td>
+                        <td>{{ participant.login }}</td>
+                        <td>
+                            <button type="submit"
+                                (click)="previousState()"
+                                class="btn btn-info">
+                                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+                            </button>
 
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/participant', participant.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
-            </button>
-
+                            <button type="button"
+                                [routerLink]="['/participant', participant.id, 'edit']"
+                                class="btn btn-primary">
+                                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-12" *ngIf="participant && participant.evenements && participant.evenements.length>0">
+        <jhi-inscription-evenement
+        [participantEvenements]="participant.participantEvenements"
+        [participant]="participant"></jhi-inscription-evenement>
     </div>
 </div>

@@ -11,7 +11,6 @@ import { EvenementService } from './evenement.service';
 import { EvenementComponent } from './evenement.component';
 import { EvenementDetailComponent } from './evenement-detail.component';
 import { EvenementUpdateComponent } from './evenement-update.component';
-import { InscriptionEvenementComponent } from './inscription-evenement/inscription-evenement.component';
 
 @Injectable({ providedIn: 'root' })
 export class EvenementResolve implements Resolve<IEvenement> {
@@ -78,15 +77,6 @@ export const evenementRoute: Routes = [
     data: {
       authorities: [Authority.USER],
       pageTitle: 'gestionevenementappApp.evenement.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: 'inscriptionevent',
-    component: InscriptionEvenementComponent,
-    data: {
-      authorities: [Authority.USER, Authority.PARTICIPANT],
-      pageTitle: 'gestionevenementappApp.evenement.home.insriptionEvent',
     },
     canActivate: [UserRouteAccessService],
   },

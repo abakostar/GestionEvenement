@@ -24,7 +24,7 @@ export class EvenementDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ evenement }) => (this.evenement = evenement));
+    this.activatedRoute.data.subscribe(({ evenement }) => (this.evenement = evenement)); // explication ?
   }
 
   previousState(): void {

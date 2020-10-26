@@ -1,11 +1,12 @@
 package com.gestionevenement.service.dto;
 
 import com.gestionevenement.domain.User;
-import com.gestionevenement.security.AuthoritiesConstants;
-import com.gestionevenement.web.rest.vm.ManagedUserVM;
+// import com.gestionevenement.security.AuthoritiesConstants;
+// import com.gestionevenement.web.rest.vm.ManagedUserVM;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,6 +36,8 @@ public class ParticipantDTO implements Serializable {
 
     private Set<EvenementDTO> evenements = new HashSet<>();
     private Set<ActiviteDTO> activites = new HashSet<>();
+
+    private List<ParticipantEventDTO> participantEvenements;
 
     public Long getId() {
         return id;
@@ -130,6 +133,14 @@ public class ParticipantDTO implements Serializable {
 
     public void setActivites(Set<ActiviteDTO> activites) {
         this.activites = activites;
+    }
+
+    public List<ParticipantEventDTO> getParticipantEvenements() {
+        return participantEvenements;
+    }
+
+    public void setParticipantEvenements(List<ParticipantEventDTO> participantEvenements) {
+        this.participantEvenements = participantEvenements;
     }
 
     @Override

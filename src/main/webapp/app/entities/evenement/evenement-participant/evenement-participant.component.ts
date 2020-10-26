@@ -1,15 +1,15 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {HttpResponse} from "@angular/common/http";
-import {ITEMS_PER_PAGE} from "../../../shared/constants/pagination.constants";
-import {JhiParseLinks} from "ng-jhipster";
-import {IParticipantEvenement} from "../../../shared/model/participant-evenement.model";
-import {EvenementService} from "../evenement.service";
-import {IEvenement} from "../../../shared/model/evenement.model";
+import { Component, Input, OnInit } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
+import { ITEMS_PER_PAGE } from '../../../shared/constants/pagination.constants';
+import { JhiParseLinks } from 'ng-jhipster';
+import { IParticipantEvenement } from '../../../shared/model/participant-evenement.model';
+import { EvenementService } from '../evenement.service';
+import { IEvenement } from '../../../shared/model/evenement.model';
 
 @Component({
   selector: 'jhi-evenement-participant',
   templateUrl: './evenement-participant.component.html',
-  styleUrls: ['./evenement-participant.component.scss']
+  styleUrls: ['./evenement-participant.component.scss'],
 })
 export class EvenementParticipantComponent implements OnInit {
   @Input() participants: IParticipantEvenement[];
@@ -33,8 +33,7 @@ export class EvenementParticipantComponent implements OnInit {
     this.evenement = {};
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   loadPage(page: number): void {
     this.page = page;
@@ -57,15 +56,14 @@ export class EvenementParticipantComponent implements OnInit {
     return result;
   }
 
-  save(participant: IParticipantEvenement) : void {
-     participant.evenementId = this.evenement.id;
-     participant.participantId = participant.id;
-     participant.registered = !participant.registered;
-     this.evenementService.addParticipant(participant)
-       .subscribe((res: HttpResponse<IParticipantEvenement>) => {
-         if(res && res.body){
-           this.participants[0].registered = res.body.registered;
-         }
-       });
+  save(participant: IParticipantEvenement, i: number): void {
+    participant.evenementId = this.evenement.id;
+    participant.participantId = participant.id;
+    participant.registered = !participant.registered;
+    this.evenementService.addParticipant(participant).subscribe((res: HttpResponse<IParticipantEvenement>) => {
+      if (res && res.body) {
+        this.participants[i].registered = res.body.registered;
+      }
+    });
   }
 }

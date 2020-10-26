@@ -1,3 +1,4 @@
+import { IEvenement } from './evenement.model';
 import { IParticipant } from './participant.model';
 
 export interface IParticipantEvenement {
@@ -6,4 +7,5 @@ export interface IParticipantEvenement {
   registered?: boolean;
   evenementId?: number;
   participantId?: number;
+  evenement?: IEvenement;
 }

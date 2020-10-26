@@ -149,7 +149,7 @@ public class EvenementResource {
 
     @PostMapping("/evenements/addParticipant")
     public ResponseEntity<ParticipantEvenementIdVM> addParticipant(@Valid @RequestBody ParticipantEvenementIdVM participantEvenementIdVM) throws URISyntaxException {
-        log.debug("REST request to save Evenement : {}", participantEvenementIdVM);
+        log.debug("REST request to save Evenement Participant : {}", participantEvenementIdVM);
         if (participantEvenementIdVM.getEvenementId() == null || participantEvenementIdVM.getParticipantId() == null) {
             throw new BadRequestAlertException("A new evenement cannot already have an participantId or evenementId", "ParticipantEvenementId", "idexists");
         }
