@@ -46,12 +46,9 @@ public class EvenementResource {
 
     private final EvenementQueryService evenementQueryService;
 
-    private final ParticipantEvenementRepository participantEvenementRepository;
-
-    public EvenementResource(EvenementService evenementService, EvenementQueryService evenementQueryService, ParticipantEvenementRepository participantEvenementRepository) {
+    public EvenementResource(EvenementService evenementService, EvenementQueryService evenementQueryService) {
         this.evenementService = evenementService;
         this.evenementQueryService = evenementQueryService;
-        this.participantEvenementRepository = participantEvenementRepository;
     }
 
     /**
@@ -147,24 +144,5 @@ public class EvenementResource {
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
-    @PostMapping("/evenements/addParticipant")
-    public ResponseEntity<ParticipantEvenementIdVM> addParticipant(@Valid @RequestBody ParticipantEvenementIdVM participantEvenementIdVM) throws URISyntaxException {
-        log.debug("REST request to save Evenement Participant : {}", participantEvenementIdVM);
-        if (participantEvenementIdVM.getEvenementId() == null || participantEvenementIdVM.getParticipantId() == null) {
-            throw new BadRequestAlertException("A new evenement cannot already have an participantId or evenementId", "ParticipantEvenementId", "idexists");
-        }
-        ParticipantEvenemrntId participantEvenemrntId = new ParticipantEvenemrntId(participantEvenementIdVM.getParticipantId(), participantEvenementIdVM.getEvenementId());
-        Optional<ParticipantEvenement> evenementRepositoryById = participantEvenementRepository.findById(participantEvenemrntId);
-        if(participantEvenementIdVM.isRegistered() && !evenementRepositoryById.isPresent()){
-            ParticipantEvenement participantEvenement = new ParticipantEvenement();
-            participantEvenement.setEvenementId(participantEvenementIdVM.getEvenementId());
-            participantEvenement.setParticipantId(participantEvenementIdVM.getParticipantId());
-            participantEvenementRepository.save(participantEvenement);
-        } else if(!participantEvenementIdVM.isRegistered() && evenementRepositoryById.isPresent()){
-            participantEvenementRepository.deleteById(participantEvenemrntId);
-        }
-        return ResponseEntity.created(new URI("/api/evenements/addParticipant/" + participantEvenementIdVM.getEvenementId() + "/" + participantEvenementIdVM.getParticipantId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, participantEvenementIdVM.getEvenementId().toString() + "_" + participantEvenementIdVM.getParticipantId()))
-            .body(participantEvenementIdVM);
-    }
+
 }

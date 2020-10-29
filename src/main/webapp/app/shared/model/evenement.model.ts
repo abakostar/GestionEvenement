@@ -10,6 +10,7 @@ export interface IEvenement {
   description?: string;
   categorieNom?: string;
   categorieId?: number;
+  registered?: boolean;
   participants?: IParticipantEvenement[];
   activites?: IActivite[];
 }
@@ -23,6 +24,7 @@ export class Evenement implements IEvenement {
     public description?: string,
     public categorieNom?: string,
     public categorieId?: number,
+    public registered?: boolean,
     public participants?: IParticipantEvenement[],
     public activites?: IActivite[]
   ) {}

@@ -88,8 +88,6 @@ export class ParticipantUpdateComponent implements OnInit {
       email: participant.email,
       password: participant.password,
       villeId: participant.villeId,
-      evenements: participant.evenements,
-      activites: participant.activites,
     });
   }
 
@@ -120,7 +118,6 @@ export class ParticipantUpdateComponent implements OnInit {
       password: this.editForm.get(['password'])!.value,
       villeId: this.editForm.get(['villeId'])!.value,
       evenements: this.editForm.get(['evenements'])!.value,
-      activites: this.editForm.get(['activites'])!.value,
     };
   }
 

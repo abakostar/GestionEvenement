@@ -64,24 +64,26 @@
                         </a>
                     </li>
                     <li>
-                        <a *jhiHasAnyAuthority="'ROLE_USER'" class="dropdown-item" routerLink="participant" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                        <a *jhiHasAnyAuthority="'ROLE_PARTICIPANT'" class="dropdown-item" routerLink="participant" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                             <span jhiTranslate="global.menu.entities.participant">Participant</span>
                         </a>
                     </li>
                     <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                     <li>
-                        <a class="dropdown-item" routerLink="evenement/inscriptionevent" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                        <a *jhiHasAnyAuthority="'ROLE_PARTICIPANT'" class="dropdown-item" routerLink="participant/evenements" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                             <span jhiTranslate="global.menu.entities.inscriptionevent">Inscription à l'Evenement</span>
                         </a>
                     </li>
+                    <!--
                     <li>
                         <a class="dropdown-item" routerLink="activite/inscriptionactivity" routerLinkActive="active/" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                             <span jhiTranslate="global.menu.entities.inscriptionactivity">Inscription à l'Actitivté</span>
                         </a>
                     </li>
+                    -->
                 </ul>
             </li>
             <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">

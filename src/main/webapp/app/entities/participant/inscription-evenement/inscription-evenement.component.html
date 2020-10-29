@@ -1,17 +1,26 @@
 <div>
-    <h2 id="page-heading">
-        <span jhiTranslate="gestionevenementappApp.evenement.home.insriptionEvent">Inscription aux événements</span>
+    <h2 id="page-heading" *ngIf="participant && participant.profileCompleted">
+        <span jhiTranslate="gestionevenementappApp.participant.inscriptionEvenement.title"></span>
     </h2>
 
     <jhi-alert-error></jhi-alert-error>
 
     <jhi-alert></jhi-alert>
 
-    <div class="alert alert-warning" id="no-result" *ngIf="participantEvenements?.length === 0">
+    <div class="alert alert-warning" id="profile-completed-and-no-result" *ngIf="participant && participant.profileCompleted && evenements?.length === 0">
         <span jhiTranslate="gestionevenementappApp.evenement.home.notFound">No evenements found</span>
     </div>
 
-    <div class="table-responsive" id="entities" *ngIf="participantEvenements && participantEvenements.length > 0">
+    <div class="alert alert-warning" id="profile-no-completed" *ngIf="participant && !participant.profileCompleted">
+        <button type="submit"
+                [routerLink]="['/participant', participant.id, 'edit']"
+                class="btn btn-primary btn-sm">
+            <fa-icon icon="pencil-alt"></fa-icon>
+            <span class="d-none d-md-inline" jhiTranslate="gestionevenementappApp.participant.inscriptionEvenement.profileNotCompleted">Edit</span>
+        </button>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="evenements && evenements.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
@@ -25,24 +34,22 @@
                 </tr>
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
-                <tr *ngFor="let evenement of participantEvenements ;trackBy: trackId ; let i = index">
-                    <td><a [routerLink]="['/evenement', evenement.id, 'view']">{{ evenement.id }}</a></td>
-                    <td *ngIf="evenement.evenement"> {{evenement.evenement.code }}</td>
-                    <td *ngIf="evenement.evenement"> {{ evenement.evenement.dateDebut | date:'medium' }}</td>
-                    <td *ngIf="evenement.evenement"> {{ evenement.evenement.dateFin | date:'medium' }}</td>
-                    <td *ngIf="evenement.evenement"> {{ evenement.evenement.description }}</td>
-                    <!-- <td><div *ngIf="evenement.evenement.categorieId">{{ evenement.evenement.categorieNom }}</div></td> -->
+                <tr *ngFor="let evenement of evenements ;trackBy: trackId ; let i = index">
+                    <td>{{evenement.id}}</td>
+                    <td>{{evenement.code}}</td>
+                    <td>{{evenement.dateDebut | date:'medium'}}</td>
+                    <td>{{evenement.dateFin | date:'medium'}}</td>
+                    <td>{{evenement.description}}</td>
                     <td class="text-right">
-                            <label class="form-check-label" for="activated">
-                                    <input class="form-check-input"
-                                           [checked]="evenement.registered"
-                                           type="checkbox"
-                                           id="activated"
-                                           name="activated"
-                                           (click)="saveInscriptionEvent(evenement,i,evenement.id,participant.id)"
-                                           formControlName="activated" />
-                                    <span>{{evenement.registered ? 'Inscris':'Non Inscris' }}</span>
-                            </label>
+                        <label class="form-check-label" for="activated">
+                            <input class="form-check-input"
+                                   [checked]="evenement.registered"
+                                   type="checkbox"
+                                   id="activated"
+                                   name="activated"
+                                   (click)="saveInscriptionEvent(evenement, i, participant.id)"/>
+                            <span>{{evenement.registered ? 'Inscris':'Non Inscris' }}</span>
+                        </label>
                     </td>
                 </tr>
             </tbody>

@@ -11,45 +11,6 @@
                     <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
                 </div>
 
-                <div class="form-group" [hidden]="editForm.get('id')!.value">
-                    <label class="form-control-label" jhiTranslate="gestionevenementappApp.participant.firstName" for="field_firstName">First Name</label>
-                    <input type="text" class="form-control" name="firstName" id="field_firstName"
-                           formControlName="firstName"/>
-                </div>
-
-                <div class="form-group" [hidden]="editForm.get('id')!.value">
-                    <label class="form-control-label" jhiTranslate="gestionevenementappApp.participant.lastName" for="field_lastName">Last Name</label>
-                    <input type="text" class="form-control" name="lastName" id="field_lastName"
-                           formControlName="lastName"/>
-                </div>
-
-                <div class="form-group" [hidden]="editForm.get('id')!.value" >
-                    <label class="form-control-label" jhiTranslate="gestionevenementappApp.participant.email" for="field_email">Email</label>
-                    <input type="text" class="form-control" name="email" id="field_email"
-                           formControlName="email"/>
-            <!--    </div>
-                <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">-->
-                    <small class="form-text text-danger"
-                           *ngIf="editForm.get('email')?.errors?.maxlength"
-                           jhiTranslate="entity.validation.maxlength"
-                           [translateValues]="{ max: 100 }">
-                        This field cannot be longer than 100 characters.
-                    </small>
-
-                    <small class="form-text text-danger"
-                           *ngIf="editForm.get('email')?.errors?.minlength"
-                           jhiTranslate="entity.validation.minlength"
-                           [translateValues]="{ min: 5 }">
-                        This field is required to be at least 5 characters.
-                    </small>
-
-                    <small class="form-text text-danger"
-                           *ngIf="editForm.get('email')?.errors?.email"
-                           jhiTranslate="global.messages.validate.email.invalid">
-                        Your email is invalid.
-                    </small>
-                </div>
-
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="gestionevenementappApp.participant.sexe" for="field_sexe">Sexe</label>
                     <select class="form-control" id="field_sexe" name="sexe" formControlName="sexe">
@@ -71,30 +32,6 @@
                         <option [ngValue]="null"></option>
                         <option [ngValue]="villeOption.id" *ngFor="let villeOption of villes; trackBy: trackById">{{ villeOption.nom }}</option>
                     </select>
-                </div>
-
-                <div class="form-group">
-                    <label jhiTranslate="gestionevenementappApp.participant.evenement" for="field_evenements">Evenement</label>
-                    <select class="form-control" id="field_evenements" multiple name="evenements" formControlName="evenements">
-                        <option [ngValue]="getSelected(editForm.get('evenements')!.value, evenementOption)" *ngFor="let evenementOption of evenements; trackBy: trackById">{{ evenementOption.code }}</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label jhiTranslate="gestionevenementappApp.participant.activite" for="field_activites">Activite</label>
-                    <select class="form-control" id="field_activites" multiple name="activites" formControlName="activites">
-                        <option [ngValue]="getSelected(editForm.get('activites')!.value, activiteOption)" *ngFor="let activiteOption of activites; trackBy: trackById">{{ activiteOption.nom }}</option>
-                    </select>
-                </div>
-
-                <div class="form-group" [hidden]="editForm.get('id')!.value">
-                    <label class="form-control-label" jhiTranslate="gestionevenementappApp.participant.login" for="field_login">Login</label>
-                    <input type="text" class="form-control" name="login" id="field_login" formControlName="login"/>
-                </div>
-
-                <div class="form-group" [hidden]="editForm.get('id')!.value">
-                    <label class="form-control-label" jhiTranslate="gestionevenementappApp.participant.password" for="field_password">Password</label>
-                    <input type="password" class="form-control" name="password" id="field_password" formControlName="password"/>
                 </div>
 
             </div>

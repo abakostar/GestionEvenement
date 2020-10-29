@@ -17,6 +17,7 @@ public class ParticipantEventDTO {
         this.registered = registered;
         this.id = participant.getId();
     }
+
     public ParticipantEventDTO(EvenementDTO evenement, boolean registered) {
         this.evenement = evenement;
         this.registered = registered;

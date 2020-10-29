@@ -1,16 +1,20 @@
 package com.gestionevenement.web.rest;
 
+import com.gestionevenement.domain.ParticipantEvenement;
+import com.gestionevenement.domain.ParticipantEvenemrntId;
 import com.gestionevenement.domain.User;
+import com.gestionevenement.repository.ParticipantEvenementRepository;
 import com.gestionevenement.security.AuthoritiesConstants;
+import com.gestionevenement.security.SecurityUtils;
+import com.gestionevenement.service.ParticipantQueryService;
 import com.gestionevenement.service.ParticipantService;
 import com.gestionevenement.service.UserService;
-import com.gestionevenement.service.dto.UserDTO;
-import com.gestionevenement.web.rest.errors.BadRequestAlertException;
-import com.gestionevenement.service.dto.ParticipantDTO;
 import com.gestionevenement.service.dto.ParticipantCriteria;
-import com.gestionevenement.service.ParticipantQueryService;
-
+import com.gestionevenement.service.dto.ParticipantDTO;
+import com.gestionevenement.web.rest.errors.BadRequestAlertException;
 import com.gestionevenement.web.rest.vm.ManagedUserVM;
+import com.gestionevenement.web.rest.vm.ParticipantEvenementIdVM;
+import io.github.jhipster.service.filter.StringFilter;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -18,13 +22,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collections;
@@ -51,10 +56,16 @@ public class ParticipantResource {
 
     private final UserService userService;
 
-    public ParticipantResource(ParticipantService participantService, UserService userService, ParticipantQueryService participantQueryService) {
+    private final ParticipantEvenementRepository participantEvenementRepository;
+
+    public ParticipantResource(ParticipantService participantService,
+                               UserService userService,
+                               ParticipantQueryService participantQueryService,
+                               ParticipantEvenementRepository participantEvenementRepository) {
         this.participantService = participantService;
         this.userService = userService;
         this.participantQueryService = participantQueryService;
+        this.participantEvenementRepository = participantEvenementRepository;
     }
 
     /**
@@ -125,7 +136,16 @@ public class ParticipantResource {
     @GetMapping("/participants")
     public ResponseEntity<List<ParticipantDTO>> getAllParticipants(ParticipantCriteria criteria, Pageable pageable) {
         log.debug("REST request to get Participants by criteria: {}", criteria);
+        StringFilter loginFilter = new StringFilter();
+        loginFilter.setEquals(SecurityUtils.getCurrentUserLogin().orElse(null));
+        criteria.setLogin(loginFilter);
         Page<ParticipantDTO> page = participantQueryService.findByCriteria(criteria, pageable);
+        if (page.isEmpty()) {
+            User user = userService.findByLogin(loginFilter.getEquals());
+            ParticipantDTO participantDTO = new ParticipantDTO();
+            participantDTO.setUser(user);
+            page = new PageImpl<>(Collections.singletonList(participantDTO), pageable, 1);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -151,9 +171,14 @@ public class ParticipantResource {
     @GetMapping("/participants/{id}")
     public ResponseEntity<ParticipantDTO> getParticipant(@PathVariable Long id) {
         log.debug("REST request to get Participant : {}", id);
-        Optional<ParticipantDTO> participantDTO = participantService.findOne(id);
+        Optional<ParticipantDTO> participantDTO;
+        if (id == 0) {
+            participantDTO = Optional.of(new ParticipantDTO());
+        } else {
+            participantDTO = participantService.findOne(id);
+        }
         participantDTO.ifPresent(participantDTO1 -> {
-            User user = userService.findByLogin(participantDTO1.getLogin());
+            final User user = userService.findByLogin(SecurityUtils.getCurrentUserLogin().orElse(null));
             if (user != null) participantDTO1.setUser(user);
         });
         return ResponseUtil.wrapOrNotFound(participantDTO);
@@ -176,5 +201,35 @@ public class ParticipantResource {
             // delete activite
         });
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+
+    @GetMapping("/participants/currentUser")
+    public ResponseEntity<ParticipantDTO> getParticipantByCurrentUser() {
+        final User user = userService.findByLogin(SecurityUtils.getCurrentUserLogin().orElse(null));
+        log.debug("REST request to get Participant : {}", user.getLogin());
+        Optional<ParticipantDTO>  result = participantService.findByUser(user);
+        return ResponseUtil.wrapOrNotFound(result);
+    }
+
+    @PostMapping("/participants/addParticipant")
+    public ResponseEntity<ParticipantEvenementIdVM> addParticipant(@Valid @RequestBody ParticipantEvenementIdVM participantEvenementIdVM) throws URISyntaxException {
+        log.debug("REST request to save Evenement Participant : {}", participantEvenementIdVM);
+        if (participantEvenementIdVM.getEvenementId() == null || participantEvenementIdVM.getParticipantId() == null) {
+            throw new BadRequestAlertException("A new evenement cannot already have an participantId or evenementId", "ParticipantEvenementId", "idexists");
+        }
+        ParticipantEvenemrntId participantEvenemrntId = new ParticipantEvenemrntId(participantEvenementIdVM.getParticipantId(), participantEvenementIdVM.getEvenementId());
+        Optional<ParticipantEvenement> evenementRepositoryById = participantEvenementRepository.findById(participantEvenemrntId);
+        if(participantEvenementIdVM.isRegistered() && !evenementRepositoryById.isPresent()){
+            ParticipantEvenement participantEvenement = new ParticipantEvenement();
+            participantEvenement.setEvenementId(participantEvenementIdVM.getEvenementId());
+            participantEvenement.setParticipantId(participantEvenementIdVM.getParticipantId());
+            participantEvenementRepository.save(participantEvenement);
+        } else if(!participantEvenementIdVM.isRegistered() && evenementRepositoryById.isPresent()){
+            participantEvenementRepository.deleteById(participantEvenemrntId);
+        }
+        return ResponseEntity.created(new URI("/api/participants/addParticipant/" + participantEvenementIdVM.getEvenementId() + "/" + participantEvenementIdVM.getParticipantId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, participantEvenementIdVM.getEvenementId().toString() + "_" + participantEvenementIdVM.getParticipantId()))
+            .body(participantEvenementIdVM);
     }
 }

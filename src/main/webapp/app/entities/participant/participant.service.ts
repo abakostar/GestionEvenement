@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IParticipant } from 'app/shared/model/participant.model';
+import {IParticipantEvenement} from "../../shared/model/participant-evenement.model";
 
 type EntityResponseType = HttpResponse<IParticipant>;
 type EntityArrayResponseType = HttpResponse<IParticipant[]>;
@@ -31,6 +32,20 @@ export class ParticipantService {
   find(id: number): Observable<EntityResponseType> {
     return this.http
       .get<IParticipant>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => res));
+  }
+
+  findByCurrentUser(): Observable<EntityResponseType> {
+    const url = this.resourceUrl+'/currentUser'
+    return this.http
+      .get<IParticipant>(url, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => res));
+  }
+
+  addParticipant(participantEvenement: IParticipantEvenement): Observable<EntityResponseType> {
+    const url = this.resourceUrl+"/addParticipant"
+    return this.http
+      .post<IParticipantEvenement>(url, participantEvenement, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => res));
   }
 

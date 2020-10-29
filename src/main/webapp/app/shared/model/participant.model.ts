@@ -1,6 +1,5 @@
 import { IEvenement } from 'app/shared/model/evenement.model';
 import { IActivite } from 'app/shared/model/activite.model';
-import { IParticipantEvenement } from './participant-evenement.model';
 
 export interface IParticipant {
   id?: number;
@@ -13,9 +12,8 @@ export interface IParticipant {
   password?: string;
   villeNom?: string;
   villeId?: number;
+  profileCompleted?: boolean;
   evenements?: IEvenement[];
-  activites?: IActivite[];
-  participantEvenements?: IParticipantEvenement[];
 }
 
 export class Participant implements IParticipant {

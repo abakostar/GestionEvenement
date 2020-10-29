@@ -1,13 +1,14 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="gestionevenementappApp.participant.home.title">Participants</span>
-
+        <!--
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-participant" [routerLink]="['/participant/new']">
             <fa-icon icon="plus"></fa-icon>
             <span  jhiTranslate="gestionevenementappApp.participant.home.createLabel">
             Create a new Participant
             </span>
         </button>
+        -->
     </h2>
 
     <jhi-alert-error></jhi-alert-error>
@@ -28,7 +29,6 @@
                     <th scope="col"  jhiSortBy="sexe"><span jhiTranslate="gestionevenementappApp.participant.sexe">Sexe</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="telephone"><span jhiTranslate="gestionevenementappApp.participant.telephone">Telephone</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="villeNom"><span jhiTranslate="gestionevenementappApp.participant.ville">Ville</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="villeNom"><span jhiTranslate="gestionevenementappApp.participant.login">Login</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -39,37 +39,30 @@
                     <td>{{ participant.lastName }}</td>
                     <td>{{ participant.sexe }}</td>
                     <td>{{ participant.telephone }}</td>
-                    <td>
-                        <div *ngIf="participant.villeId">
-                            <a [routerLink]="['/ville', participant.villeId , 'view']" >{{ participant.villeNom }}</a>
-                        </div>
-                    </td>
-                    <td>
-                        <div *ngIf="participant.villeId">
-                            <a [routerLink]="['/admin/user-management', participant.login , 'view']" >{{ participant.login }}</a>
-                        </div>
-                    </td>
+                    <td>{{ participant.villeNom }}</td>
                     <td class="text-right">
                         <div class="btn-group">
+                            <!--
                             <button type="submit"
                                     [routerLink]="['/participant', participant.id, 'view']"
                                     class="btn btn-info btn-sm">
                                 <fa-icon icon="eye"></fa-icon>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                             </button>
-
+                            -->
                             <button type="submit"
                                     [routerLink]="['/participant', participant.id, 'edit']"
                                     class="btn btn-primary btn-sm">
                                 <fa-icon icon="pencil-alt"></fa-icon>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                             </button>
-
+                            <!--
                             <button type="submit" (click)="delete(participant)"
                                     class="btn btn-danger btn-sm">
                                 <fa-icon icon="times"></fa-icon>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                             </button>
+                            -->
                         </div>
                     </td>
                 </tr>

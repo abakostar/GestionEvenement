@@ -9,12 +9,15 @@ import { IParticipant } from 'app/shared/model/participant.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { ParticipantService } from './participant.service';
 import { ParticipantDeleteDialogComponent } from './participant-delete-dialog.component';
+import {AccountService} from "../../core/auth/account.service";
+import {Account} from "../../core/user/account.model";
 
 @Component({
   selector: 'jhi-participant',
   templateUrl: './participant.component.html',
 })
 export class ParticipantComponent implements OnInit, OnDestroy {
+  account: Account | null = null;
   participants: IParticipant[];
   eventSubscriber?: Subscription;
   itemsPerPage: number;
@@ -27,7 +30,8 @@ export class ParticipantComponent implements OnInit, OnDestroy {
     protected participantService: ParticipantService,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
-    protected parseLinks: JhiParseLinks
+    protected parseLinks: JhiParseLinks,
+    private accountService: AccountService
   ) {
     this.participants = [];
     this.itemsPerPage = ITEMS_PER_PAGE;
@@ -63,6 +67,7 @@ export class ParticipantComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadAll();
     this.registerChangeInParticipants();
+    this.accountService.identity().subscribe(account => (this.account = account));
   }
 
   ngOnDestroy(): void {

@@ -1,5 +1,6 @@
 package com.gestionevenement.service;
 
+import com.gestionevenement.domain.User;
 import com.gestionevenement.service.dto.ParticipantDTO;
 
 import org.springframework.data.domain.Page;
@@ -50,4 +51,6 @@ public interface ParticipantService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Optional<ParticipantDTO> findByUser(User user);
 }

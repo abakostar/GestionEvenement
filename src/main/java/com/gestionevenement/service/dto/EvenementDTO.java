@@ -23,14 +23,15 @@ public class EvenementDTO implements Serializable {
 
     private String description;
 
-
     private Long categorieId;
 
     private String categorieNom;
 
     private int nbActivite;
 
-    private List<ParticipantEventDTO> participants;
+    private boolean registered;
+
+    private List<ParticipantEventDTO> participants; // Using ParticipantDto
 
     private List<ActiviteDTO> activites;
 
@@ -104,6 +105,15 @@ public class EvenementDTO implements Serializable {
 
     public void setParticipants(List<ParticipantEventDTO> participants) {
         this.participants = participants;
+    }
+
+
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
     }
 
     @Override

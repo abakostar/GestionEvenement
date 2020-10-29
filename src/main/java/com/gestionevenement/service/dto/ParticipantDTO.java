@@ -34,10 +34,11 @@ public class ParticipantDTO implements Serializable {
 
     private String villeNom;
 
-    private Set<EvenementDTO> evenements = new HashSet<>();
-    private Set<ActiviteDTO> activites = new HashSet<>();
+    private boolean profileCompleted;
 
-    private List<ParticipantEventDTO> participantEvenements;
+    private boolean registered;
+
+    private List<EvenementDTO> evenements;
 
     public Long getId() {
         return id;
@@ -119,28 +120,28 @@ public class ParticipantDTO implements Serializable {
         this.villeNom = villeNom;
     }
 
-    public Set<EvenementDTO> getEvenements() {
+    public List<EvenementDTO> getEvenements() {
         return evenements;
     }
 
-    public void setEvenements(Set<EvenementDTO> evenements) {
+    public void setEvenements(List<EvenementDTO> evenements) {
         this.evenements = evenements;
     }
 
-    public Set<ActiviteDTO> getActivites() {
-        return activites;
+    public boolean isProfileCompleted() {
+        return profileCompleted;
     }
 
-    public void setActivites(Set<ActiviteDTO> activites) {
-        this.activites = activites;
+    public void setProfileCompleted(boolean profileCompleted) {
+        this.profileCompleted = profileCompleted;
     }
 
-    public List<ParticipantEventDTO> getParticipantEvenements() {
-        return participantEvenements;
+    public boolean isRegistered() {
+        return registered;
     }
 
-    public void setParticipantEvenements(List<ParticipantEventDTO> participantEvenements) {
-        this.participantEvenements = participantEvenements;
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
     }
 
     @Override
@@ -160,6 +161,7 @@ public class ParticipantDTO implements Serializable {
         return 31;
     }
 
+
     // prettier-ignore
     @Override
     public String toString() {
@@ -175,12 +177,14 @@ public class ParticipantDTO implements Serializable {
             ", villeId=" + getVilleId() +
             ", villeNom='" + getVilleNom() + "'" +
             ", evenements='" + getEvenements() + "'" +
-            ", activites='" + getActivites() + "'" +
             "}";
     }
 
     public void setUser(User user) {
         setFirstName(user.getFirstName());
         setLastName(user.getLastName());
+        setEmail(user.getEmail());
+        setLogin(user.getLogin());
+        setId(id == null ? 0L : id);
     }
 }

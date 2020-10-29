@@ -86,7 +86,7 @@ public class UserService {
     }
 
     public User registerUser(UserDTO userDTO, String password) {
-        return registerUser(userDTO, Collections.singleton(AuthoritiesConstants.USER), password, false);
+        return registerUser(userDTO, Collections.singleton(AuthoritiesConstants.PARTICIPANT), password, false);
     }
 
 

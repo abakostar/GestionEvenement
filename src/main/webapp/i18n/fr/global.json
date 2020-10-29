@@ -13,8 +13,8 @@
         "ville": "Gestion Ville",
         "emplacement": "Gestion Emplacement",
         "activite": "Gestion Activite",
-        "participant": "Gestion Participant",
-        "inscriptionevent": "Inscription Evenement",
+        "participant": "Mes Informations",
+        "inscriptionevent": "Mes Evenements",
         "inscriptionactivity": "Inscription Activite",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },

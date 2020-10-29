@@ -42,7 +42,7 @@ export const participantRoute: Routes = [
     path: '',
     component: ParticipantComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.PARTICIPANT],
       pageTitle: 'gestionevenementappApp.participant.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -54,7 +54,7 @@ export const participantRoute: Routes = [
       participant: ParticipantResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.PARTICIPANT],
       pageTitle: 'gestionevenementappApp.participant.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -66,7 +66,7 @@ export const participantRoute: Routes = [
       participant: ParticipantResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.PARTICIPANT],
       pageTitle: 'gestionevenementappApp.participant.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -78,7 +78,7 @@ export const participantRoute: Routes = [
       participant: ParticipantResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.PARTICIPANT],
       pageTitle: 'gestionevenementappApp.participant.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -91,10 +91,10 @@ export const participantRoute: Routes = [
     },
   },
   {
-    path: 'inscriptionevent',
+    path: 'evenements',
     component: InscriptionEvenementComponent,
     data: {
-      authorities: [Authority.USER, Authority.PARTICIPANT],
+      authorities: [Authority.PARTICIPANT],
       pageTitle: 'gestionevenementappApp.evenement.home.insriptionEvent',
     },
     canActivate: [UserRouteAccessService],

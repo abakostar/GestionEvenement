@@ -1,5 +1,6 @@
 package com.gestionevenement.service.impl;
 
+import com.gestionevenement.domain.User;
 import com.gestionevenement.service.EvenementQueryService;
 import com.gestionevenement.service.ParticipantService;
 import com.gestionevenement.domain.Participant;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing {@link Participant}.
@@ -36,8 +38,8 @@ public class ParticipantServiceImpl implements ParticipantService {
     private final EvenementQueryService evenementQueryService;
 
     public ParticipantServiceImpl(ParticipantRepository participantRepository, ParticipantMapper participantMapper,
-            ParticipantEvenementRepository participantEvenementRepository,
-            EvenementQueryService evenementQueryService) {
+                                  ParticipantEvenementRepository participantEvenementRepository,
+                                  EvenementQueryService evenementQueryService) {
         this.participantRepository = participantRepository;
         this.participantMapper = participantMapper;
         this.participantEvenementRepository = participantEvenementRepository;
@@ -70,39 +72,45 @@ public class ParticipantServiceImpl implements ParticipantService {
     public Optional<ParticipantDTO> findOne(Long id) {
         log.debug("Request to get Participant : {}", id);
         return participantRepository.findOneWithEagerRelationships(id)
-            //.map(participantMapper::toDto);
-            .map(participant ->{
-                ParticipantDTO participantDTO = participantMapper.toDto(participant);
-                participantDTO.setParticipantEvenements(registerParticipantEvent(participantDTO.getId()));
-                return participantDTO;
-            });
-    }
-
-    private List<ParticipantEventDTO> registerParticipantEvent(Long id){
-        Map<Long, ParticipantEventDTO> map = new HashMap<>();
-        List<EvenementDTO> evenementDTOs = evenementQueryService.findByCriteria(null);
-        if (evenementDTOs == null || evenementDTOs.size() == 0){
-            return new ArrayList<>();
-        }else{
-            evenementDTOs.forEach(evenementparticipant -> map.put(evenementparticipant.getId(), new ParticipantEventDTO(evenementparticipant, false)));
-        }
-
-        List<ParticipantEvenement> participants = participantEvenementRepository.findAllByParticipantId(id);
-        if (participants != null && participants.size() > 0) {
-            participants.forEach(participantEvenement -> {
-                ParticipantEventDTO participantEventDTO = map.get(participantEvenement.getEvenementId());
-                if(participantEventDTO != null){
-                    participantEventDTO.setRegistered(true);
-                }
-            });
-        }
-            return new ArrayList<>(map.values());
+            .map(participantMapper::toDto);
     }
 
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Participant : {}", id);
         participantRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<ParticipantDTO> findByUser(User user) {
+        Participant participant = participantRepository.findOneByLoginWithEagerRelationships(user.getLogin()).orElse(null);
+        ParticipantDTO participantDTO;
+        if (participant == null) {
+            participantDTO = new ParticipantDTO();
+            participantDTO.setProfileCompleted(false);
+        } else {
+            participantDTO = participantMapper.toDto(participant);
+            participantDTO.setProfileCompleted(true);
+        }
+        participantDTO.setUser(user);
+        participantDTO.setEvenements(buildEvenementDtos(participant));
+        return Optional.of(participantDTO);
+    }
+
+    private List<EvenementDTO> buildEvenementDtos(Participant participant) {
+        if (participant == null) {
+            return Collections.emptyList();
+        }
+        List<ParticipantEvenement> allByParticipantId = participantEvenementRepository.findAllByParticipantId(participant.getId());
+        Set<Long> participantEvenementIds = (allByParticipantId == null || allByParticipantId.size() == 0)
+            ? Collections.emptySet()
+            : allByParticipantId.stream().map(ParticipantEvenement::getEvenementId).collect(Collectors.toSet());
+        List<EvenementDTO> allEvenements = evenementQueryService.findByCriteria(null);
+        if (allEvenements == null || allEvenements.size() == 0) {
+            return Collections.emptyList();
+        }
+        allEvenements.forEach(evenementDTO -> evenementDTO.setRegistered(participantEvenementIds.contains(evenementDTO.getId())));
+        return allEvenements;
     }
 
 }

@@ -45,10 +45,3 @@
         </div>
     </div>
 </div>
-<div class="row justify-content-center">
-    <div class="col-12" *ngIf="participant && participant.evenements && participant.evenements.length>0">
-        <jhi-inscription-evenement
-        [participantEvenements]="participant.participantEvenements"
-        [participant]="participant"></jhi-inscription-evenement>
-    </div>
-</div>
