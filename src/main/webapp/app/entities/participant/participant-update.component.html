@@ -27,8 +27,6 @@
                     <label class="form-control-label" jhiTranslate="gestionevenementappApp.participant.email" for="field_email">Email</label>
                     <input type="text" class="form-control" name="email" id="field_email"
                            formControlName="email"/>
-            <!--    </div>
-                <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">-->
                     <small class="form-text text-danger"
                            *ngIf="editForm.get('email')?.errors?.maxlength"
                            jhiTranslate="entity.validation.maxlength"
@@ -56,7 +54,6 @@
                         <option >Masculin</option>
                         <option >Feminin</option>
                     </select>
-<!--                    <input type="text" class="form-control" name="sexe" id="field_sexe" formControlName="sexe"/>-->
                 </div>
 
                 <div class="form-group">

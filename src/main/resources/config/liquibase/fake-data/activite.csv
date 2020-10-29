@@ -3,4 +3,6 @@ id;nom;description;etatclos;date_activite;heure_debut;heure_fin;evenement_id;emp
 2;Exposés;Exposés des articles à la CRI;true;2020-09-20;2020-09-20T16:32:22;2020-09-20T00:51:12;1;1
 3;Descente sur le terrain;Descente sur le terrain à l'Université de Yaoundé;false;2020-09-20;2020-09-20T21:22:04;2020-09-20T07:13:56;1;1
 4;Cloture;Cloture de CRI;false;2020-09-20;2020-09-20T09:28:56;2020-09-20T02:51:23;1;1
+5;Ouverture du SEM GIS ;Cérémonie d'ouverture du Séminaire du GIS de l'ENSG;false;2020-10-28;2020-10-28T07:35:48;2020-10-28T12:25:24;3;3
+6;Formation; Formation sur l'utilisation du QGIS-ArcGis;false;2020-10-29;2020-10-29T07:35:48;2020-10-28T12:25:24;3;3
 

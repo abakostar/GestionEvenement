@@ -13,9 +13,9 @@ export interface IParticipant {
   password?: string;
   villeNom?: string;
   villeId?: number;
+  participantEvenements?: IParticipantEvenement[];
   evenements?: IEvenement[];
   activites?: IActivite[];
-  participantEvenements?: IParticipantEvenement[];
 }
 
 export class Participant implements IParticipant {
@@ -30,6 +30,7 @@ export class Participant implements IParticipant {
     public password?: string,
     public villeNom?: string,
     public villeId?: number,
+    public participantEvenements?: IParticipantEvenement[],
     public evenements?: IEvenement[],
     public activites?: IActivite[]
   ) {}

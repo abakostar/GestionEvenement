@@ -3,9 +3,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EvenementService } from 'app/entities/evenement/evenement.service';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
+import { IEvenement } from 'app/shared/model/evenement.model';
+import { IParticipantActivite } from 'app/shared/model/participant-activite.model';
 import { IParticipantEvenement } from 'app/shared/model/participant-evenement.model';
 import { IParticipant } from 'app/shared/model/participant.model';
 import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { InscriptionActiviteComponent } from '../inscription-activite/inscription-activite.component';
 
 @Component({
   selector: 'jhi-inscription-evenement',
@@ -61,12 +64,13 @@ export class InscriptionEvenementComponent implements OnInit {
     return result;
   }
 
-  saveInscriptionEvent(
-    participantEvent: IParticipantEvenement,
-    i: number,
-    evenId?: number | undefined,
-    partiId?: number | undefined
-  ): void {
+  // pop-up pour l'ouverture de l'activité
+  inscrire(participantActivite: IParticipantActivite): void {
+    const modalRef = this.modalService.open(InscriptionActiviteComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.participantActivite = participantActivite;
+  }
+
+  saveInscriptionEvent(participantEvent: IParticipantEvenement, i: number, evenId?: number | number, partiId?: number | undefined): void {
     participantEvent.evenementId = evenId;
     participantEvent.participantId = partiId;
     participantEvent.registered = !participantEvent.registered;

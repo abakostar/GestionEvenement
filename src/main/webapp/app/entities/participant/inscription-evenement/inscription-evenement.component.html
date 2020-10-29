@@ -20,8 +20,8 @@
                     <th scope="col"  jhiSortBy="dateDebut"><span jhiTranslate="gestionevenementappApp.evenement.dateDebut">Date Debut</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="dateFin"><span jhiTranslate="gestionevenementappApp.evenement.dateFin">Date Fin</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="description"><span jhiTranslate="gestionevenementappApp.evenement.description">Description</span> <fa-icon icon="sort"></fa-icon></th>
-                    <!-- <th scope="col"  jhiSortBy="categorieNom"><span jhiTranslate="gestionevenementappApp.evenement.categorie">Categorie</span> <fa-icon icon="sort"></fa-icon></th> -->
-                    <th scope="col"></th>
+                    <th scope="col">Etat d'inscription</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
@@ -31,7 +31,6 @@
                     <td *ngIf="evenement.evenement"> {{ evenement.evenement.dateDebut | date:'medium' }}</td>
                     <td *ngIf="evenement.evenement"> {{ evenement.evenement.dateFin | date:'medium' }}</td>
                     <td *ngIf="evenement.evenement"> {{ evenement.evenement.description }}</td>
-                    <!-- <td><div *ngIf="evenement.evenement.categorieId">{{ evenement.evenement.categorieNom }}</div></td> -->
                     <td class="text-right">
                             <label class="form-check-label" for="activated">
                                     <input class="form-check-input"
@@ -39,10 +38,28 @@
                                            type="checkbox"
                                            id="activated"
                                            name="activated"
-                                           (click)="saveInscriptionEvent(evenement,i,evenement.id,participant.id)"
+                                           (click)="saveInscriptionEvent(evenement, i, evenement.evenement?.id, participant.id)"
                                            formControlName="activated" />
                                     <span>{{evenement.registered ? 'Inscris':'Non Inscris' }}</span>
                             </label>
+                    </td>
+                    <td>
+                        <div>
+                            <button type="submit" (click)="inscrire(evenement.evenement?.activites)"
+                                [hidden] = "!evenement.registered"
+                                    class="btn btn-info">
+                                <fa-icon icon="arrow-right"></fa-icon>
+                                <span class="d-none d-md-inline" >Inscription Activité</span>
+                            </button>
+                        </div>
+                        <!-- <div>
+                            <button type="submit" (click)="inscrire(evenement.evenement?.activites)"
+                                [hidden] = "!evenement.registered"
+                                    class="btn btn-info">
+                                <fa-icon icon="arrow-right"></fa-icon>
+                                <span class="d-none d-md-inline" >Inscription Activité</span>
+                            </button>
+                        </div> -->
                     </td>
                 </tr>
             </tbody>

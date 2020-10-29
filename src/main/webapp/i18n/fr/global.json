@@ -107,7 +107,10 @@
       "delete": "Supprimer",
       "open": "Ouvrir",
       "save": "Sauvegarder",
-      "view": "Voir"
+      "view": "Voir",
+      "saveregistered": "Enregistrer !!",
+      "inscrire": "S'inscrire",
+      "role": "Rôle"
     },
     "detail": {
       "field": "Champs",

@@ -8,6 +8,7 @@ import { ParticipantUpdateComponent } from './participant-update.component';
 import { ParticipantDeleteDialogComponent } from './participant-delete-dialog.component';
 import { participantRoute } from './participant.route';
 import { InscriptionEvenementComponent } from './inscription-evenement/inscription-evenement.component';
+import { InscriptionActiviteComponent } from './inscription-activite/inscription-activite.component';
 
 @NgModule({
   imports: [GestionevenementappSharedModule, RouterModule.forChild(participantRoute)],
@@ -17,6 +18,7 @@ import { InscriptionEvenementComponent } from './inscription-evenement/inscripti
     ParticipantUpdateComponent,
     ParticipantDeleteDialogComponent,
     InscriptionEvenementComponent,
+    InscriptionActiviteComponent,
   ],
   entryComponents: [ParticipantDeleteDialogComponent],
 })

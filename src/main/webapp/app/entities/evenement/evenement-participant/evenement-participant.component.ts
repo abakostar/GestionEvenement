@@ -58,7 +58,7 @@ export class EvenementParticipantComponent implements OnInit {
 
   save(participant: IParticipantEvenement, i: number): void {
     participant.evenementId = this.evenement.id;
-    participant.participantId = participant.id;
+    participant.participantId = participant.participant?.id; // explication pourquoi pas l'id de Iparticipant
     participant.registered = !participant.registered;
     this.evenementService.addParticipant(participant).subscribe((res: HttpResponse<IParticipantEvenement>) => {
       if (res && res.body) {

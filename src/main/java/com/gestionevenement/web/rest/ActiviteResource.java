@@ -1,5 +1,7 @@
 package com.gestionevenement.web.rest;
 
+import com.gestionevenement.domain.ParticipantActivite;
+import com.gestionevenement.domain.ParticipantActiviteId;
 import com.gestionevenement.repository.ParticipantActiviteRepository;
 import com.gestionevenement.service.ActiviteService;
 import com.gestionevenement.web.rest.errors.BadRequestAlertException;
@@ -7,6 +9,7 @@ import com.gestionevenement.service.dto.ActiviteDTO;
 import com.gestionevenement.service.dto.ActiviteCriteria;
 import com.gestionevenement.service.ActiviteQueryService;
 
+import com.gestionevenement.web.rest.vm.ParticipantActiviteIdVM;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -20,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -105,6 +109,36 @@ public class ActiviteResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
+
+    // pour l'api de tester de disponibilité de place, Ajout AS
+    @GetMapping("/activites/placedispo")
+    public Boolean testDispoplace(Long id) {
+        log.debug("Teste de disponibilté de Place",id);
+        Boolean val = activiteService.placedispo(id);
+        return  val;
+    }
+
+    @PostMapping("/activites/addParticipant")
+    public ResponseEntity<ParticipantActiviteIdVM> addParticipant(@Valid @RequestBody ParticipantActiviteIdVM participantActiviteIdVM) throws URISyntaxException {
+        log.debug("REST request to save Activite Participant : {}", participantActiviteIdVM);
+        if (participantActiviteIdVM.getActiviteId() == null || participantActiviteIdVM.getParticipantId() == null) {
+            throw new BadRequestAlertException("A new evenement cannot already have an participantId or evenementId", "ParticipantEvenementId", "idexists");
+        }
+        ParticipantActiviteId participantActiviteId = new ParticipantActiviteId(participantActiviteIdVM.getParticipantId(), participantActiviteIdVM.getActiviteId());
+        Optional<ParticipantActivite> activiteRepositoryById = participantActiviteRepository.findById(participantActiviteId);
+        if(participantActiviteIdVM.isRegistered() && !activiteRepositoryById.isPresent()){
+            ParticipantActivite participantActivite = new ParticipantActivite();
+            participantActivite.setActiviteId(participantActiviteIdVM.getActiviteId());
+            participantActivite.setParticipantId(participantActiviteIdVM.getParticipantId());
+            participantActiviteRepository.save(participantActivite);
+        } else if(!participantActiviteIdVM.isRegistered() && activiteRepositoryById.isPresent()){
+            participantActiviteRepository.deleteById(participantActiviteId);
+        }
+        return ResponseEntity.created(new URI("/api/evenements/addParticipant/" + participantActiviteIdVM.getActiviteId() + "/" + participantActiviteIdVM.getParticipantId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, participantActiviteIdVM.getActiviteId().toString() + "_" + participantActiviteIdVM.getParticipantId()))
+            .body(participantActiviteIdVM);
+    }
+
 
     /**
      * {@code GET  /activites/count} : count all the activites.

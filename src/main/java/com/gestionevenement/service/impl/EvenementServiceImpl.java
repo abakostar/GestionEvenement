@@ -92,27 +92,6 @@ public class EvenementServiceImpl implements EvenementService {
         return activiteQueryService.findByCriteria(activiteCriteria);
     }
 
-/*     private List<ParticipantEventDTO> registerParticipantEvent(Long id){
-        Map<Long, ParticipantEventDTO> map = new HashMap<>();
-        List<EvenementDTO> evenementDTOs = evenementQueryService.findByCriteria(null);
-        if (evenementDTOs == null || evenementDTOs.size() == 0){
-            return new ArrayList<>();
-        }else{
-            evenementDTOs.forEach(evenementparticipant -> map.put(evenementparticipant.getId(), new ParticipantEventDTO(evenementparticipant, false)));
-        }
-
-        List<ParticipantEvenement> participants = participantEvenementRepository.findByParticipantId(id);
-        if (participants != null && participants.size() > 0) {
-            participants.forEach(participantEvenement -> {
-                ParticipantEventDTO participantEventDTO = map.get(participantEvenement.getEvenementId());
-                if(participantEventDTO != null){
-                    participantEventDTO.setRegistered(true);
-                }
-            });
-            return new ArrayList<>(map.values());
-        }
-    } */
-
 
     private List<ParticipantEventDTO> computeParticipantEvent(Long id) {
         Map<Long, ParticipantEventDTO> map = new HashMap<>();

@@ -8,6 +8,7 @@ import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IActivite } from 'app/shared/model/activite.model';
+import { IParticipantActivite } from 'app/shared/model/participant-activite.model';
 
 type EntityResponseType = HttpResponse<IActivite>;
 type EntityArrayResponseType = HttpResponse<IActivite[]>;
@@ -76,5 +77,17 @@ export class ActiviteService {
       });
     }
     return res;
+  }
+
+  addParticipantActivite(participantActivite: IParticipantActivite): Observable<EntityResponseType> {
+    const url = this.resourceUrl + '/addParticipant';
+    return this.http
+      .post<IParticipantActivite>(url, participantActivite, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  testPlacedispo(id: number): Observable<HttpResponse<Boolean>> {
+    const url = this.resourceUrl + '/placedispo';
+    return this.http.get<Boolean>(`${url}/${id}`, { observe: 'response' });
   }
 }

@@ -3,4 +3,7 @@ id;code;nom
 2;CONG;Congrès
 3;ATL;Atelier
 4;COL;Colloque
+5;SEM;Seminaire
+6;SAL;Salon
+7;FOI;Foire
 

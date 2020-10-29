@@ -47,6 +47,7 @@ public class ParticipantEventDTO {
         this.evenement = evenement;
     }
 
+
     public boolean isRegistered() {
         return registered;
     }
