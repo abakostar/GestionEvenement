@@ -3,6 +3,7 @@ package com.gestionevenement.service.dto;
 public class ParticipantActiviteDTO {
     private Long id;
     private ParticipantDTO participant;
+    private ActiviteDTO activite;
     private String role;
 
     public ParticipantActiviteDTO() {
@@ -21,4 +22,12 @@ public class ParticipantActiviteDTO {
         this.participant = participant; }
     public String getRole() { return role; }
     public void setRole(String role) {  this.role = role; }
+
+    public ActiviteDTO getActivite() {
+        return activite;
+    }
+
+    public void setActivite(ActiviteDTO activite) {
+        this.activite = activite;
+    }
 }

@@ -5,8 +5,6 @@
 
     <jhi-alert-error></jhi-alert-error>
 
-    <jhi-alert></jhi-alert>
-
     <div class="alert alert-warning" id="profile-completed-and-no-result" *ngIf="participant && participant.profileCompleted && evenements?.length === 0">
         <span jhiTranslate="gestionevenementappApp.evenement.home.notFound">No evenements found</span>
     </div>
@@ -31,6 +29,7 @@
                     <th scope="col"  jhiSortBy="description"><span jhiTranslate="gestionevenementappApp.evenement.description">Description</span> <fa-icon icon="sort"></fa-icon></th>
                     <!-- <th scope="col"  jhiSortBy="categorieNom"><span jhiTranslate="gestionevenementappApp.evenement.categorie">Categorie</span> <fa-icon icon="sort"></fa-icon></th> -->
                     <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
@@ -50,6 +49,12 @@
                                    (click)="saveInscriptionEvent(evenement, i, participant.id)"/>
                             <span>{{evenement.registered ? 'Inscris':'Non Inscris' }}</span>
                         </label>
+                    </td>
+                    <td>
+                        <button type="submit" (click)="detailActivities(participant, evenement)" class="btn btn-info btn-sm" [disabled]="evenement && !evenement.registered">
+                            <fa-icon icon="times"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view"></span>
+                        </button>
                     </td>
                 </tr>
             </tbody>

@@ -7,6 +7,8 @@ import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IParticipant } from 'app/shared/model/participant.model';
 import {IParticipantEvenement} from "../../shared/model/participant-evenement.model";
+import {IParticipantActivite} from "../../shared/model/participant-activite.model";
+import * as moment from "moment";
 
 type EntityResponseType = HttpResponse<IParticipant>;
 type EntityArrayResponseType = HttpResponse<IParticipant[]>;
@@ -42,6 +44,13 @@ export class ParticipantService {
       .pipe(map((res: EntityResponseType) => res));
   }
 
+  findActivitesByEvenementId(evenementId?: number): Observable<HttpResponse<IParticipantActivite[]>> {
+    const url = this.resourceUrl+'/activite/'+evenementId
+    return this.http
+      .get<IParticipantActivite[]>(url, {observe: 'response' })
+      .pipe(map((res: HttpResponse<IParticipantActivite[]>) => this.convertDateArrayFromServer(res)));
+  }
+
   addParticipant(participantEvenement: IParticipantEvenement): Observable<EntityResponseType> {
     const url = this.resourceUrl+"/addParticipant"
     return this.http
@@ -58,6 +67,17 @@ export class ParticipantService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  protected convertDateArrayFromServer(res:  HttpResponse<IParticipantActivite[]>): HttpResponse<IParticipantActivite[]> {
+    if (res.body) {
+      res.body.forEach((activite: IParticipantActivite) => {
+        activite.activite.dateActivite = activite.activite.dateActivite ? moment(activite.activite.dateActivite) : undefined;
+        activite.activite.heureDebut = activite.activite.heureDebut ? moment(activite.activite.heureDebut) : undefined;
+        activite.activite.heureFin = activite.activite.heureFin ? moment(activite.activite.heureFin) : undefined;
+      });
+    }
+    return res;
   }
 
 }

@@ -9,3 +9,7 @@ export interface IParticipantEvenement {
   participantId?: number;
   evenement?: IEvenement;
 }
+
+export class ParticipantEvenement implements IParticipantEvenement {
+  constructor(public participantId?: number, public evenementId?: number, public registered?: boolean) {}
+}

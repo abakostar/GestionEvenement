@@ -13,5 +13,6 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface ActiviteRepository extends JpaRepository<Activite, Long>, JpaSpecificationExecutor<Activite> {
+
     List<Activite> findAllActiviteByEvenementId(Long evenementId);
 }

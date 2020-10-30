@@ -11,6 +11,10 @@
         "title": "Mes Evenements",
         "profileNotCompleted": "Completer votre profile"
       },
+      "inscriptionActivite": {
+        "title": "Mes Activites",
+        "notFound": "Aucune Activites trouvées"
+      },
       "created": "Un nouveau Participant a été créé avec l'identifiant {{ param }}",
       "updated": "Le Participant avec l'identifiant {{ param }} a été mis à jour",
       "deleted": "Le Participant avec l'identifiant {{ param }} a été supprimé",

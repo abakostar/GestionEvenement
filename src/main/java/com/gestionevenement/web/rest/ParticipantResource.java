@@ -9,6 +9,7 @@ import com.gestionevenement.security.SecurityUtils;
 import com.gestionevenement.service.ParticipantQueryService;
 import com.gestionevenement.service.ParticipantService;
 import com.gestionevenement.service.UserService;
+import com.gestionevenement.service.dto.ParticipantActiviteDTO;
 import com.gestionevenement.service.dto.ParticipantCriteria;
 import com.gestionevenement.service.dto.ParticipantDTO;
 import com.gestionevenement.web.rest.errors.BadRequestAlertException;
@@ -209,6 +210,14 @@ public class ParticipantResource {
         final User user = userService.findByLogin(SecurityUtils.getCurrentUserLogin().orElse(null));
         log.debug("REST request to get Participant : {}", user.getLogin());
         Optional<ParticipantDTO>  result = participantService.findByUser(user);
+        return ResponseUtil.wrapOrNotFound(result);
+    }
+
+    @GetMapping("/participants/activite/{evenementId}")
+    public ResponseEntity<List<ParticipantActiviteDTO>> getParticipantActiviteByCurrentUser(@PathVariable Long evenementId) {
+        final User user = userService.findByLogin(SecurityUtils.getCurrentUserLogin().orElse(null));
+        log.debug("REST request to get Participant : {}", user.getLogin());
+        Optional<List<ParticipantActiviteDTO>> result = participantService.findAllParticipantActiviteByUser(user, evenementId);
         return ResponseUtil.wrapOrNotFound(result);
     }
 

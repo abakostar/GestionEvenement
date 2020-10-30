@@ -1,13 +1,14 @@
 package com.gestionevenement.service.impl;
 
-import com.gestionevenement.domain.User;
+import com.gestionevenement.domain.*;
+import com.gestionevenement.repository.ActiviteRepository;
+import com.gestionevenement.repository.ParticipantActiviteRepository;
 import com.gestionevenement.service.EvenementQueryService;
 import com.gestionevenement.service.ParticipantService;
-import com.gestionevenement.domain.Participant;
-import com.gestionevenement.domain.ParticipantEvenement;
 import com.gestionevenement.repository.ParticipantEvenementRepository;
 import com.gestionevenement.repository.ParticipantRepository;
 import com.gestionevenement.service.dto.*;
+import com.gestionevenement.service.mapper.ActiviteMapper;
 import com.gestionevenement.service.mapper.ParticipantMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,13 +38,25 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     private final EvenementQueryService evenementQueryService;
 
+    private final ActiviteRepository activiteRepository;
+
+    private final ParticipantActiviteRepository participantActiviteRepository;
+
+    private final ActiviteMapper activiteMapper;
+
     public ParticipantServiceImpl(ParticipantRepository participantRepository, ParticipantMapper participantMapper,
                                   ParticipantEvenementRepository participantEvenementRepository,
+                                  ActiviteRepository activiteRepository,
+                                  ParticipantActiviteRepository participantActiviteRepository,
+                                  ActiviteMapper activiteMapper,
                                   EvenementQueryService evenementQueryService) {
         this.participantRepository = participantRepository;
         this.participantMapper = participantMapper;
         this.participantEvenementRepository = participantEvenementRepository;
+        this.activiteRepository = activiteRepository;
+        this.participantActiviteRepository = participantActiviteRepository;
         this.evenementQueryService = evenementQueryService;
+        this.activiteMapper = activiteMapper;
     }
 
     @Override
@@ -95,6 +108,33 @@ public class ParticipantServiceImpl implements ParticipantService {
         participantDTO.setUser(user);
         participantDTO.setEvenements(buildEvenementDtos(participant));
         return Optional.of(participantDTO);
+    }
+
+    @Override
+    public Optional<List<ParticipantActiviteDTO>> findAllParticipantActiviteByUser(User user, Long evenementId) {
+        Participant participant = participantRepository.findOneByLoginWithEagerRelationships(user.getLogin()).orElse(null);
+        if (participant == null) {
+            return Optional.of(Collections.emptyList());
+        }
+
+        List<Activite> activites = activiteRepository.findAllActiviteByEvenementId(evenementId);
+        if (activites == null || activites.size() == 0) {
+            return Optional.of(Collections.emptyList());
+        }
+
+        Map<Long, ParticipantActivite> participantActivitesMap = new HashMap<>();
+        List<ParticipantActivite> participantActivites = participantActiviteRepository.findAllByParticipantId(participant.getId());
+        participantActivites.forEach(participantActivite -> participantActivitesMap.put(participantActivite.getActiviteId(), participantActivite));
+
+        List<ParticipantActiviteDTO> results = activites.stream().map(activite -> {
+            ParticipantActivite participantActivite = participantActivitesMap.get(activite.getId());
+            ParticipantActiviteDTO dto = new ParticipantActiviteDTO();
+            dto.setActivite(activiteMapper.toDto(activite));
+            dto.setRole(participantActivite == null ? null : participantActivite.getRole());
+            return dto;
+        }).collect(Collectors.toList());
+
+        return Optional.of(results);
     }
 
     private List<EvenementDTO> buildEvenementDtos(Participant participant) {

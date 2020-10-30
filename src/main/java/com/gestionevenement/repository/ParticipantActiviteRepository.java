@@ -15,4 +15,5 @@ public interface ParticipantActiviteRepository extends JpaRepository<Participant
     List<ParticipantActivite> findAllByParticipantId(Long participantId);
 
     List<ParticipantActivite> findAllByActiviteId(Long activiteId);
+
 }

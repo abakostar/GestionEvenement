@@ -1,0 +1,55 @@
+<form *ngIf="participant" name="deleteForm" (ngSubmit)="confirmDelete(participant?.id!)">
+    <div class="modal-header">
+        <h4 class="modal-title" jhiTranslate="gestionevenementappApp.participant.inscriptionActivite.title"></h4>
+
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="cancel()">&times;</button>
+    </div>
+
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="alert alert-warning" id="no-result" *ngIf="participantActivites && participantActivites?.length === 0">
+            <span jhiTranslate="gestionevenementappApp.participant.inscriptionActivite.notFound">No evenements found</span>
+        </div>
+
+        <div class="table-responsive" id="entities" *ngIf="participantActivites && participantActivites.length > 0">
+            <table class="table table-striped" aria-describedby="page-heading">
+                <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                    <th scope="col"  jhiSortBy="nom"><span jhiTranslate="gestionevenementappApp.activite.nom">Nom</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dateActivite"><span jhiTranslate="gestionevenementappApp.activite.dateActivite">Date Activite</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="heureDebut"><span jhiTranslate="gestionevenementappApp.activite.heureDebut">Heure Debut</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="heureFin"><span jhiTranslate="gestionevenementappApp.activite.heureFin">Heure Fin</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="role"><span jhiTranslate="gestionevenementappApp.activite.role">Role</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+                <tr *ngFor="let participantActive of participantActivites ;trackBy: trackId ; let i = index">
+                    <td>{{participantActive.activite.nom}}</td>
+                    <td>{{participantActive.activite.dateActivite | date:'shortDate'}}</td>
+                    <td>{{participantActive.activite.heureDebut | date:'mediumTime'}}</td>
+                    <td>{{participantActive.activite.heureFin | date:'mediumTime'}}</td>
+                    <td>{{participantActive.role}}</td>
+                    <td class="text-right">
+                        <label class="form-check-label" for="activated">
+                            <input class="form-check-input"
+                                   [checked]="participantActive.role"
+                                   type="checkbox"
+                                   id="activated"
+                                   name="activated"
+                                   (click)="saveParticipantActivite(participantActive, i, participant.id, evenement.id)"/>
+                            <span>{{participantActive.role ? 'Inscris':'Non Inscris' }}</span>
+                        </label>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+    </div>
+</form>
+

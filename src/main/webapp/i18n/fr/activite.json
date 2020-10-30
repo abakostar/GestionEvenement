@@ -24,7 +24,8 @@
       "heureDebut": "Heure Debut",
       "heureFin": "Heure Fin",
       "evenement": "Evenement",
-      "emplacement": "Emplacement"
+      "emplacement": "Emplacement",
+      "role": "Role"
     }
   }
 }

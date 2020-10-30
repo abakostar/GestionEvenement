@@ -1,11 +1,13 @@
 package com.gestionevenement.service;
 
 import com.gestionevenement.domain.User;
+import com.gestionevenement.service.dto.ParticipantActiviteDTO;
 import com.gestionevenement.service.dto.ParticipantDTO;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -53,4 +55,6 @@ public interface ParticipantService {
     void delete(Long id);
 
     Optional<ParticipantDTO> findByUser(User user);
+
+    Optional<List<ParticipantActiviteDTO>> findAllParticipantActiviteByUser(User user, Long evenementId);
 }
