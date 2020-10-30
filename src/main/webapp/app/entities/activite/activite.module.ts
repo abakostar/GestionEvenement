@@ -7,7 +7,6 @@ import { ActiviteDetailComponent } from './activite-detail.component';
 import { ActiviteUpdateComponent } from './activite-update.component';
 import { ActiviteDeleteDialogComponent } from './activite-delete-dialog.component';
 import { activiteRoute } from './activite.route';
-import { ActiviteParticipantsComponent } from './activite-participants/activite-participants.component';
 
 @NgModule({
   imports: [GestionevenementappSharedModule, RouterModule.forChild(activiteRoute)],
@@ -16,7 +15,6 @@ import { ActiviteParticipantsComponent } from './activite-participants/activite-
     ActiviteDetailComponent,
     ActiviteUpdateComponent,
     ActiviteDeleteDialogComponent,
-    ActiviteParticipantsComponent,
   ],
   entryComponents: [ActiviteDeleteDialogComponent],
 })

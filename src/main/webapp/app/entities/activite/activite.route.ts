@@ -11,7 +11,6 @@ import { ActiviteService } from './activite.service';
 import { ActiviteComponent } from './activite.component';
 import { ActiviteDetailComponent } from './activite-detail.component';
 import { ActiviteUpdateComponent } from './activite-update.component';
-import { ActiviteParticipantsComponent } from './activite-participants/activite-participants.component';
 
 @Injectable({ providedIn: 'root' })
 export class ActiviteResolve implements Resolve<IActivite> {
@@ -72,18 +71,6 @@ export const activiteRoute: Routes = [
   {
     path: ':id/edit',
     component: ActiviteUpdateComponent,
-    resolve: {
-      activite: ActiviteResolve,
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'gestionevenementappApp.activite.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/placedispo',
-    component: ActiviteParticipantsComponent,
     resolve: {
       activite: ActiviteResolve,
     },
