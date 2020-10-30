@@ -43,4 +43,6 @@ public interface ActiviteService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Boolean placedispo(Long id);
 }

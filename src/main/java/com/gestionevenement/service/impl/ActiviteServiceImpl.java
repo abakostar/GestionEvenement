@@ -79,7 +79,7 @@ public class ActiviteServiceImpl implements ActiviteService {
 
     // Ajout AS
 
-    public boolean placedispo(Long id){
+    public Boolean placedispo(Long id){
         EmplacementDTO emplacementDTO = new EmplacementDTO();
         EmplacementCriteria emplacementCriteria = new EmplacementCriteria();
         LongFilter longFilter = new LongFilter();
@@ -89,6 +89,7 @@ public class ActiviteServiceImpl implements ActiviteService {
         Integer nbparticipant = ((int) participantActiviteRepository.findAllByActiviteId(id).stream().count());
         if (emplacementDTO.getCapacite() !=null && nbparticipant != 0){
           if   (emplacementDTO.getCapacite() > nbparticipant ){
+              log.debug("Request to test of local available :  Place disponible {}", id);
               return true;
           }
         }
@@ -102,16 +103,15 @@ public class ActiviteServiceImpl implements ActiviteService {
         if (participantsDTO == null || participantsDTO.size() == 0) {
             return new ArrayList<>();
         } else {
-            participantsDTO.forEach(participantDTO -> map.put(participantDTO.getId(), new ParticipantActiviteDTO(participantDTO, "participant")));
+            participantsDTO.forEach(participantDTO -> map.put(participantDTO.getId(), new ParticipantActiviteDTO(participantDTO, "participant",false)));
         }
-
         List<ParticipantActivite> activites = participantActiviteRepository.findAllByActiviteId(id);
         if (activites != null && activites.size() > 0) {
-            activites.forEach(
-                participantActivite -> {
+            activites.forEach( participantActivite -> {
                     ParticipantActiviteDTO participantActiviteDTO = map.get(participantActivite.getParticipantId());
                     if(participantActiviteDTO !=null){
-                        participantActiviteDTO.setRole(participantActiviteDTO.getRole());
+                        participantActiviteDTO.setRole(participantActivite.getRole());
+                        participantActiviteDTO.setRegistered(true);
                     }
                 }
             );

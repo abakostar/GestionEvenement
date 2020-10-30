@@ -107,7 +107,10 @@
       "edit": "Edit",
       "open": "Open",
       "save": "Save",
-      "view": "View"
+      "view": "View",
+      "saveregistered": "Save register",
+      "inscrire": "Register",
+      "role": "Role"
     },
     "detail": {
       "field": "Field",

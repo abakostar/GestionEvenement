@@ -9,10 +9,12 @@ import { IParticipant } from 'app/shared/model/participant.model';
 })
 export class ParticipantDetailComponent implements OnInit {
   participant: IParticipant | null = null;
+  // participant:IParticipant;
   predicate: string;
   ascending: boolean;
 
   constructor(protected activatedRoute: ActivatedRoute) {
+    // this.participant = {};
     this.predicate = 'id';
     this.ascending = true;
   }

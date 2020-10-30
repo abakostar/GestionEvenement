@@ -24,10 +24,10 @@ export class InscriptionEvenementComponent implements OnInit {
   ascending: boolean;
 
   constructor(
-    protected participantService: ParticipantService,
-    protected eventManager: JhiEventManager,
-    protected modalService: NgbModal,
-    protected parseLinks: JhiParseLinks
+      protected participantService: ParticipantService,
+      protected eventManager: JhiEventManager,
+      protected modalService: NgbModal,
+      protected parseLinks: JhiParseLinks
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
     this.page = 0;

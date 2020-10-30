@@ -1,3 +1,4 @@
 id;code;description;capacite;ville_id
 1;UY1-SAL500;Amphi 500 de l'Université de Yaoundé 1;500;1
 2;PalaisCongrès;Palais des Congrès de la Ville de Paris;1000;4
+3;Conférence ENSG;Salle de conférénce de l'ENSG de Paris;500;4

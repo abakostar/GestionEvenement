@@ -7,3 +7,4 @@ id;login;password_hash;first_name;last_name;email;image_url;activated;lang_key;c
 6;ahmadou;$2a$10$2MEfANcj/tygUKba1juS7edJdCyoPwHX9fgDB2aaUwiZXSrtKSGTS;AHMADOU;SARDAOUNA;ahmadou.sardaouna@yahoo.fr;;TRUE;fr;admin;admin
 7;bodjona;$2a$10$O5MnwkKaahyI9gzAmTLp7.coYlKAYlIGu3V760PVxdOMFwb.QgScK;BODJONA;Bataka Pignanti;bobgentil77@gmail.com;;TRUE;fr;admin;admin
 8;test;$2a$10$TLBsNnqjWB1hgv6m9kBmTuz5EorKx2BQpkgCLJ.ORdfYRq8CjBQ5a;Participant;Participant;participant@gmail.com;;TRUE;fr;admin;admin
+9;test2;$2a$10$p5.e5/dkOEEBlEP3aV.XHesBzN9BEEx6KgRDM/H7e5GauxWvANOXi;NOUMO;Priso;test2@gmail.com;;TRUE;fr;admin;admin
