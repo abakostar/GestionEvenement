@@ -5,14 +5,23 @@ public class ParticipantActiviteDTO {
     private ParticipantDTO participant;
     private ActiviteDTO activite;
     private String role;
+    private boolean registered;
 
     public ParticipantActiviteDTO() {
     }
 
-    public ParticipantActiviteDTO(ParticipantDTO participant, String role) {
+    public ParticipantActiviteDTO(ParticipantDTO participant, String role, boolean registered) {
         this.id = participant.getId();
         this.participant = participant;
         this.role = role;
+        this.registered = registered;
+    }
+
+    public ParticipantActiviteDTO(ActiviteDTO activite, String role, boolean registered) {
+        this.id = activite.getId();
+        this.activite = activite;
+        this.role = role;
+        this.registered = registered;
     }
 
     public Long getId() { return id; }
@@ -29,5 +38,12 @@ public class ParticipantActiviteDTO {
 
     public void setActivite(ActiviteDTO activite) {
         this.activite = activite;
+    }
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
     }
 }
