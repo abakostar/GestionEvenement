@@ -1,6 +1,6 @@
 <div>
     <h3 id="page-heading" >
-        <span jhiTranslate="gestionevenementappApp.evenement.titreprogramme">Programme de l'Evenement</span>
+        <span jhiTranslate="gestionevenementappApp.evenement.titreprogramme">Activites</span>
    </h3>
 
     <jhi-alert-error></jhi-alert-error>
@@ -31,8 +31,8 @@
                     <td><a [routerLink]="['/activite', activite.id, 'view']">{{ activite.id }}</a></td>
                     <td>{{ activite.dateActivite | date:'mediumDate' }}</td>
                     <td>{{ activite.nom }}</td>
-                    <td>{{ activite.heureDebut | date:'medium' }}</td>
-                    <td>{{ activite.heureFin | date:'medium' }}</td>
+                    <td>{{ activite.heureDebut | date:'mediumTime' }}</td>
+                    <td>{{ activite.heureFin | date:'mediumTime' }}</td>
                     <td>
                         <div *ngIf="activite.evenementId">
                             <a [routerLink]="['/evenement', activite.evenementId , 'view']" >{{ activite.evenementCode }}</a>

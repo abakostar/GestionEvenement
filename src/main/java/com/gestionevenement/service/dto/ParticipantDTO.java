@@ -40,6 +40,8 @@ public class ParticipantDTO implements Serializable {
 
     private List<EvenementDTO> evenements;
 
+    private String role;
+
     public Long getId() {
         return id;
     }
@@ -142,6 +144,14 @@ public class ParticipantDTO implements Serializable {
 
     public void setRegistered(boolean registered) {
         this.registered = registered;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override

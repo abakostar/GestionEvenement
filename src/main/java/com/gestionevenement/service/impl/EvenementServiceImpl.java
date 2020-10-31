@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing {@link Evenement}.
@@ -78,13 +79,13 @@ public class EvenementServiceImpl implements EvenementService {
         return evenementRepository.findById(id)
             .map(evenement -> {
                 EvenementDTO evenementDTO = evenementMapper.toDto(evenement);
-                evenementDTO.setParticipants(computeParticipantEvent(evenementDTO.getId()));
-                evenementDTO.setActivites(computeActiviteEvent(evenementDTO.getId()));
+                evenementDTO.setParticipants(computeParticipants(evenementDTO.getId()));
+                evenementDTO.setActivites(computeActivites(evenementDTO.getId()));
                 return evenementDTO;
             });
     }
 
-    private List<ActiviteDTO> computeActiviteEvent(Long id) {
+    private List<ActiviteDTO> computeActivites(Long id) {
         ActiviteCriteria activiteCriteria  = new ActiviteCriteria();
         LongFilter longFilter = new LongFilter();
         longFilter.setEquals(id);
@@ -93,25 +94,11 @@ public class EvenementServiceImpl implements EvenementService {
     }
 
 
-    private List<ParticipantEventDTO> computeParticipantEvent(Long id) {
-        Map<Long, ParticipantEventDTO> map = new HashMap<>();
+    private List<ParticipantDTO> computeParticipants(Long id) {
         List<ParticipantDTO> participantDTOS = participantQueryService.findByCriteria(null);
-        if (participantDTOS == null || participantDTOS.size() == 0) {
-            return new ArrayList<>();
-        } else {
-            participantDTOS.forEach(participantDTO -> map.put(participantDTO.getId(), new ParticipantEventDTO(participantDTO, false)));
-        }
-
         List<ParticipantEvenement> evenements = participantEvenementRepository.findAllByEvenementId(id);
-        if (evenements != null && evenements.size() > 0) {
-            evenements.forEach(participantEvenement -> {
-                ParticipantEventDTO participantEventDTO = map.get(participantEvenement.getParticipantId());
-                if(participantEventDTO != null){
-                    participantEventDTO.setRegistered(true);
-                }
-            });
-        }
-        return new ArrayList<>(map.values());
+        Set<Long> participantIds = evenements.stream().map(ParticipantEvenement::getParticipantId).collect(Collectors.toSet());
+        return participantDTOS.stream().filter(participantDTO -> participantIds.contains(participantDTO.getId())).collect(Collectors.toList());
     }
 
     @Override

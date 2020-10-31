@@ -40,7 +40,8 @@
       "password": "Password",
       "ville": "Ville",
       "evenement": "Evenement",
-      "activite": "Activite"
+      "activite": "Activite",
+      "role": "Role"
     }
   }
 }

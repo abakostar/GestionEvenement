@@ -33,7 +33,7 @@ public class ActiviteDTO implements Serializable {
 
     private String emplacementCode;
 
-    private List<ParticipantActiviteDTO> participants;
+    private List<ParticipantDTO> participants;
 
     public Long getId() {
         return id;
@@ -123,9 +123,9 @@ public class ActiviteDTO implements Serializable {
         this.emplacementCode = emplacementCode;
     }
 
-    public List<ParticipantActiviteDTO> getParticipants() { return participants; }
+    public List<ParticipantDTO> getParticipants() { return participants; }
 
-    public void setParticipants(List<ParticipantActiviteDTO> participants) { this.participants = participants; }
+    public void setParticipants(List<ParticipantDTO> participants) { this.participants = participants; }
 
     @Override
     public boolean equals(Object o) {

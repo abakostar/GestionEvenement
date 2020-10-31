@@ -9,7 +9,7 @@
         <span jhiTranslate="gestionevenementappApp.evenement.home.notFound">No evenements found</span>
     </div>
 
-    <div class="alert alert-warning" id="profile-no-completed" *ngIf="participant && !participant.profileCompleted && participant.id">
+    <div class="alert alert-warning" id="profile-no-completed" *ngIf="participant && !participant.profileCompleted">
         <button type="submit"
                 [routerLink]="['/participant', participant.id, 'edit']"
                 class="btn btn-primary btn-sm">

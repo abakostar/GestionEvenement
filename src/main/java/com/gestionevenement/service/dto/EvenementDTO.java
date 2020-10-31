@@ -31,7 +31,7 @@ public class EvenementDTO implements Serializable {
 
     private boolean registered;
 
-    private List<ParticipantEventDTO> participants; // Using ParticipantDto
+    private List<ParticipantDTO> participants; // Using ParticipantDto
 
     private List<ActiviteDTO> activites;
 
@@ -99,11 +99,11 @@ public class EvenementDTO implements Serializable {
         this.categorieNom = categorieNom;
     }
 
-    public List<ParticipantEventDTO> getParticipants() {
+    public List<ParticipantDTO> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(List<ParticipantEventDTO> participants) {
+    public void setParticipants(List<ParticipantDTO> participants) {
         this.participants = participants;
     }
 

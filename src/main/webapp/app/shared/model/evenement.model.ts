@@ -1,6 +1,6 @@
 import { Moment } from 'moment';
 import { IActivite } from './activite.model';
-import { IParticipantEvenement } from './participant-evenement.model';
+import {IParticipant} from "./participant.model";
 
 export interface IEvenement {
   id?: number;
@@ -11,7 +11,7 @@ export interface IEvenement {
   categorieNom?: string;
   categorieId?: number;
   registered?: boolean;
-  participants?: IParticipantEvenement[];
+  participants?: IParticipant[];
   activites?: IActivite[];
 }
 
@@ -25,7 +25,7 @@ export class Evenement implements IEvenement {
     public categorieNom?: string,
     public categorieId?: number,
     public registered?: boolean,
-    public participants?: IParticipantEvenement[],
+    public participants?: IParticipant[],
     public activites?: IActivite[]
   ) {}
 }

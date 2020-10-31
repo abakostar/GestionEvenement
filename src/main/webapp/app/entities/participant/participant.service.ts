@@ -51,11 +51,18 @@ export class ParticipantService {
       .pipe(map((res: HttpResponse<IParticipantActivite[]>) => this.convertDateArrayFromServer(res)));
   }
 
-  addParticipant(participantEvenement: IParticipantEvenement): Observable<EntityResponseType> {
-    const url = this.resourceUrl+"/addParticipant"
+  addActivite(participantActivite: IParticipantActivite): Observable<HttpResponse<IParticipantActivite>> {
+    const url = this.resourceUrl+"/addActivite"
+    return this.http
+      .post<IParticipantActivite>(url, participantActivite, { observe: 'response' })
+      .pipe(map((res: HttpResponse<IParticipantActivite>) => res));
+  }
+
+  addEvenement(participantEvenement: IParticipantEvenement): Observable<HttpResponse<IParticipantEvenement>> {
+    const url = this.resourceUrl+"/addEvenement"
     return this.http
       .post<IParticipantEvenement>(url, participantEvenement, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => res));
+      .pipe(map((res: HttpResponse<IParticipantEvenement>) => res));
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {

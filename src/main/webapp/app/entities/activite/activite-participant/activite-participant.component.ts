@@ -1,18 +1,20 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { IActivite } from 'app/shared/model/activite.model';
-import { IEvenement } from 'app/shared/model/evenement.model';
+import {Component, OnInit, OnDestroy, Input} from '@angular/core';
 import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { IActivite } from 'app/shared/model/activite.model';
+
+import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
+import {IParticipant} from "../../../shared/model/participant.model";
 
 @Component({
-  selector: 'jhi-evenement-activite',
-  templateUrl: './evenement-activite.component.html',
-  styleUrls: ['./evenement-activite.component.scss'],
+  selector: 'jhi-activite-participant',
+  templateUrl: './activite-participant.component.html',
+  styleUrls: ['./activite-participant.component.scss'],
 })
-export class EvenementActiviteComponent implements OnInit, OnDestroy {
-  @Input() activites: IActivite[];
-  @Input() evenement: IEvenement;
+export class ActiviteParticipantComponent implements OnInit, OnDestroy {
+  @Input() activite: IActivite;
+  @Input() participants: IParticipant[];
 
   itemsPerPage: number;
   links: any;
@@ -25,7 +27,8 @@ export class EvenementActiviteComponent implements OnInit, OnDestroy {
     protected modalService: NgbModal,
     protected parseLinks: JhiParseLinks
   ) {
-    this.activites = [];
+    this.activite = {};
+    this.participants = [];
     this.itemsPerPage = ITEMS_PER_PAGE;
     this.page = 0;
     this.links = {
@@ -33,7 +36,6 @@ export class EvenementActiviteComponent implements OnInit, OnDestroy {
     };
     this.predicate = 'id';
     this.ascending = true;
-    this.evenement = {};
   }
 
   reset(): void {
@@ -50,7 +52,7 @@ export class EvenementActiviteComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
   }
 
-  trackId(index: number, item: IActivite): number {
+  trackId(index: number, item: IParticipant): number {
     return item.id!;
   }
 

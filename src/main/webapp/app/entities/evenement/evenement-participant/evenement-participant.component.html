@@ -1,5 +1,5 @@
 <h3 id="page-heading">
-    <span jhiTranslate="gestionevenementappApp.evenement.participantinscrit">Inscrire/désincrire Participants</span>
+    <span jhiTranslate="gestionevenementappApp.evenement.participantinscrit">Participants</span>
 </h3>
 
 <jhi-alert-error></jhi-alert-error>
@@ -25,12 +25,12 @@
         <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
             <tr *ngFor="let participant of participants ;trackBy: trackId; let i=index">
                 <td><a [routerLink]="['/participant', participant.id, 'view']">{{ participant.id }}</a></td>
-                <td *ngIf="participant.participant">{{ participant.participant.firstName }}</td>
-                <td *ngIf="participant.participant">{{ participant.participant.lastName }}</td>
-                <td *ngIf="participant.participant">{{ participant.participant.sexe }}</td>
-                <td *ngIf="participant.participant">{{ participant.participant.telephone }}</td>
-                <td *ngIf="participant.participant">{{ participant.participant.villeNom }}</td>
-                <td *ngIf="participant.participant">{{ participant.participant.login }}</td>
+                <td>{{ participant.firstName }}</td>
+                <td>{{ participant.lastName }}</td>
+                <td>{{ participant.sexe }}</td>
+                <td>{{ participant.telephone }}</td>
+                <td>{{ participant.villeNom }}</td>
+                <td>{{ participant.login }}</td>
             </tr>
         </tbody>
     </table>

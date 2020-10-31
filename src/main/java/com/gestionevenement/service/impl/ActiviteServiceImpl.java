@@ -1,6 +1,7 @@
 package com.gestionevenement.service.impl;
 
 import com.gestionevenement.domain.ParticipantActivite;
+import com.gestionevenement.domain.ParticipantEvenement;
 import com.gestionevenement.repository.ParticipantActiviteRepository;
 import com.gestionevenement.service.ActiviteService;
 import com.gestionevenement.domain.Activite;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing {@link Activite}.
@@ -69,10 +71,9 @@ public class ActiviteServiceImpl implements ActiviteService {
     public Optional<ActiviteDTO> findOne(Long id) {
         log.debug("Request to get Activite : {}", id);
         return activiteRepository.findById(id)
-            //.map(activiteMapper::toDto);
         .map(activite -> {
             ActiviteDTO activiteDTO = activiteMapper.toDto(activite);
-            activiteDTO.setParticipants(ajoutParticipantActivite(activiteDTO.getId()));
+            activiteDTO.setParticipants(ajoutParticipants(activiteDTO.getId()));
             return  activiteDTO;
         });
     }
@@ -97,26 +98,16 @@ public class ActiviteServiceImpl implements ActiviteService {
     }
 
 
-    private List<ParticipantActiviteDTO> ajoutParticipantActivite(Long id) {
-        Map<Long, ParticipantActiviteDTO> map = new HashMap<>();
+    private List<ParticipantDTO> ajoutParticipants(Long id) {
         List<ParticipantDTO> participantsDTO = participantQueryService.findByCriteria(null);
-        if (participantsDTO == null || participantsDTO.size() == 0) {
-            return new ArrayList<>();
-        } else {
-            participantsDTO.forEach(participantDTO -> map.put(participantDTO.getId(), new ParticipantActiviteDTO(participantDTO, "participant",false)));
-        }
         List<ParticipantActivite> activites = participantActiviteRepository.findAllByActiviteId(id);
-        if (activites != null && activites.size() > 0) {
-            activites.forEach( participantActivite -> {
-                    ParticipantActiviteDTO participantActiviteDTO = map.get(participantActivite.getParticipantId());
-                    if(participantActiviteDTO !=null){
-                        participantActiviteDTO.setRole(participantActivite.getRole());
-                        participantActiviteDTO.setRegistered(true);
-                    }
-                }
-            );
-        }
-        return new ArrayList<>(map.values());
+        Map<Long, ParticipantActivite> mapParticipantActivite = new HashMap<>();
+        activites.forEach(participantActivite -> mapParticipantActivite.put(participantActivite.getParticipantId(), participantActivite));
+        return participantsDTO
+            .stream()
+            .filter(participantDTO -> mapParticipantActivite.containsKey(participantDTO.getId()))
+            .peek(participantDTO -> participantDTO.setRole(mapParticipantActivite.get(participantDTO.getId()).getRole()))
+            .collect(Collectors.toList());
     }
 
     @Override

@@ -6,7 +6,7 @@
         "createLabel": "Créer un nouveau Activite",
         "createOrEditLabel": "Créer ou éditer un Activite",
         "notFound": "Aucun Activite trouvé",
-        "activityparticipate": "Participation aux activites"
+        "activityparticipate": "Participants"
       },
       "created": "Un nouveau Activite a été créé avec l'identifiant {{ param }}",
       "updated": "Le Activite avec l'identifiant {{ param }} a été mis à jour",

@@ -18,7 +18,7 @@ export class EvenementDetailComponent implements OnInit {
   constructor(protected activatedRoute: ActivatedRoute) {
     this.predicate = 'id';
     this.ascending = true;
-    this.viewpgme = false;
+    this.viewpgme = true;
     this.viewparticipants = true;
     this.namebutton = 'Voir Programme';
   }

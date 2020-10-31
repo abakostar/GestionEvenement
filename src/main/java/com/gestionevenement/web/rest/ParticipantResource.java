@@ -1,9 +1,9 @@
 package com.gestionevenement.web.rest;
 
-import com.gestionevenement.domain.ParticipantEvenement;
-import com.gestionevenement.domain.ParticipantEvenemrntId;
-import com.gestionevenement.domain.User;
+import com.gestionevenement.domain.*;
+import com.gestionevenement.repository.ParticipantActiviteRepository;
 import com.gestionevenement.repository.ParticipantEvenementRepository;
+import com.gestionevenement.repository.ParticipantRepository;
 import com.gestionevenement.security.AuthoritiesConstants;
 import com.gestionevenement.security.SecurityUtils;
 import com.gestionevenement.service.ParticipantQueryService;
@@ -14,6 +14,7 @@ import com.gestionevenement.service.dto.ParticipantCriteria;
 import com.gestionevenement.service.dto.ParticipantDTO;
 import com.gestionevenement.web.rest.errors.BadRequestAlertException;
 import com.gestionevenement.web.rest.vm.ManagedUserVM;
+import com.gestionevenement.web.rest.vm.ParticipantActiviteIdVM;
 import com.gestionevenement.web.rest.vm.ParticipantEvenementIdVM;
 import io.github.jhipster.service.filter.StringFilter;
 import io.github.jhipster.web.util.HeaderUtil;
@@ -59,14 +60,22 @@ public class ParticipantResource {
 
     private final ParticipantEvenementRepository participantEvenementRepository;
 
+    private final ParticipantActiviteRepository participantActiviteRepository;
+
+    private final ParticipantRepository participantRepository;
+
     public ParticipantResource(ParticipantService participantService,
                                UserService userService,
                                ParticipantQueryService participantQueryService,
+                               ParticipantActiviteRepository participantActiviteRepository,
+                               ParticipantRepository participantRepository,
                                ParticipantEvenementRepository participantEvenementRepository) {
         this.participantService = participantService;
         this.userService = userService;
         this.participantQueryService = participantQueryService;
         this.participantEvenementRepository = participantEvenementRepository;
+        this.participantActiviteRepository = participantActiviteRepository;
+        this.participantRepository = participantRepository;
     }
 
     /**
@@ -209,36 +218,66 @@ public class ParticipantResource {
     public ResponseEntity<ParticipantDTO> getParticipantByCurrentUser() {
         final User user = userService.findByLogin(SecurityUtils.getCurrentUserLogin().orElse(null));
         log.debug("REST request to get Participant : {}", user.getLogin());
-        Optional<ParticipantDTO>  result = participantService.findByUser(user);
+        Optional<ParticipantDTO> result = participantService.findByUser(user);
         return ResponseUtil.wrapOrNotFound(result);
     }
 
     @GetMapping("/participants/activite/{evenementId}")
     public ResponseEntity<List<ParticipantActiviteDTO>> getParticipantActiviteByCurrentUser(@PathVariable Long evenementId) {
         final User user = userService.findByLogin(SecurityUtils.getCurrentUserLogin().orElse(null));
-        log.debug("REST request to get Participant : {}", user.getLogin());
+        log.debug("REST request to get Participant : {}", user == null ? null : user.getLogin());
         Optional<List<ParticipantActiviteDTO>> result = participantService.findAllParticipantActiviteByUser(user, evenementId);
         return ResponseUtil.wrapOrNotFound(result);
     }
 
-    @PostMapping("/participants/addParticipant")
-    public ResponseEntity<ParticipantEvenementIdVM> addParticipant(@Valid @RequestBody ParticipantEvenementIdVM participantEvenementIdVM) throws URISyntaxException {
+    @PostMapping("/participants/addEvenement")
+    public ResponseEntity<ParticipantEvenementIdVM> addEvenement(@Valid @RequestBody ParticipantEvenementIdVM participantEvenementIdVM) throws URISyntaxException {
         log.debug("REST request to save Evenement Participant : {}", participantEvenementIdVM);
+        Participant participant = participantRepository.findOneByLoginWithEagerRelationships(SecurityUtils.getCurrentUserLogin().orElse(null)).orElse(null);
+        if (participant == null || !participant.getId().equals(participantEvenementIdVM.getParticipantId())) {
+            throw new BadRequestAlertException("Invalid participant connected", ENTITY_NAME, participantEvenementIdVM.getParticipantId() == null ? "nullId" : participantEvenementIdVM.getParticipantId().toString());
+        }
         if (participantEvenementIdVM.getEvenementId() == null || participantEvenementIdVM.getParticipantId() == null) {
             throw new BadRequestAlertException("A new evenement cannot already have an participantId or evenementId", "ParticipantEvenementId", "idexists");
         }
         ParticipantEvenemrntId participantEvenemrntId = new ParticipantEvenemrntId(participantEvenementIdVM.getParticipantId(), participantEvenementIdVM.getEvenementId());
         Optional<ParticipantEvenement> evenementRepositoryById = participantEvenementRepository.findById(participantEvenemrntId);
-        if(participantEvenementIdVM.isRegistered() && !evenementRepositoryById.isPresent()){
+        if (participantEvenementIdVM.isRegistered() && !evenementRepositoryById.isPresent()) {
             ParticipantEvenement participantEvenement = new ParticipantEvenement();
             participantEvenement.setEvenementId(participantEvenementIdVM.getEvenementId());
             participantEvenement.setParticipantId(participantEvenementIdVM.getParticipantId());
             participantEvenementRepository.save(participantEvenement);
-        } else if(!participantEvenementIdVM.isRegistered() && evenementRepositoryById.isPresent()){
+        } else if (!participantEvenementIdVM.isRegistered() && evenementRepositoryById.isPresent()) {
             participantEvenementRepository.deleteById(participantEvenemrntId);
         }
         return ResponseEntity.created(new URI("/api/participants/addParticipant/" + participantEvenementIdVM.getEvenementId() + "/" + participantEvenementIdVM.getParticipantId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, participantEvenementIdVM.getEvenementId().toString() + "_" + participantEvenementIdVM.getParticipantId()))
             .body(participantEvenementIdVM);
+    }
+
+    @PostMapping("/participants/addActivite")
+    public ResponseEntity<ParticipantActiviteIdVM> addActivite(@Valid @RequestBody ParticipantActiviteIdVM participantActiviteIdVM) throws URISyntaxException {
+        log.debug("REST request to save Activite Participant : {}", participantActiviteIdVM);
+        Participant participant = participantRepository.findOneByLoginWithEagerRelationships(SecurityUtils.getCurrentUserLogin().orElse(null)).orElse(null);
+        if (participant == null || !participant.getId().equals(participantActiviteIdVM.getParticipantId())) {
+            throw new BadRequestAlertException("Invalid participant connected", ENTITY_NAME, participantActiviteIdVM.getParticipantId() == null ? "nullId" : participantActiviteIdVM.getParticipantId().toString());
+        }
+        if (participantActiviteIdVM.getActiviteId() == null || participantActiviteIdVM.getParticipantId() == null) {
+            throw new BadRequestAlertException("A new evenement cannot already have an participantId or evenementId", "ParticipantEvenementId", "idexists");
+        }
+        ParticipantActiviteId participantActiviteId = new ParticipantActiviteId(participantActiviteIdVM.getParticipantId(), participantActiviteIdVM.getActiviteId());
+        Optional<ParticipantActivite> activiteRepositoryById = participantActiviteRepository.findById(participantActiviteId);
+        if (participantActiviteIdVM.isRegistered() && !activiteRepositoryById.isPresent()) {
+            ParticipantActivite participantActivite = new ParticipantActivite();
+            participantActivite.setActiviteId(participantActiviteIdVM.getActiviteId());
+            participantActivite.setParticipantId(participantActiviteIdVM.getParticipantId());
+            participantActivite.setRole(participantActiviteIdVM.getRole());
+            participantActiviteRepository.save(participantActivite);
+        } else if (!participantActiviteIdVM.isRegistered() && activiteRepositoryById.isPresent()) {
+            participantActiviteRepository.deleteById(participantActiviteId);
+        }
+        return ResponseEntity.created(new URI("/api/participants/addActivite/" + participantActiviteIdVM.getActiviteId() + "/" + participantActiviteIdVM.getParticipantId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, participantActiviteIdVM.getActiviteId().toString() + "_" + participantActiviteIdVM.getParticipantId()))
+            .body(participantActiviteIdVM);
     }
 }

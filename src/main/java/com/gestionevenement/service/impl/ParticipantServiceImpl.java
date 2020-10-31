@@ -131,6 +131,7 @@ public class ParticipantServiceImpl implements ParticipantService {
             ParticipantActiviteDTO dto = new ParticipantActiviteDTO();
             dto.setActivite(activiteMapper.toDto(activite));
             dto.setRole(participantActivite == null ? null : participantActivite.getRole());
+            dto.setRegistered(participantActivite != null);
             return dto;
         }).collect(Collectors.toList());
 

@@ -70,7 +70,7 @@ export class InscriptionEvenementComponent implements OnInit {
   saveInscriptionEvent(evenement: IEvenement, index: number): void {
     const participantId = this.participant ? this.participant.id : 0;
     const participantEvenement =  new ParticipantEvenement(participantId, evenement.id, !evenement.registered);
-    this.participantService.addParticipant(participantEvenement).subscribe((res: HttpResponse<IParticipantEvenement>) => {
+    this.participantService.addEvenement(participantEvenement).subscribe((res: HttpResponse<IParticipantEvenement>) => {
       if (res && res.body && this.participant && this.participant.evenements && this.participant.evenements.length > index) {
         this.participant.evenements[index].registered = res.body.registered;
       }

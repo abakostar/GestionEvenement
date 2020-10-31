@@ -1,5 +1,5 @@
 import { Moment } from 'moment';
-import { IParticipantActivite } from './participant-activite.model';
+import {IParticipant} from "./participant.model";
 
 export interface IActivite {
   id?: number;
@@ -13,7 +13,7 @@ export interface IActivite {
   evenementId?: number;
   emplacementCode?: string;
   emplacementId?: number;
-  participants?: IParticipantActivite[];
+  participants?: IParticipant[];
 }
 
 export class Activite implements IActivite {
@@ -29,7 +29,7 @@ export class Activite implements IActivite {
     public evenementId?: number,
     public emplacementCode?: string,
     public emplacementId?: number,
-    public participants?: IParticipantActivite[]
+    public participants?: IParticipant[]
   ) {
     this.etatclos = this.etatclos || false;
   }

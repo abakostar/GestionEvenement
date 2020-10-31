@@ -1,4 +1,4 @@
-<form *ngIf="participant" name="deleteForm" (ngSubmit)="confirmDelete(participant?.id!)">
+<div>
     <div class="modal-header">
         <h4 class="modal-title" jhiTranslate="gestionevenementappApp.participant.inscriptionActivite.title"></h4>
 
@@ -17,11 +17,12 @@
             <table class="table table-striped" aria-describedby="page-heading">
                 <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
-                    <th scope="col"  jhiSortBy="nom"><span jhiTranslate="gestionevenementappApp.activite.nom">Nom</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="dateActivite"><span jhiTranslate="gestionevenementappApp.activite.dateActivite">Date Activite</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="heureDebut"><span jhiTranslate="gestionevenementappApp.activite.heureDebut">Heure Debut</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="heureFin"><span jhiTranslate="gestionevenementappApp.activite.heureFin">Heure Fin</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="role"><span jhiTranslate="gestionevenementappApp.activite.role">Role</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="nom"><span jhiTranslate="gestionevenementappApp.activite.nom">Nom</span></th>
+                    <th scope="col"  jhiSortBy="dateActivite"><span jhiTranslate="gestionevenementappApp.activite.dateActivite">Date Activite</span></th>
+                    <th scope="col"  jhiSortBy="heureDebut"><span jhiTranslate="gestionevenementappApp.activite.heureDebut">Heure Debut</span></th>
+                    <th scope="col"  jhiSortBy="heureFin"><span jhiTranslate="gestionevenementappApp.activite.heureFin">Heure Fin</span></th>
+                    <th scope="col"  jhiSortBy="role"><span jhiTranslate="gestionevenementappApp.activite.role">Role</span></th>
+                    <th scope="col"></th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
@@ -31,17 +32,35 @@
                     <td>{{participantActive.activite.dateActivite | date:'shortDate'}}</td>
                     <td>{{participantActive.activite.heureDebut | date:'mediumTime'}}</td>
                     <td>{{participantActive.activite.heureFin | date:'mediumTime'}}</td>
-                    <td>{{participantActive.role}}</td>
                     <td class="text-right">
-                        <label class="form-check-label" for="activated">
+                        <label class="form-check-label" for="role">
+                            <select class="form-control"
+                                    id="role"
+                                    required
+                                    [(ngModel)]="participantActive.role" name="role">
+                                <option *ngFor="let r of defaultRoles" [ngValue]="r">{{r}}</option>
+                            </select>
+                        </label>
+                    </td>
+                    <td class="text-right">
+                        <label class="form-check-label" for="registered">
                             <input class="form-check-input"
                                    [checked]="participantActive.registered"
                                    type="checkbox"
-                                   id="activated"
-                                   name="activated"
-                                   (click)="saveParticipantActivite(participantActive, i)"/>
+                                   id="registered"
+                                   name="registered"
+                                   [(ngModel)]="participantActive.registered"
+                                   (click)="setRegistered(participantActive, i)"/>
                             <span>{{participantActive.registered ? 'Inscris':'Non Inscris' }}</span>
                         </label>
+                    </td>
+                    <td class="text-right">
+                        <button type="submit"
+                                (click)="saveParticipantActivite(participantActive, i)"
+                                class="btn btn-info btn-sm">
+                            <fa-icon icon="pencil-alt"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.save">Save</span>
+                        </button>
                     </td>
                 </tr>
                 </tbody>
@@ -51,5 +70,5 @@
 
     <div class="modal-footer">
     </div>
-</form>
+</div>
 

@@ -13,6 +13,7 @@ export interface IParticipant {
   villeNom?: string;
   villeId?: number;
   profileCompleted?: boolean;
+  role?: string;
   evenements?: IEvenement[];
 }
 

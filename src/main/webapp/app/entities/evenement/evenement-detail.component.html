@@ -56,12 +56,16 @@
         </div>
     </div>
 </div>
+
 <div class="row justify-content-center">
     <div class="col-12" *ngIf="evenement && evenement.activites && evenement.activites.length>0 && viewpgme">
         <jhi-evenement-activite
         [activites]="evenement.activites"
         [evenement]="evenement"></jhi-evenement-activite>
     </div>
+</div>
+
+<div class="row justify-content-center">
     <div class="col-12" *ngIf="evenement && evenement.participants && evenement.participants.length>0 && viewparticipants">
         <jhi-evenement-participant
             [participants]="evenement.participants"

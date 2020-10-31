@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ITEMS_PER_PAGE } from '../../../shared/constants/pagination.constants';
 import { JhiParseLinks } from 'ng-jhipster';
-import { IParticipantEvenement } from '../../../shared/model/participant-evenement.model';
 import { EvenementService } from '../evenement.service';
 import { IEvenement } from '../../../shared/model/evenement.model';
+import {IParticipant} from "../../../shared/model/participant.model";
 
 @Component({
   selector: 'jhi-evenement-participant',
@@ -11,7 +11,7 @@ import { IEvenement } from '../../../shared/model/evenement.model';
   styleUrls: ['./evenement-participant.component.scss'],
 })
 export class EvenementParticipantComponent implements OnInit {
-  @Input() participants: IParticipantEvenement[];
+  @Input() participants: IParticipant[];
   @Input() evenement: IEvenement;
 
   predicate: string;
@@ -38,7 +38,7 @@ export class EvenementParticipantComponent implements OnInit {
     this.page = page;
   }
 
-  trackId(index: number, item: IParticipantEvenement): number {
+  trackId(index: number, item: IParticipant): number {
     return item.id!;
   }
 
