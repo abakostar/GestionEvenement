@@ -13,7 +13,6 @@ export interface IEvenement {
   registered?: boolean;
   participants?: IParticipantEvenement[];
   activites?: IActivite[];
-  collapsed?: boolean;
 }
 
 export class Evenement implements IEvenement {

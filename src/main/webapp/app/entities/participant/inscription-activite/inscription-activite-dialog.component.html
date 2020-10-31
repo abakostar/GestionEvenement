@@ -35,12 +35,12 @@
                     <td class="text-right">
                         <label class="form-check-label" for="activated">
                             <input class="form-check-input"
-                                   [checked]="participantActive.role"
+                                   [checked]="participantActive.registered"
                                    type="checkbox"
                                    id="activated"
                                    name="activated"
-                                   (click)="saveParticipantActivite(participantActive, i, participant.id, evenement.id)"/>
-                            <span>{{participantActive.role ? 'Inscris':'Non Inscris' }}</span>
+                                   (click)="saveParticipantActivite(participantActive, i)"/>
+                            <span>{{participantActive.registered ? 'Inscris':'Non Inscris' }}</span>
                         </label>
                     </td>
                 </tr>

@@ -55,7 +55,7 @@ export class InscriptionEvenementComponent implements OnInit {
         });
   }
 
-  trackId(index: number, item: IParticipantEvenement): number {
+  trackId(index: number, item: IEvenement): number {
     return item.id!;
   }
 
@@ -67,7 +67,8 @@ export class InscriptionEvenementComponent implements OnInit {
     return result;
   }
 
-  saveInscriptionEvent(evenement: IEvenement, index: number, participantId: number): void {
+  saveInscriptionEvent(evenement: IEvenement, index: number): void {
+    const participantId = this.participant ? this.participant.id : 0;
     const participantEvenement =  new ParticipantEvenement(participantId, evenement.id, !evenement.registered);
     this.participantService.addParticipant(participantEvenement).subscribe((res: HttpResponse<IParticipantEvenement>) => {
       if (res && res.body && this.participant && this.participant.evenements && this.participant.evenements.length > index) {
@@ -76,9 +77,9 @@ export class InscriptionEvenementComponent implements OnInit {
     });
   }
 
-  detailActivities(participant: IParticipant, evenement: IEvenement): void {
+  detailActivities(evenement: IEvenement): void {
     const modalRef = this.modalService.open(InscriptionActiviteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.participant = participant;
+    modalRef.componentInstance.participant = this.participant;
     modalRef.componentInstance.evenement = evenement;
   }
 }

@@ -78,7 +78,7 @@ export class InscriptionActiviteDialogComponent implements OnInit {
     return result;
   }
 
-  saveParticipantActivite(participantActive: IParticipantActivite, index: number, participantId: number, evenementId: number) {
-
+  saveParticipantActivite(participantActive: IParticipantActivite, index: number): void {
+      participantActive && index
   }
 }

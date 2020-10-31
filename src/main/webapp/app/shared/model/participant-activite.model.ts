@@ -5,4 +5,5 @@ export interface IParticipantActivite {
   participant?: IParticipant;
   activite: IActivite;
   role?: string;
+  registered?: boolean;
 }

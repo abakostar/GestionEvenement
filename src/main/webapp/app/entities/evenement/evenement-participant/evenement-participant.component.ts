@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
 import { ITEMS_PER_PAGE } from '../../../shared/constants/pagination.constants';
 import { JhiParseLinks } from 'ng-jhipster';
 import { IParticipantEvenement } from '../../../shared/model/participant-evenement.model';
@@ -56,14 +55,4 @@ export class EvenementParticipantComponent implements OnInit {
     return result;
   }
 
-  save(participant: IParticipantEvenement, i: number): void {
-    participant.evenementId = this.evenement.id;
-    participant.participantId = participant.participant?.id; // explication pourquoi pas l'id de Iparticipant
-    participant.registered = !participant.registered;
-    this.evenementService.addParticipant(participant).subscribe((res: HttpResponse<IParticipantEvenement>) => {
-      if (res && res.body) {
-        this.participants[i].registered = res.body.registered;
-      }
-    });
-  }
 }

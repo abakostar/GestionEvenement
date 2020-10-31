@@ -31,20 +31,6 @@
                 <td *ngIf="participant.participant">{{ participant.participant.telephone }}</td>
                 <td *ngIf="participant.participant">{{ participant.participant.villeNom }}</td>
                 <td *ngIf="participant.participant">{{ participant.participant.login }}</td>
-                <td *ngIf="participant.participant" class="text-center">
-                    <div class="form-check">
-                        <label class="form-check-label" for="activated">
-                            <input class="form-check-input"
-                                   [checked]="participant.registered"
-                                   type="checkbox"
-                                   id="activated"
-                                   name="activated"
-                                   (click)="save(participant,i)"
-                                   formControlName="activated" />
-                            <span>{{ participant.registered ? 'Inscris':'Non Inscris' }}</span>
-                        </label>
-                    </div>
-                </td>
             </tr>
         </tbody>
     </table>
